@@ -1,0 +1,12 @@
+{
+  "name": "github-bubble-chart",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/teociaps/github-bubble-chart.git",
+  "author": "Matteo Ciapparelli",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "typescript": "^5.5.4"
+  }
+}
