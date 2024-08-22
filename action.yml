@@ -1,0 +1,29 @@
+name: 'Generate Bubble Chart'
+description: 'Generates a bubble chart of most used languages using @teociaps/bubble-chart'
+author: 'Matteo Ciapparelli'
+inputs:
+  useConfigFile:
+    description: 'Set to true to use a configuration file instead of the GitHub API'
+    required: false
+    default: 'false'
+  configFilePath:
+    description: 'Path to the configuration file (required if useConfigFile is true)'
+    required: false
+  outputFilePath:
+    description: 'Path where the bubble chart image will be saved'
+    required: false
+    default: 'bubble-chart.svg'
+  format:
+    description: 'Output format of the bubble chart (e.g., png, svg)'
+    required: false
+    default: 'svg'
+
+runs:
+  using: 'node20'
+  main: 'dist/generate-bubble-chart.js'
+
+# branding:
+#   icon: 'chart'
+#   color: 'blue'
+
+# TODO: to enhance with output and inputs + descr

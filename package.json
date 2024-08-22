@@ -2,11 +2,24 @@
   "name": "github-bubble-chart",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "repository": "https://github.com/teociaps/github-bubble-chart.git",
   "author": "Matteo Ciapparelli",
   "license": "MIT",
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.5.0",
+    "axios": "^1.7.4",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@teociaps/bubble-chart": "file:..\\BubbleChart\\" // TODO: change with npm pkg
   }
 }
