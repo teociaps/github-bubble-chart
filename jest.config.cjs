@@ -1,16 +1,13 @@
-const { pathsToModuleNameMapper } = require('ts-jest');
-
 module.exports = {
-  preset: 'ts-jest/presets/default-esm',
+  preset: 'ts-jest',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
-  transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
-      {
-        useESM: true,
-        tsconfig: 'tsconfig.json',
-      }
-    ]
-  }
+  moduleFileExtensions: ['ts', 'js'],
+  testMatch: ['**/tests/**/*.test.ts'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',
+    },
+  },
 };
+
+// TODO: do refactor
