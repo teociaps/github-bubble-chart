@@ -2,6 +2,7 @@ import { Error400 } from '../src/error.js';
 import { CONSTANTS, parseParams } from '../src/utils.js';
 import { fetchLanguagesByUser } from '../src/services/githubService.js';
 import * as d3 from 'd3';
+import languageMappings from '../src/languageMappings.json' assert { type: 'json' }; // TODO: change this since it's experimental (see tsconfig)
 
 // TODO: arrange better
 
@@ -14,6 +15,8 @@ const defaultHeaders = new Headers({
 export default async (req: any, res: any) => {
   const params = parseParams(req);
   const username = params.get('username');
+
+  console.log(languageMappings["JavaScript"]); // TEST: to remove
 
   if (!username) {
     const [base] = req.url.split('?');

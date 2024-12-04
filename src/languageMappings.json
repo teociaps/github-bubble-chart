@@ -1,0 +1,2446 @@
+{
+  "1C Enterprise": {
+    "color": "#814CCC",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/1centerprise/1centerprise-original.svg"
+  },
+  "2-Dimensional Array": {
+    "color": "#38761D",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/2-dimensionalarray/2-dimensionalarray-original.svg"
+  },
+  "4D": {
+    "color": "#004289",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/4d/4d-original.svg"
+  },
+  "ABAP": {
+    "color": "#E8274B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/abap/abap-original.svg"
+  },
+  "ABAP CDS": {
+    "color": "#555e25",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/abapcds/abapcds-original.svg"
+  },
+  "AGS Script": {
+    "color": "#B9D9FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/agsscript/agsscript-original.svg"
+  },
+  "AIDL": {
+    "color": "#34EB6B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/aidl/aidl-original.svg"
+  },
+  "AL": {
+    "color": "#3AA2B5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/al/al-original.svg"
+  },
+  "AMPL": {
+    "color": "#E6EFBB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ampl/ampl-original.svg"
+  },
+  "ANTLR": {
+    "color": "#9DC3FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/antlr/antlr-original.svg"
+  },
+  "API Blueprint": {
+    "color": "#2ACCA8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/apiblueprint/apiblueprint-original.svg"
+  },
+  "APL": {
+    "color": "#5A8164",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/apl/apl-original.svg"
+  },
+  "ASP.NET": {
+    "color": "#9400ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/asp.net/asp.net-original.svg"
+  },
+  "ATS": {
+    "color": "#1ac620",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ats/ats-original.svg"
+  },
+  "ActionScript": {
+    "color": "#882B0F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/actionscript/actionscript-original.svg"
+  },
+  "Ada": {
+    "color": "#02f88c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ada/ada-original.svg"
+  },
+  "Adblock Filter List": {
+    "color": "#800000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/adblockfilter list/adblockfilter list-original.svg"
+  },
+  "Adobe Font Metrics": {
+    "color": "#fa0f00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/adobefont metrics/adobefont metrics-original.svg"
+  },
+  "Agda": {
+    "color": "#315665",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/agda/agda-original.svg"
+  },
+  "Alloy": {
+    "color": "#64C800",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/alloy/alloy-original.svg"
+  },
+  "Alpine Abuild": {
+    "color": "#0D597F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/alpineabuild/alpineabuild-original.svg"
+  },
+  "Altium Designer": {
+    "color": "#A89663",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/altiumdesigner/altiumdesigner-original.svg"
+  },
+  "AngelScript": {
+    "color": "#C7D7DC",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/angelscript/angelscript-original.svg"
+  },
+  "Ant Build System": {
+    "color": "#A9157E",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/antbuild system/antbuild system-original.svg"
+  },
+  "Antlers": {
+    "color": "#ff269e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/antlers/antlers-original.svg"
+  },
+  "ApacheConf": {
+    "color": "#d12127",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/apacheconf/apacheconf-original.svg"
+  },
+  "Apex": {
+    "color": "#1797c0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/apex/apex-original.svg"
+  },
+  "Apollo Guidance Computer": {
+    "color": "#0B3D91",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/apolloguidance computer/apolloguidance computer-original.svg"
+  },
+  "AppleScript": {
+    "color": "#101F1F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/applescript/applescript-original.svg"
+  },
+  "Arc": {
+    "color": "#aa2afe",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/arc/arc-original.svg"
+  },
+  "AsciiDoc": {
+    "color": "#73a0c5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/asciidoc/asciidoc-original.svg"
+  },
+  "AspectJ": {
+    "color": "#a957b0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/aspectj/aspectj-original.svg"
+  },
+  "Assembly": {
+    "color": "#6E4C13",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/assembly/assembly-original.svg"
+  },
+  "Astro": {
+    "color": "#ff5a03",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/astro/astro-original.svg"
+  },
+  "Asymptote": {
+    "color": "#ff0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/asymptote/asymptote-original.svg"
+  },
+  "Augeas": {
+    "color": "#9CC134",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/augeas/augeas-original.svg"
+  },
+  "AutoHotkey": {
+    "color": "#6594b9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/autohotkey/autohotkey-original.svg"
+  },
+  "AutoIt": {
+    "color": "#1C3552",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/autoit/autoit-original.svg"
+  },
+  "Avro IDL": {
+    "color": "#0040FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/avroidl/avroidl-original.svg"
+  },
+  "Awk": {
+    "color": "#c30e9b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/awk/awk-original.svg"
+  },
+  "B4X": {
+    "color": "#00e4ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/b4x/b4x-original.svg"
+  },
+  "BASIC": {
+    "color": "#ff0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/basic/basic-original.svg"
+  },
+  "BQN": {
+    "color": "#2b7067",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bqn/bqn-original.svg"
+  },
+  "Ballerina": {
+    "color": "#FF5000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ballerina/ballerina-original.svg"
+  },
+  "Batchfile": {
+    "color": "#C1F12E",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/batchfile/batchfile-original.svg"
+  },
+  "Beef": {
+    "color": "#a52f4e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/beef/beef-original.svg"
+  },
+  "Berry": {
+    "color": "#15A13C",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/berry/berry-original.svg"
+  },
+  "BibTeX": {
+    "color": "#778899",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bibtex/bibtex-original.svg"
+  },
+  "Bicep": {
+    "color": "#519aba",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bicep/bicep-original.svg"
+  },
+  "Bikeshed": {
+    "color": "#5562ac",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bikeshed/bikeshed-original.svg"
+  },
+  "Bison": {
+    "color": "#6A463F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bison/bison-original.svg"
+  },
+  "BitBake": {
+    "color": "#00bce4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bitbake/bitbake-original.svg"
+  },
+  "Blade": {
+    "color": "#f7523f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/blade/blade-original.svg"
+  },
+  "BlitzBasic": {
+    "color": "#00FFAE",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/blitzbasic/blitzbasic-original.svg"
+  },
+  "BlitzMax": {
+    "color": "#cd6400",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/blitzmax/blitzmax-original.svg"
+  },
+  "Bluespec": {
+    "color": "#12223c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bluespec/bluespec-original.svg"
+  },
+  "Bluespec BH": {
+    "color": "#12223c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/bluespecbh/bluespecbh-original.svg"
+  },
+  "Boo": {
+    "color": "#d4bec1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/boo/boo-original.svg"
+  },
+  "Boogie": {
+    "color": "#c80fa0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/boogie/boogie-original.svg"
+  },
+  "Brainfuck": {
+    "color": "#2F2530",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/brainfuck/brainfuck-original.svg"
+  },
+  "BrighterScript": {
+    "color": "#66AABB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/brighterscript/brighterscript-original.svg"
+  },
+  "Brightscript": {
+    "color": "#662D91",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/brightscript/brightscript-original.svg"
+  },
+  "Browserslist": {
+    "color": "#ffd539",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/browserslist/browserslist-original.svg"
+  },
+  "C": {
+    "color": "#555555",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/c/c-original.svg"
+  },
+  "C#": {
+    "color": "#178600",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/csharp/csharp-original.svg"
+  },
+  "C++": {
+    "color": "#f34b7d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cplusplus/cplusplus-original.svg"
+  },
+  "CAP CDS": {
+    "color": "#0092d1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/capcds/capcds-original.svg"
+  },
+  "CLIPS": {
+    "color": "#00A300",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/clips/clips-original.svg"
+  },
+  "CMake": {
+    "color": "#DA3434",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cmake/cmake-original.svg"
+  },
+  "COLLADA": {
+    "color": "#F1A42B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/collada/collada-original.svg"
+  },
+  "CSON": {
+    "color": "#244776",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cson/cson-original.svg"
+  },
+  "CSS": {
+    "color": "#663399",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/css/css-original.svg"
+  },
+  "CSV": {
+    "color": "#237346",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/csv/csv-original.svg"
+  },
+  "CUE": {
+    "color": "#5886E1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cue/cue-original.svg"
+  },
+  "CWeb": {
+    "color": "#00007a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cweb/cweb-original.svg"
+  },
+  "Cabal Config": {
+    "color": "#483465",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cabalconfig/cabalconfig-original.svg"
+  },
+  "Caddyfile": {
+    "color": "#22b638",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/caddyfile/caddyfile-original.svg"
+  },
+  "Cadence": {
+    "color": "#00ef8b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cadence/cadence-original.svg"
+  },
+  "Cairo": {
+    "color": "#ff4a48",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cairo/cairo-original.svg"
+  },
+  "Cairo Zero": {
+    "color": "#ff4a48",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cairozero/cairozero-original.svg"
+  },
+  "CameLIGO": {
+    "color": "#3be133",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cameligo/cameligo-original.svg"
+  },
+  "Cap'n Proto": {
+    "color": "#c42727",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cap'nproto/cap'nproto-original.svg"
+  },
+  "Carbon": {
+    "color": "#222222",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/carbon/carbon-original.svg"
+  },
+  "Ceylon": {
+    "color": "#dfa535",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ceylon/ceylon-original.svg"
+  },
+  "Chapel": {
+    "color": "#8dc63f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/chapel/chapel-original.svg"
+  },
+  "ChucK": {
+    "color": "#3f8000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/chuck/chuck-original.svg"
+  },
+  "Circom": {
+    "color": "#707575",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/circom/circom-original.svg"
+  },
+  "Cirru": {
+    "color": "#ccccff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cirru/cirru-original.svg"
+  },
+  "Clarion": {
+    "color": "#db901e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/clarion/clarion-original.svg"
+  },
+  "Clarity": {
+    "color": "#5546ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/clarity/clarity-original.svg"
+  },
+  "Classic ASP": {
+    "color": "#6a40fd",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/classicasp/classicasp-original.svg"
+  },
+  "Clean": {
+    "color": "#3F85AF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/clean/clean-original.svg"
+  },
+  "Click": {
+    "color": "#E4E6F3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/click/click-original.svg"
+  },
+  "Clojure": {
+    "color": "#db5855",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/clojure/clojure-original.svg"
+  },
+  "Closure Templates": {
+    "color": "#0d948f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/closuretemplates/closuretemplates-original.svg"
+  },
+  "Cloud Firestore Security Rules": {
+    "color": "#FFA000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cloudfirestore security rules/cloudfirestore security rules-original.svg"
+  },
+  "CodeQL": {
+    "color": "#140f46",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/codeql/codeql-original.svg"
+  },
+  "CoffeeScript": {
+    "color": "#244776",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/coffeescript/coffeescript-original.svg"
+  },
+  "ColdFusion": {
+    "color": "#ed2cd6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/coldfusion/coldfusion-original.svg"
+  },
+  "ColdFusion CFC": {
+    "color": "#ed2cd6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/coldfusioncfc/coldfusioncfc-original.svg"
+  },
+  "Common Lisp": {
+    "color": "#3fb68b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/commonlisp/commonlisp-original.svg"
+  },
+  "Common Workflow Language": {
+    "color": "#B5314C",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/commonworkflow language/commonworkflow language-original.svg"
+  },
+  "Component Pascal": {
+    "color": "#B0CE4E",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/componentpascal/componentpascal-original.svg"
+  },
+  "Coq": {
+    "color": "#d0b68c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/coq/coq-original.svg"
+  },
+  "Crystal": {
+    "color": "#000100",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/crystal/crystal-original.svg"
+  },
+  "Csound": {
+    "color": "#1a1a1a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/csound/csound-original.svg"
+  },
+  "Csound Document": {
+    "color": "#1a1a1a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/csounddocument/csounddocument-original.svg"
+  },
+  "Csound Score": {
+    "color": "#1a1a1a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/csoundscore/csoundscore-original.svg"
+  },
+  "Cuda": {
+    "color": "#3A4E3A",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cuda/cuda-original.svg"
+  },
+  "Curry": {
+    "color": "#531242",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/curry/curry-original.svg"
+  },
+  "Cylc": {
+    "color": "#00b3fd",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cylc/cylc-original.svg"
+  },
+  "Cypher": {
+    "color": "#34c0eb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cypher/cypher-original.svg"
+  },
+  "Cython": {
+    "color": "#fedf5b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/cython/cython-original.svg"
+  },
+  "D": {
+    "color": "#ba595e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/d/d-original.svg"
+  },
+  "D2": {
+    "color": "#526ee8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/d2/d2-original.svg"
+  },
+  "DM": {
+    "color": "#447265",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dm/dm-original.svg"
+  },
+  "Dafny": {
+    "color": "#FFEC25",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dafny/dafny-original.svg"
+  },
+  "Darcs Patch": {
+    "color": "#8eff23",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/darcspatch/darcspatch-original.svg"
+  },
+  "Dart": {
+    "color": "#00B4AB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dart/dart-original.svg"
+  },
+  "DataWeave": {
+    "color": "#003a52",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dataweave/dataweave-original.svg"
+  },
+  "Debian Package Control File": {
+    "color": "#D70751",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/debianpackage control file/debianpackage control file-original.svg"
+  },
+  "DenizenScript": {
+    "color": "#FBEE96",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/denizenscript/denizenscript-original.svg"
+  },
+  "Dhall": {
+    "color": "#dfafff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dhall/dhall-original.svg"
+  },
+  "DirectX 3D File": {
+    "color": "#aace60",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/directx3d file/directx3d file-original.svg"
+  },
+  "Dockerfile": {
+    "color": "#384d54",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dockerfile/dockerfile-original.svg"
+  },
+  "Dogescript": {
+    "color": "#cca760",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dogescript/dogescript-original.svg"
+  },
+  "Dotenv": {
+    "color": "#e5d559",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dotenv/dotenv-original.svg"
+  },
+  "Dune": {
+    "color": "#89421e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dune/dune-original.svg"
+  },
+  "Dylan": {
+    "color": "#6c616e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/dylan/dylan-original.svg"
+  },
+  "E": {
+    "color": "#ccce35",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/e/e-original.svg"
+  },
+  "ECL": {
+    "color": "#8a1267",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ecl/ecl-original.svg"
+  },
+  "ECLiPSe": {
+    "color": "#001d9d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/eclipse/eclipse-original.svg"
+  },
+  "EJS": {
+    "color": "#a91e50",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ejs/ejs-original.svg"
+  },
+  "EQ": {
+    "color": "#a78649",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/eq/eq-original.svg"
+  },
+  "Earthly": {
+    "color": "#2af0ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/earthly/earthly-original.svg"
+  },
+  "Easybuild": {
+    "color": "#069406",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/easybuild/easybuild-original.svg"
+  },
+  "Ecere Projects": {
+    "color": "#913960",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ecereprojects/ecereprojects-original.svg"
+  },
+  "Ecmarkup": {
+    "color": "#eb8131",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ecmarkup/ecmarkup-original.svg"
+  },
+  "Edge": {
+    "color": "#0dffe0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/edge/edge-original.svg"
+  },
+  "EdgeQL": {
+    "color": "#31A7FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/edgeql/edgeql-original.svg"
+  },
+  "EditorConfig": {
+    "color": "#fff1f2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/editorconfig/editorconfig-original.svg"
+  },
+  "Eiffel": {
+    "color": "#4d6977",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/eiffel/eiffel-original.svg"
+  },
+  "Elixir": {
+    "color": "#6e4a7e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/elixir/elixir-original.svg"
+  },
+  "Elm": {
+    "color": "#60B5CC",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/elm/elm-original.svg"
+  },
+  "Elvish": {
+    "color": "#55BB55",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/elvish/elvish-original.svg"
+  },
+  "Elvish Transcript": {
+    "color": "#55BB55",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/elvishtranscript/elvishtranscript-original.svg"
+  },
+  "Emacs Lisp": {
+    "color": "#c065db",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/emacslisp/emacslisp-original.svg"
+  },
+  "EmberScript": {
+    "color": "#FFF4F3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/emberscript/emberscript-original.svg"
+  },
+  "Erlang": {
+    "color": "#B83998",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/erlang/erlang-original.svg"
+  },
+  "Euphoria": {
+    "color": "#FF790B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/euphoria/euphoria-original.svg"
+  },
+  "F#": {
+    "color": "#b845fc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/f#/f#-original.svg"
+  },
+  "F*": {
+    "color": "#572e30",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/f*/f*-original.svg"
+  },
+  "FIGlet Font": {
+    "color": "#FFDDBB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/figletfont/figletfont-original.svg"
+  },
+  "FIRRTL": {
+    "color": "#2f632f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/firrtl/firrtl-original.svg"
+  },
+  "FLUX": {
+    "color": "#88ccff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/flux/flux-original.svg"
+  },
+  "Factor": {
+    "color": "#636746",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/factor/factor-original.svg"
+  },
+  "Fancy": {
+    "color": "#7b9db4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fancy/fancy-original.svg"
+  },
+  "Fantom": {
+    "color": "#14253c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fantom/fantom-original.svg"
+  },
+  "Faust": {
+    "color": "#c37240",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/faust/faust-original.svg"
+  },
+  "Fennel": {
+    "color": "#fff3d7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fennel/fennel-original.svg"
+  },
+  "Filebench WML": {
+    "color": "#F6B900",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/filebenchwml/filebenchwml-original.svg"
+  },
+  "Fluent": {
+    "color": "#ffcc33",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fluent/fluent-original.svg"
+  },
+  "Forth": {
+    "color": "#341708",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/forth/forth-original.svg"
+  },
+  "Fortran": {
+    "color": "#4d41b1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fortran/fortran-original.svg"
+  },
+  "Fortran Free Form": {
+    "color": "#4d41b1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fortranfree form/fortranfree form-original.svg"
+  },
+  "FreeBASIC": {
+    "color": "#141AC9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/freebasic/freebasic-original.svg"
+  },
+  "FreeMarker": {
+    "color": "#0050b2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/freemarker/freemarker-original.svg"
+  },
+  "Frege": {
+    "color": "#00cafe",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/frege/frege-original.svg"
+  },
+  "Futhark": {
+    "color": "#5f021f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/futhark/futhark-original.svg"
+  },
+  "G-code": {
+    "color": "#D08CF2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/g-code/g-code-original.svg"
+  },
+  "GAML": {
+    "color": "#FFC766",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gaml/gaml-original.svg"
+  },
+  "GAMS": {
+    "color": "#f49a22",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gams/gams-original.svg"
+  },
+  "GAP": {
+    "color": "#0000cc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gap/gap-original.svg"
+  },
+  "GCC Machine Description": {
+    "color": "#FFCFAB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gccmachine description/gccmachine description-original.svg"
+  },
+  "GDScript": {
+    "color": "#355570",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gdscript/gdscript-original.svg"
+  },
+  "GEDCOM": {
+    "color": "#003058",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gedcom/gedcom-original.svg"
+  },
+  "GLSL": {
+    "color": "#5686a5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/glsl/glsl-original.svg"
+  },
+  "GSC": {
+    "color": "#FF6800",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gsc/gsc-original.svg"
+  },
+  "Game Maker Language": {
+    "color": "#71b417",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gamemaker language/gamemaker language-original.svg"
+  },
+  "Gemfile.lock": {
+    "color": "#701516",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gemfile.lock/gemfile.lock-original.svg"
+  },
+  "Gemini": {
+    "color": "#ff6900",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gemini/gemini-original.svg"
+  },
+  "Genero 4gl": {
+    "color": "#63408e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/genero4gl/genero4gl-original.svg"
+  },
+  "Genero per": {
+    "color": "#d8df39",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/generoper/generoper-original.svg"
+  },
+  "Genie": {
+    "color": "#fb855d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/genie/genie-original.svg"
+  },
+  "Genshi": {
+    "color": "#951531",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/genshi/genshi-original.svg"
+  },
+  "Gentoo Ebuild": {
+    "color": "#9400ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gentooebuild/gentooebuild-original.svg"
+  },
+  "Gentoo Eclass": {
+    "color": "#9400ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gentooeclass/gentooeclass-original.svg"
+  },
+  "Gerber Image": {
+    "color": "#d20b00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gerberimage/gerberimage-original.svg"
+  },
+  "Gherkin": {
+    "color": "#5B2063",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gherkin/gherkin-original.svg"
+  },
+  "Git Attributes": {
+    "color": "#F44D27",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gitattributes/gitattributes-original.svg"
+  },
+  "Git Config": {
+    "color": "#F44D27",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gitconfig/gitconfig-original.svg"
+  },
+  "Git Revision List": {
+    "color": "#F44D27",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gitrevision list/gitrevision list-original.svg"
+  },
+  "Gleam": {
+    "color": "#ffaff3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gleam/gleam-original.svg"
+  },
+  "Glimmer JS": {
+    "color": "#F5835F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/glimmerjs/glimmerjs-original.svg"
+  },
+  "Glimmer TS": {
+    "color": "#3178c6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/glimmerts/glimmerts-original.svg"
+  },
+  "Glyph": {
+    "color": "#c1ac7f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/glyph/glyph-original.svg"
+  },
+  "Gnuplot": {
+    "color": "#f0a9f0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gnuplot/gnuplot-original.svg"
+  },
+  "Go": {
+    "color": "#00ADD8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/go/go-original.svg"
+  },
+  "Go Checksums": {
+    "color": "#00ADD8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gochecksums/gochecksums-original.svg"
+  },
+  "Go Module": {
+    "color": "#00ADD8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gomodule/gomodule-original.svg"
+  },
+  "Go Workspace": {
+    "color": "#00ADD8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/goworkspace/goworkspace-original.svg"
+  },
+  "Godot Resource": {
+    "color": "#355570",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/godotresource/godotresource-original.svg"
+  },
+  "Golo": {
+    "color": "#88562A",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/golo/golo-original.svg"
+  },
+  "Gosu": {
+    "color": "#82937f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gosu/gosu-original.svg"
+  },
+  "Grace": {
+    "color": "#615f8b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/grace/grace-original.svg"
+  },
+  "Gradle": {
+    "color": "#02303a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gradle/gradle-original.svg"
+  },
+  "Gradle Kotlin DSL": {
+    "color": "#02303a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/gradlekotlin dsl/gradlekotlin dsl-original.svg"
+  },
+  "Grammatical Framework": {
+    "color": "#ff0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/grammaticalframework/grammaticalframework-original.svg"
+  },
+  "GraphQL": {
+    "color": "#e10098",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/graphql/graphql-original.svg"
+  },
+  "Graphviz (DOT)": {
+    "color": "#2596be",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/graphviz(dot)/graphviz(dot)-original.svg"
+  },
+  "Groovy": {
+    "color": "#4298b8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/groovy/groovy-original.svg"
+  },
+  "Groovy Server Pages": {
+    "color": "#4298b8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/groovyserver pages/groovyserver pages-original.svg"
+  },
+  "HAProxy": {
+    "color": "#106da9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/haproxy/haproxy-original.svg"
+  },
+  "HCL": {
+    "color": "#844FBA",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hcl/hcl-original.svg"
+  },
+  "HLSL": {
+    "color": "#aace60",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hlsl/hlsl-original.svg"
+  },
+  "HOCON": {
+    "color": "#9ff8ee",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hocon/hocon-original.svg"
+  },
+  "HTML": {
+    "color": "#e34c26",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html/html-original.svg"
+  },
+  "HTML+ECR": {
+    "color": "#2e1052",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html+ecr/html+ecr-original.svg"
+  },
+  "HTML+EEX": {
+    "color": "#6e4a7e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html+eex/html+eex-original.svg"
+  },
+  "HTML+ERB": {
+    "color": "#701516",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html+erb/html+erb-original.svg"
+  },
+  "HTML+PHP": {
+    "color": "#4f5d95",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html+php/html+php-original.svg"
+  },
+  "HTML+Razor": {
+    "color": "#512be4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/html+razor/html+razor-original.svg"
+  },
+  "HTTP": {
+    "color": "#005C9C",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/http/http-original.svg"
+  },
+  "HXML": {
+    "color": "#f68712",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hxml/hxml-original.svg"
+  },
+  "Hack": {
+    "color": "#878787",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hack/hack-original.svg"
+  },
+  "Haml": {
+    "color": "#ece2a9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/haml/haml-original.svg"
+  },
+  "Handlebars": {
+    "color": "#f7931e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/handlebars/handlebars-original.svg"
+  },
+  "Harbour": {
+    "color": "#0e60e3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/harbour/harbour-original.svg"
+  },
+  "Hare": {
+    "color": "#9d7424",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hare/hare-original.svg"
+  },
+  "Haskell": {
+    "color": "#5e5086",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/haskell/haskell-original.svg"
+  },
+  "Haxe": {
+    "color": "#df7900",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/haxe/haxe-original.svg"
+  },
+  "HiveQL": {
+    "color": "#dce200",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hiveql/hiveql-original.svg"
+  },
+  "HolyC": {
+    "color": "#ffefaf",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/holyc/holyc-original.svg"
+  },
+  "Hosts File": {
+    "color": "#308888",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hostsfile/hostsfile-original.svg"
+  },
+  "Hy": {
+    "color": "#7790B2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hy/hy-original.svg"
+  },
+  "IDL": {
+    "color": "#a3522f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/idl/idl-original.svg"
+  },
+  "IGOR Pro": {
+    "color": "#0000cc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/igorpro/igorpro-original.svg"
+  },
+  "INI": {
+    "color": "#d1dbe0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ini/ini-original.svg"
+  },
+  "Idris": {
+    "color": "#b30000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/idris/idris-original.svg"
+  },
+  "Ignore List": {
+    "color": "#000000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ignorelist/ignorelist-original.svg"
+  },
+  "ImageJ Macro": {
+    "color": "#99AAFF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/imagejmacro/imagejmacro-original.svg"
+  },
+  "Imba": {
+    "color": "#16cec6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/imba/imba-original.svg"
+  },
+  "Inno Setup": {
+    "color": "#264b99",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/innosetup/innosetup-original.svg"
+  },
+  "Io": {
+    "color": "#a9188d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/io/io-original.svg"
+  },
+  "Ioke": {
+    "color": "#078193",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ioke/ioke-original.svg"
+  },
+  "Isabelle": {
+    "color": "#FEFE00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/isabelle/isabelle-original.svg"
+  },
+  "Isabelle ROOT": {
+    "color": "#FEFE00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/isabelleroot/isabelleroot-original.svg"
+  },
+  "J": {
+    "color": "#9EEDFF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/j/j-original.svg"
+  },
+  "JAR Manifest": {
+    "color": "#b07219",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jarmanifest/jarmanifest-original.svg"
+  },
+  "JCL": {
+    "color": "#d90e09",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jcl/jcl-original.svg"
+  },
+  "JFlex": {
+    "color": "#DBCA00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jflex/jflex-original.svg"
+  },
+  "JSON": {
+    "color": "#292929",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/json/json-original.svg"
+  },
+  "JSON with Comments": {
+    "color": "#292929",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jsonwith comments/jsonwith comments-original.svg"
+  },
+  "JSON5": {
+    "color": "#267CB9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/json5/json5-original.svg"
+  },
+  "JSONLD": {
+    "color": "#0c479c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jsonld/jsonld-original.svg"
+  },
+  "JSONiq": {
+    "color": "#40d47e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jsoniq/jsoniq-original.svg"
+  },
+  "Janet": {
+    "color": "#0886a5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/janet/janet-original.svg"
+  },
+  "Jasmin": {
+    "color": "#d03600",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jasmin/jasmin-original.svg"
+  },
+  "Java": {
+    "color": "#b07219",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg"
+  },
+  "Java Properties": {
+    "color": "#2A6277",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/javaproperties/javaproperties-original.svg"
+  },
+  "Java Server Pages": {
+    "color": "#2A6277",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/javaserver pages/javaserver pages-original.svg"
+  },
+  "Java Template Engine": {
+    "color": "#2A6277",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/javatemplate engine/javatemplate engine-original.svg"
+  },
+  "JavaScript": {
+    "color": "#f1e05a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg"
+  },
+  "JavaScript+ERB": {
+    "color": "#f1e05a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/javascript+erb/javascript+erb-original.svg"
+  },
+  "Jest Snapshot": {
+    "color": "#15c213",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jestsnapshot/jestsnapshot-original.svg"
+  },
+  "JetBrains MPS": {
+    "color": "#21D789",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jetbrainsmps/jetbrainsmps-original.svg"
+  },
+  "Jinja": {
+    "color": "#a52a22",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jinja/jinja-original.svg"
+  },
+  "Jison": {
+    "color": "#56b3cb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jison/jison-original.svg"
+  },
+  "Jison Lex": {
+    "color": "#56b3cb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jisonlex/jisonlex-original.svg"
+  },
+  "Jolie": {
+    "color": "#843179",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jolie/jolie-original.svg"
+  },
+  "Jsonnet": {
+    "color": "#0064bd",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jsonnet/jsonnet-original.svg"
+  },
+  "Julia": {
+    "color": "#a270ba",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/julia/julia-original.svg"
+  },
+  "Julia REPL": {
+    "color": "#a270ba",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/juliarepl/juliarepl-original.svg"
+  },
+  "Jupyter Notebook": {
+    "color": "#DA5B0B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jupyternotebook/jupyternotebook-original.svg"
+  },
+  "Just": {
+    "color": "#384d54",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/just/just-original.svg"
+  },
+  "KRL": {
+    "color": "#28430A",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/krl/krl-original.svg"
+  },
+  "Kaitai Struct": {
+    "color": "#773b37",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kaitaistruct/kaitaistruct-original.svg"
+  },
+  "KakouneScript": {
+    "color": "#6f8042",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kakounescript/kakounescript-original.svg"
+  },
+  "KerboScript": {
+    "color": "#41adf0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kerboscript/kerboscript-original.svg"
+  },
+  "KiCad Layout": {
+    "color": "#2f4aab",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kicadlayout/kicadlayout-original.svg"
+  },
+  "KiCad Legacy Layout": {
+    "color": "#2f4aab",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kicadlegacy layout/kicadlegacy layout-original.svg"
+  },
+  "KiCad Schematic": {
+    "color": "#2f4aab",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kicadschematic/kicadschematic-original.svg"
+  },
+  "Kotlin": {
+    "color": "#A97BFF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kotlin/kotlin-original.svg"
+  },
+  "LFE": {
+    "color": "#4C3023",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lfe/lfe-original.svg"
+  },
+  "LLVM": {
+    "color": "#185619",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/llvm/llvm-original.svg"
+  },
+  "LOLCODE": {
+    "color": "#cc9900",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lolcode/lolcode-original.svg"
+  },
+  "LSL": {
+    "color": "#3d9970",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lsl/lsl-original.svg"
+  },
+  "LabVIEW": {
+    "color": "#fede06",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/labview/labview-original.svg"
+  },
+  "Lark": {
+    "color": "#2980B9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lark/lark-original.svg"
+  },
+  "Lasso": {
+    "color": "#999999",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lasso/lasso-original.svg"
+  },
+  "Latte": {
+    "color": "#f2a542",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/latte/latte-original.svg"
+  },
+  "Less": {
+    "color": "#1d365d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/less/less-original.svg"
+  },
+  "Lex": {
+    "color": "#DBCA00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lex/lex-original.svg"
+  },
+  "LigoLANG": {
+    "color": "#0e74ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ligolang/ligolang-original.svg"
+  },
+  "LilyPond": {
+    "color": "#9ccc7c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lilypond/lilypond-original.svg"
+  },
+  "Liquid": {
+    "color": "#67b8de",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/liquid/liquid-original.svg"
+  },
+  "Literate Agda": {
+    "color": "#315665",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/literateagda/literateagda-original.svg"
+  },
+  "Literate CoffeeScript": {
+    "color": "#244776",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/literatecoffeescript/literatecoffeescript-original.svg"
+  },
+  "Literate Haskell": {
+    "color": "#5e5086",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/literatehaskell/literatehaskell-original.svg"
+  },
+  "LiveCode Script": {
+    "color": "#0c5ba5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/livecodescript/livecodescript-original.svg"
+  },
+  "LiveScript": {
+    "color": "#499886",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/livescript/livescript-original.svg"
+  },
+  "Logtalk": {
+    "color": "#295b9a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/logtalk/logtalk-original.svg"
+  },
+  "LookML": {
+    "color": "#652B81",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lookml/lookml-original.svg"
+  },
+  "Lua": {
+    "color": "#000080",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/lua/lua-original.svg"
+  },
+  "Luau": {
+    "color": "#00A2FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/luau/luau-original.svg"
+  },
+  "MATLAB": {
+    "color": "#e16737",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/matlab/matlab-original.svg"
+  },
+  "MAXScript": {
+    "color": "#00a6a6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/maxscript/maxscript-original.svg"
+  },
+  "MDX": {
+    "color": "#fcb32c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mdx/mdx-original.svg"
+  },
+  "MLIR": {
+    "color": "#5EC8DB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mlir/mlir-original.svg"
+  },
+  "MQL4": {
+    "color": "#62A8D6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mql4/mql4-original.svg"
+  },
+  "MQL5": {
+    "color": "#4A76B8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mql5/mql5-original.svg"
+  },
+  "MTML": {
+    "color": "#b7e1f4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mtml/mtml-original.svg"
+  },
+  "Macaulay2": {
+    "color": "#d8ffff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/macaulay2/macaulay2-original.svg"
+  },
+  "Makefile": {
+    "color": "#427819",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/makefile/makefile-original.svg"
+  },
+  "Mako": {
+    "color": "#7e858d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mako/mako-original.svg"
+  },
+  "Markdown": {
+    "color": "#083fa1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/markdown/markdown-original.svg"
+  },
+  "Marko": {
+    "color": "#42bff2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/marko/marko-original.svg"
+  },
+  "Mask": {
+    "color": "#f97732",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mask/mask-original.svg"
+  },
+  "Mathematica": {
+    "color": "#dd1100",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mathematica/mathematica-original.svg"
+  },
+  "Max": {
+    "color": "#c4a79c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/max/max-original.svg"
+  },
+  "Mercury": {
+    "color": "#ff2b2b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mercury/mercury-original.svg"
+  },
+  "Mermaid": {
+    "color": "#ff3670",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mermaid/mermaid-original.svg"
+  },
+  "Meson": {
+    "color": "#007800",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/meson/meson-original.svg"
+  },
+  "Metal": {
+    "color": "#8f14e9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/metal/metal-original.svg"
+  },
+  "MiniYAML": {
+    "color": "#ff1111",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/miniyaml/miniyaml-original.svg"
+  },
+  "Mint": {
+    "color": "#02b046",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mint/mint-original.svg"
+  },
+  "Mirah": {
+    "color": "#c7a938",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mirah/mirah-original.svg"
+  },
+  "Modelica": {
+    "color": "#de1d31",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/modelica/modelica-original.svg"
+  },
+  "Modula-2": {
+    "color": "#10253f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/modula-2/modula-2-original.svg"
+  },
+  "Modula-3": {
+    "color": "#223388",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/modula-3/modula-3-original.svg"
+  },
+  "Mojo": {
+    "color": "#ff4c1f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mojo/mojo-original.svg"
+  },
+  "Monkey C": {
+    "color": "#8D6747",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/monkeyc/monkeyc-original.svg"
+  },
+  "MoonBit": {
+    "color": "#b92381",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/moonbit/moonbit-original.svg"
+  },
+  "MoonScript": {
+    "color": "#ff4585",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/moonscript/moonscript-original.svg"
+  },
+  "Motoko": {
+    "color": "#fbb03b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/motoko/motoko-original.svg"
+  },
+  "Motorola 68K Assembly": {
+    "color": "#005daa",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/motorola68k assembly/motorola68k assembly-original.svg"
+  },
+  "Move": {
+    "color": "#4a137a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/move/move-original.svg"
+  },
+  "Mustache": {
+    "color": "#724b3b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mustache/mustache-original.svg"
+  },
+  "NCL": {
+    "color": "#28431f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ncl/ncl-original.svg"
+  },
+  "NMODL": {
+    "color": "#00356B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nmodl/nmodl-original.svg"
+  },
+  "NPM Config": {
+    "color": "#cb3837",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/npmconfig/npmconfig-original.svg"
+  },
+  "NWScript": {
+    "color": "#111522",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nwscript/nwscript-original.svg"
+  },
+  "Nasal": {
+    "color": "#1d2c4e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nasal/nasal-original.svg"
+  },
+  "Nearley": {
+    "color": "#990000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nearley/nearley-original.svg"
+  },
+  "Nemerle": {
+    "color": "#3d3c6e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nemerle/nemerle-original.svg"
+  },
+  "NetLinx": {
+    "color": "#0aa0ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/netlinx/netlinx-original.svg"
+  },
+  "NetLinx+ERB": {
+    "color": "#747faa",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/netlinx+erb/netlinx+erb-original.svg"
+  },
+  "NetLogo": {
+    "color": "#ff6375",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/netlogo/netlogo-original.svg"
+  },
+  "NewLisp": {
+    "color": "#87AED7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/newlisp/newlisp-original.svg"
+  },
+  "Nextflow": {
+    "color": "#3ac486",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nextflow/nextflow-original.svg"
+  },
+  "Nginx": {
+    "color": "#009639",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nginx/nginx-original.svg"
+  },
+  "Nim": {
+    "color": "#ffc200",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nim/nim-original.svg"
+  },
+  "Nit": {
+    "color": "#009917",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nit/nit-original.svg"
+  },
+  "Nix": {
+    "color": "#7e7eff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nix/nix-original.svg"
+  },
+  "Noir": {
+    "color": "#2f1f49",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/noir/noir-original.svg"
+  },
+  "Nu": {
+    "color": "#c9df40",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nu/nu-original.svg"
+  },
+  "NumPy": {
+    "color": "#9C8AF9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/numpy/numpy-original.svg"
+  },
+  "Nunjucks": {
+    "color": "#3d8137",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nunjucks/nunjucks-original.svg"
+  },
+  "Nushell": {
+    "color": "#4E9906",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nushell/nushell-original.svg"
+  },
+  "OASv2-json": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oasv2-json/oasv2-json-original.svg"
+  },
+  "OASv2-yaml": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oasv2-yaml/oasv2-yaml-original.svg"
+  },
+  "OASv3-json": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oasv3-json/oasv3-json-original.svg"
+  },
+  "OASv3-yaml": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oasv3-yaml/oasv3-yaml-original.svg"
+  },
+  "OCaml": {
+    "color": "#ef7a08",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ocaml/ocaml-original.svg"
+  },
+  "ObjectScript": {
+    "color": "#424893",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/objectscript/objectscript-original.svg"
+  },
+  "Objective-C": {
+    "color": "#438eff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/objectivec/objectivec-original.svg"
+  },
+  "Objective-C++": {
+    "color": "#6866fb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/objective-c++/objective-c++-original.svg"
+  },
+  "Objective-J": {
+    "color": "#ff0c5a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/objective-j/objective-j-original.svg"
+  },
+  "Odin": {
+    "color": "#60AFFE",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/odin/odin-original.svg"
+  },
+  "Omgrofl": {
+    "color": "#cabbff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/omgrofl/omgrofl-original.svg"
+  },
+  "Opal": {
+    "color": "#f7ede0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/opal/opal-original.svg"
+  },
+  "Open Policy Agent": {
+    "color": "#7d9199",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openpolicy agent/openpolicy agent-original.svg"
+  },
+  "OpenAPI Specification v2": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openapispecification v2/openapispecification v2-original.svg"
+  },
+  "OpenAPI Specification v3": {
+    "color": "#85ea2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openapispecification v3/openapispecification v3-original.svg"
+  },
+  "OpenCL": {
+    "color": "#ed2e2d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/opencl/opencl-original.svg"
+  },
+  "OpenEdge ABL": {
+    "color": "#5ce600",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openedgeabl/openedgeabl-original.svg"
+  },
+  "OpenQASM": {
+    "color": "#AA70FF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openqasm/openqasm-original.svg"
+  },
+  "OpenSCAD": {
+    "color": "#e5cd45",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/openscad/openscad-original.svg"
+  },
+  "Option List": {
+    "color": "#476732",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/optionlist/optionlist-original.svg"
+  },
+  "Org": {
+    "color": "#77aa99",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/org/org-original.svg"
+  },
+  "Oxygene": {
+    "color": "#cdd0e3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oxygene/oxygene-original.svg"
+  },
+  "Oz": {
+    "color": "#fab738",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/oz/oz-original.svg"
+  },
+  "P4": {
+    "color": "#7055b5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/p4/p4-original.svg"
+  },
+  "PDDL": {
+    "color": "#0d00ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pddl/pddl-original.svg"
+  },
+  "PEG.js": {
+    "color": "#234d6b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/peg.js/peg.js-original.svg"
+  },
+  "PHP": {
+    "color": "#4F5D95",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/php/php-original.svg"
+  },
+  "PLSQL": {
+    "color": "#dad8d8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/plsql/plsql-original.svg"
+  },
+  "PLpgSQL": {
+    "color": "#336790",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/plpgsql/plpgsql-original.svg"
+  },
+  "POV-Ray SDL": {
+    "color": "#6bac65",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pov-raysdl/pov-raysdl-original.svg"
+  },
+  "Pact": {
+    "color": "#F7A8B8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pact/pact-original.svg"
+  },
+  "Pan": {
+    "color": "#cc0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pan/pan-original.svg"
+  },
+  "Papyrus": {
+    "color": "#6600cc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/papyrus/papyrus-original.svg"
+  },
+  "Parrot": {
+    "color": "#f3ca0a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/parrot/parrot-original.svg"
+  },
+  "Pascal": {
+    "color": "#E3F171",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pascal/pascal-original.svg"
+  },
+  "Pawn": {
+    "color": "#dbb284",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pawn/pawn-original.svg"
+  },
+  "Pep8": {
+    "color": "#C76F5B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pep8/pep8-original.svg"
+  },
+  "Perl": {
+    "color": "#0298c3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/perl/perl-original.svg"
+  },
+  "PicoLisp": {
+    "color": "#6067af",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/picolisp/picolisp-original.svg"
+  },
+  "PigLatin": {
+    "color": "#fcd7de",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/piglatin/piglatin-original.svg"
+  },
+  "Pike": {
+    "color": "#005390",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pike/pike-original.svg"
+  },
+  "Pip Requirements": {
+    "color": "#FFD343",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/piprequirements/piprequirements-original.svg"
+  },
+  "Pkl": {
+    "color": "#6b9543",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pkl/pkl-original.svg"
+  },
+  "PlantUML": {
+    "color": "#fbbd16",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/plantuml/plantuml-original.svg"
+  },
+  "PogoScript": {
+    "color": "#d80074",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pogoscript/pogoscript-original.svg"
+  },
+  "Polar": {
+    "color": "#ae81ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/polar/polar-original.svg"
+  },
+  "Portugol": {
+    "color": "#f8bd00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/portugol/portugol-original.svg"
+  },
+  "PostCSS": {
+    "color": "#dc3a0c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/postcss/postcss-original.svg"
+  },
+  "PostScript": {
+    "color": "#da291c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/postscript/postscript-original.svg"
+  },
+  "PowerBuilder": {
+    "color": "#8f0f8d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/powerbuilder/powerbuilder-original.svg"
+  },
+  "PowerShell": {
+    "color": "#012456",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/powershell/powershell-original.svg"
+  },
+  "Praat": {
+    "color": "#c8506d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/praat/praat-original.svg"
+  },
+  "Prisma": {
+    "color": "#0c344b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/prisma/prisma-original.svg"
+  },
+  "Processing": {
+    "color": "#0096D8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/processing/processing-original.svg"
+  },
+  "Procfile": {
+    "color": "#3B2F63",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/procfile/procfile-original.svg"
+  },
+  "Prolog": {
+    "color": "#74283c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/prolog/prolog-original.svg"
+  },
+  "Promela": {
+    "color": "#de0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/promela/promela-original.svg"
+  },
+  "Propeller Spin": {
+    "color": "#7fa2a7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/propellerspin/propellerspin-original.svg"
+  },
+  "Pug": {
+    "color": "#a86454",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pug/pug-original.svg"
+  },
+  "Puppet": {
+    "color": "#302B6D",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/puppet/puppet-original.svg"
+  },
+  "PureBasic": {
+    "color": "#5a6986",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/purebasic/purebasic-original.svg"
+  },
+  "PureScript": {
+    "color": "#1D222D",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/purescript/purescript-original.svg"
+  },
+  "Pyret": {
+    "color": "#ee1e10",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pyret/pyret-original.svg"
+  },
+  "Python": {
+    "color": "#3572A5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg"
+  },
+  "Python console": {
+    "color": "#3572A5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pythonconsole/pythonconsole-original.svg"
+  },
+  "Python traceback": {
+    "color": "#3572A5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/pythontraceback/pythontraceback-original.svg"
+  },
+  "Q#": {
+    "color": "#fed659",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/q#/q#-original.svg"
+  },
+  "QML": {
+    "color": "#44a51c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/qml/qml-original.svg"
+  },
+  "Qt Script": {
+    "color": "#00b841",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/qtscript/qtscript-original.svg"
+  },
+  "Quake": {
+    "color": "#882233",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/quake/quake-original.svg"
+  },
+  "QuickBASIC": {
+    "color": "#008080",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/quickbasic/quickbasic-original.svg"
+  },
+  "R": {
+    "color": "#198CE7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/r/r-original.svg"
+  },
+  "RAML": {
+    "color": "#77d9fb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/raml/raml-original.svg"
+  },
+  "RBS": {
+    "color": "#701516",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rbs/rbs-original.svg"
+  },
+  "RDoc": {
+    "color": "#701516",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rdoc/rdoc-original.svg"
+  },
+  "REXX": {
+    "color": "#d90e09",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rexx/rexx-original.svg"
+  },
+  "RMarkdown": {
+    "color": "#198ce7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rmarkdown/rmarkdown-original.svg"
+  },
+  "RON": {
+    "color": "#a62c00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ron/ron-original.svg"
+  },
+  "RPGLE": {
+    "color": "#2BDE21",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rpgle/rpgle-original.svg"
+  },
+  "RUNOFF": {
+    "color": "#665a4e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/runoff/runoff-original.svg"
+  },
+  "Racket": {
+    "color": "#3c5caa",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/racket/racket-original.svg"
+  },
+  "Ragel": {
+    "color": "#9d5200",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ragel/ragel-original.svg"
+  },
+  "Raku": {
+    "color": "#0000fb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/raku/raku-original.svg"
+  },
+  "Rascal": {
+    "color": "#fffaa0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rascal/rascal-original.svg"
+  },
+  "ReScript": {
+    "color": "#ed5051",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rescript/rescript-original.svg"
+  },
+  "Reason": {
+    "color": "#ff5847",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/reason/reason-original.svg"
+  },
+  "ReasonLIGO": {
+    "color": "#ff5847",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/reasonligo/reasonligo-original.svg"
+  },
+  "Rebol": {
+    "color": "#358a5b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rebol/rebol-original.svg"
+  },
+  "Record Jar": {
+    "color": "#0673ba",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/recordjar/recordjar-original.svg"
+  },
+  "Red": {
+    "color": "#f50000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/red/red-original.svg"
+  },
+  "Regular Expression": {
+    "color": "#009a00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/regularexpression/regularexpression-original.svg"
+  },
+  "Ren'Py": {
+    "color": "#ff7f7f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ren'py/ren'py-original.svg"
+  },
+  "Rez": {
+    "color": "#FFDAB3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rez/rez-original.svg"
+  },
+  "Ring": {
+    "color": "#2D54CB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ring/ring-original.svg"
+  },
+  "Riot": {
+    "color": "#A71E49",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/riot/riot-original.svg"
+  },
+  "RobotFramework": {
+    "color": "#00c0b5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/robotframework/robotframework-original.svg"
+  },
+  "Roc": {
+    "color": "#7c38f5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/roc/roc-original.svg"
+  },
+  "Roff": {
+    "color": "#ecdebe",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/roff/roff-original.svg"
+  },
+  "Roff Manpage": {
+    "color": "#ecdebe",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/roffmanpage/roffmanpage-original.svg"
+  },
+  "Rouge": {
+    "color": "#cc0088",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rouge/rouge-original.svg"
+  },
+  "RouterOS Script": {
+    "color": "#DE3941",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/routerosscript/routerosscript-original.svg"
+  },
+  "Ruby": {
+    "color": "#701516",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ruby/ruby-original.svg"
+  },
+  "Rust": {
+    "color": "#dea584",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/rust/rust-original.svg"
+  },
+  "SAS": {
+    "color": "#B34936",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sas/sas-original.svg"
+  },
+  "SCSS": {
+    "color": "#c6538c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scss/scss-original.svg"
+  },
+  "SPARQL": {
+    "color": "#0C4597",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sparql/sparql-original.svg"
+  },
+  "SQF": {
+    "color": "#3F3F3F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sqf/sqf-original.svg"
+  },
+  "SQL": {
+    "color": "#e38c00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sql/sql-original.svg"
+  },
+  "SQLPL": {
+    "color": "#e38c00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sqlpl/sqlpl-original.svg"
+  },
+  "SRecode Template": {
+    "color": "#348a34",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/srecodetemplate/srecodetemplate-original.svg"
+  },
+  "STL": {
+    "color": "#373b5e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/stl/stl-original.svg"
+  },
+  "SVG": {
+    "color": "#ff9900",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/svg/svg-original.svg"
+  },
+  "SaltStack": {
+    "color": "#646464",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/saltstack/saltstack-original.svg"
+  },
+  "Sass": {
+    "color": "#a53b70",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sass/sass-original.svg"
+  },
+  "Scala": {
+    "color": "#c22d40",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scala/scala-original.svg"
+  },
+  "Scaml": {
+    "color": "#bd181a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scaml/scaml-original.svg"
+  },
+  "Scenic": {
+    "color": "#fdc700",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scenic/scenic-original.svg"
+  },
+  "Scheme": {
+    "color": "#1e4aec",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scheme/scheme-original.svg"
+  },
+  "Scilab": {
+    "color": "#ca0f21",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/scilab/scilab-original.svg"
+  },
+  "Self": {
+    "color": "#0579aa",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/self/self-original.svg"
+  },
+  "ShaderLab": {
+    "color": "#222c37",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/shaderlab/shaderlab-original.svg"
+  },
+  "Shell": {
+    "color": "#89e051",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/shell/shell-original.svg"
+  },
+  "ShellCheck Config": {
+    "color": "#cecfcb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/shellcheckconfig/shellcheckconfig-original.svg"
+  },
+  "Shen": {
+    "color": "#120F14",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/shen/shen-original.svg"
+  },
+  "Simple File Verification": {
+    "color": "#C9BFED",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/simplefile verification/simplefile verification-original.svg"
+  },
+  "Singularity": {
+    "color": "#64E6AD",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/singularity/singularity-original.svg"
+  },
+  "Slash": {
+    "color": "#007eff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/slash/slash-original.svg"
+  },
+  "Slice": {
+    "color": "#003fa2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/slice/slice-original.svg"
+  },
+  "Slim": {
+    "color": "#2b2b2b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/slim/slim-original.svg"
+  },
+  "Slint": {
+    "color": "#2379F4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/slint/slint-original.svg"
+  },
+  "SmPL": {
+    "color": "#c94949",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/smpl/smpl-original.svg"
+  },
+  "Smalltalk": {
+    "color": "#596706",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/smalltalk/smalltalk-original.svg"
+  },
+  "Smarty": {
+    "color": "#f0c040",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/smarty/smarty-original.svg"
+  },
+  "Smithy": {
+    "color": "#c44536",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/smithy/smithy-original.svg"
+  },
+  "Snakemake": {
+    "color": "#419179",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/snakemake/snakemake-original.svg"
+  },
+  "Solidity": {
+    "color": "#AA6746",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/solidity/solidity-original.svg"
+  },
+  "SourcePawn": {
+    "color": "#f69e1d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sourcepawn/sourcepawn-original.svg"
+  },
+  "Squirrel": {
+    "color": "#800000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/squirrel/squirrel-original.svg"
+  },
+  "Stan": {
+    "color": "#b2011d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/stan/stan-original.svg"
+  },
+  "Standard ML": {
+    "color": "#dc566d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/standardml/standardml-original.svg"
+  },
+  "Starlark": {
+    "color": "#76d275",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/starlark/starlark-original.svg"
+  },
+  "Stata": {
+    "color": "#1a5f91",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/stata/stata-original.svg"
+  },
+  "StringTemplate": {
+    "color": "#3fb34f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/stringtemplate/stringtemplate-original.svg"
+  },
+  "Stylus": {
+    "color": "#ff6347",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/stylus/stylus-original.svg"
+  },
+  "SubRip Text": {
+    "color": "#9e0101",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/subriptext/subriptext-original.svg"
+  },
+  "SugarSS": {
+    "color": "#2fcc9f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sugarss/sugarss-original.svg"
+  },
+  "SuperCollider": {
+    "color": "#46390b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/supercollider/supercollider-original.svg"
+  },
+  "Svelte": {
+    "color": "#ff3e00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/svelte/svelte-original.svg"
+  },
+  "Sway": {
+    "color": "#00F58C",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sway/sway-original.svg"
+  },
+  "Sweave": {
+    "color": "#198ce7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sweave/sweave-original.svg"
+  },
+  "Swift": {
+    "color": "#F05138",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/swift/swift-original.svg"
+  },
+  "SystemVerilog": {
+    "color": "#DAE1C2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/systemverilog/systemverilog-original.svg"
+  },
+  "TI Program": {
+    "color": "#A0AA87",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tiprogram/tiprogram-original.svg"
+  },
+  "TL-Verilog": {
+    "color": "#C40023",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tl-verilog/tl-verilog-original.svg"
+  },
+  "TLA": {
+    "color": "#4b0079",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tla/tla-original.svg"
+  },
+  "TOML": {
+    "color": "#9c4221",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/toml/toml-original.svg"
+  },
+  "TSQL": {
+    "color": "#e38c00",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tsql/tsql-original.svg"
+  },
+  "TSV": {
+    "color": "#237346",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tsv/tsv-original.svg"
+  },
+  "TSX": {
+    "color": "#3178c6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tsx/tsx-original.svg"
+  },
+  "TXL": {
+    "color": "#0178b8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/txl/txl-original.svg"
+  },
+  "Tact": {
+    "color": "#48b5ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tact/tact-original.svg"
+  },
+  "Talon": {
+    "color": "#333333",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/talon/talon-original.svg"
+  },
+  "Tcl": {
+    "color": "#e4cc98",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tcl/tcl-original.svg"
+  },
+  "TeX": {
+    "color": "#3D6117",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/tex/tex-original.svg"
+  },
+  "Terra": {
+    "color": "#00004c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/terra/terra-original.svg"
+  },
+  "Terraform Template": {
+    "color": "#7b42bb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/terraformtemplate/terraformtemplate-original.svg"
+  },
+  "TextGrid": {
+    "color": "#c8506d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/textgrid/textgrid-original.svg"
+  },
+  "TextMate Properties": {
+    "color": "#df66e4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/textmateproperties/textmateproperties-original.svg"
+  },
+  "Textile": {
+    "color": "#ffe7ac",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/textile/textile-original.svg"
+  },
+  "Thrift": {
+    "color": "#D12127",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/thrift/thrift-original.svg"
+  },
+  "Toit": {
+    "color": "#c2c9fb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/toit/toit-original.svg"
+  },
+  "Turing": {
+    "color": "#cf142b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/turing/turing-original.svg"
+  },
+  "Twig": {
+    "color": "#c1d026",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/twig/twig-original.svg"
+  },
+  "TypeScript": {
+    "color": "#3178c6",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg"
+  },
+  "TypeSpec": {
+    "color": "#4A3665",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/typespec/typespec-original.svg"
+  },
+  "Typst": {
+    "color": "#239dad",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/typst/typst-original.svg"
+  },
+  "Unified Parallel C": {
+    "color": "#4e3617",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/unifiedparallel c/unifiedparallel c-original.svg"
+  },
+  "Unity3D Asset": {
+    "color": "#222c37",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/unity3dasset/unity3dasset-original.svg"
+  },
+  "Uno": {
+    "color": "#9933cc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/uno/uno-original.svg"
+  },
+  "UnrealScript": {
+    "color": "#a54c4d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/unrealscript/unrealscript-original.svg"
+  },
+  "UrWeb": {
+    "color": "#ccccee",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/urweb/urweb-original.svg"
+  },
+  "V": {
+    "color": "#4f87c4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/v/v-original.svg"
+  },
+  "VBA": {
+    "color": "#867db1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vba/vba-original.svg"
+  },
+  "VBScript": {
+    "color": "#15dcdc",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vbscript/vbscript-original.svg"
+  },
+  "VCL": {
+    "color": "#148AA8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vcl/vcl-original.svg"
+  },
+  "VHDL": {
+    "color": "#adb2cb",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vhdl/vhdl-original.svg"
+  },
+  "Vala": {
+    "color": "#a56de2",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vala/vala-original.svg"
+  },
+  "Valve Data Format": {
+    "color": "#f26025",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/valvedata format/valvedata format-original.svg"
+  },
+  "Velocity Template Language": {
+    "color": "#507cff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/velocitytemplate language/velocitytemplate language-original.svg"
+  },
+  "Verilog": {
+    "color": "#b2b7f8",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/verilog/verilog-original.svg"
+  },
+  "Vim Help File": {
+    "color": "#199f4b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vimhelp file/vimhelp file-original.svg"
+  },
+  "Vim Script": {
+    "color": "#199f4b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vimscript/vimscript-original.svg"
+  },
+  "Vim Snippet": {
+    "color": "#199f4b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vimsnippet/vimsnippet-original.svg"
+  },
+  "Visual Basic .NET": {
+    "color": "#945db7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/visualbasic .net/visualbasic .net-original.svg"
+  },
+  "Visual Basic 6.0": {
+    "color": "#2c6353",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/visualbasic 6.0/visualbasic 6.0-original.svg"
+  },
+  "Volt": {
+    "color": "#1F1F1F",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/volt/volt-original.svg"
+  },
+  "Vue": {
+    "color": "#41b883",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vue/vue-original.svg"
+  },
+  "Vyper": {
+    "color": "#2980b9",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vyper/vyper-original.svg"
+  },
+  "WDL": {
+    "color": "#42f1f4",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wdl/wdl-original.svg"
+  },
+  "WGSL": {
+    "color": "#1a5e9a",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wgsl/wgsl-original.svg"
+  },
+  "Web Ontology Language": {
+    "color": "#5b70bd",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/webontology language/webontology language-original.svg"
+  },
+  "WebAssembly": {
+    "color": "#04133b",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/webassembly/webassembly-original.svg"
+  },
+  "WebAssembly Interface Type": {
+    "color": "#6250e7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/webassemblyinterface type/webassemblyinterface type-original.svg"
+  },
+  "Whiley": {
+    "color": "#d5c397",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/whiley/whiley-original.svg"
+  },
+  "Wikitext": {
+    "color": "#fc5757",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wikitext/wikitext-original.svg"
+  },
+  "Windows Registry Entries": {
+    "color": "#52d5ff",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/windowsregistry entries/windowsregistry entries-original.svg"
+  },
+  "Witcher Script": {
+    "color": "#ff0000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/witcherscript/witcherscript-original.svg"
+  },
+  "Wollok": {
+    "color": "#a23738",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wollok/wollok-original.svg"
+  },
+  "World of Warcraft Addon Data": {
+    "color": "#f7e43f",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/worldof warcraft addon data/worldof warcraft addon data-original.svg"
+  },
+  "Wren": {
+    "color": "#383838",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wren/wren-original.svg"
+  },
+  "X10": {
+    "color": "#4B6BEF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/x10/x10-original.svg"
+  },
+  "XC": {
+    "color": "#99DA07",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xc/xc-original.svg"
+  },
+  "XML": {
+    "color": "#0060ac",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xml/xml-original.svg"
+  },
+  "XML Property List": {
+    "color": "#0060ac",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xmlproperty list/xmlproperty list-original.svg"
+  },
+  "XQuery": {
+    "color": "#5232e7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xquery/xquery-original.svg"
+  },
+  "XSLT": {
+    "color": "#EB8CEB",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xslt/xslt-original.svg"
+  },
+  "Xojo": {
+    "color": "#81bd41",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xojo/xojo-original.svg"
+  },
+  "Xonsh": {
+    "color": "#285EEF",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xonsh/xonsh-original.svg"
+  },
+  "Xtend": {
+    "color": "#24255d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xtend/xtend-original.svg"
+  },
+  "YAML": {
+    "color": "#cb171e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/yaml/yaml-original.svg"
+  },
+  "YARA": {
+    "color": "#220000",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/yara/yara-original.svg"
+  },
+  "YASnippet": {
+    "color": "#32AB90",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/yasnippet/yasnippet-original.svg"
+  },
+  "Yacc": {
+    "color": "#4B6C4B",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/yacc/yacc-original.svg"
+  },
+  "Yul": {
+    "color": "#794932",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/yul/yul-original.svg"
+  },
+  "ZAP": {
+    "color": "#0d665e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zap/zap-original.svg"
+  },
+  "ZIL": {
+    "color": "#dc75e5",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zil/zil-original.svg"
+  },
+  "ZenScript": {
+    "color": "#00BCD1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zenscript/zenscript-original.svg"
+  },
+  "Zephir": {
+    "color": "#118f9e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zephir/zephir-original.svg"
+  },
+  "Zig": {
+    "color": "#ec915c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zig/zig-original.svg"
+  },
+  "Zimpl": {
+    "color": "#d67711",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/zimpl/zimpl-original.svg"
+  },
+  "crontab": {
+    "color": "#ead7ac",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/crontab/crontab-original.svg"
+  },
+  "eC": {
+    "color": "#913960",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ec/ec-original.svg"
+  },
+  "fish": {
+    "color": "#4aae47",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/fish/fish-original.svg"
+  },
+  "hoon": {
+    "color": "#00b171",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/hoon/hoon-original.svg"
+  },
+  "iCalendar": {
+    "color": "#ec564c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/icalendar/icalendar-original.svg"
+  },
+  "jq": {
+    "color": "#c7254e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/jq/jq-original.svg"
+  },
+  "kvlang": {
+    "color": "#1da6e0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/kvlang/kvlang-original.svg"
+  },
+  "mIRC Script": {
+    "color": "#3d57c3",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mircscript/mircscript-original.svg"
+  },
+  "mcfunction": {
+    "color": "#E22837",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mcfunction/mcfunction-original.svg"
+  },
+  "mupad": {
+    "color": "#244963",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/mupad/mupad-original.svg"
+  },
+  "nanorc": {
+    "color": "#2d004d",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nanorc/nanorc-original.svg"
+  },
+  "nesC": {
+    "color": "#94B0C7",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/nesc/nesc-original.svg"
+  },
+  "omnetpp-msg": {
+    "color": "#a0e0a0",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/omnetpp-msg/omnetpp-msg-original.svg"
+  },
+  "omnetpp-ned": {
+    "color": "#08607c",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/omnetpp-ned/omnetpp-ned-original.svg"
+  },
+  "ooc": {
+    "color": "#b0b77e",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/ooc/ooc-original.svg"
+  },
+  "q": {
+    "color": "#0040cd",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/q/q-original.svg"
+  },
+  "reStructuredText": {
+    "color": "#141414",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/restructuredtext/restructuredtext-original.svg"
+  },
+  "sed": {
+    "color": "#64b970",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/sed/sed-original.svg"
+  },
+  "templ": {
+    "color": "#66D0DD",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/templ/templ-original.svg"
+  },
+  "vCard": {
+    "color": "#ee2647",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/vcard/vcard-original.svg"
+  },
+  "wisp": {
+    "color": "#7582D1",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/wisp/wisp-original.svg"
+  },
+  "xBase": {
+    "color": "#403a40",
+    "iconUrl": "https://github.com/devicons/devicon/blob/master/icons/xbase/xbase-original.svg"
+  }
+}
