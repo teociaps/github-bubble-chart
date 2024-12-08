@@ -11,6 +11,6 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["src/**/*", "api/**/*", "express.ts"],
+  "include": ["src/*", "api/*", "config/*", "express.ts"],
   "exclude": ["node_modules"]
 }

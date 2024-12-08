@@ -39,15 +39,3 @@ export function parseParams(req: Request): CustomURLSearchParams {
   }
   return new CustomURLSearchParams(splittedURL[1]);
 }
-
-const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
-
-export const CONSTANTS = {
-  CACHE_MAX_AGE: 14400,
-  // DEFAULT_GITHUB_API: 'https://api.github.com/graphql',
-  DEFAULT_GITHUB_RETRY_DELAY: 1000,
-  REVALIDATE_TIME: HOUR_IN_MILLISECONDS,
-  LANGS_OUTPUT_FILE: 'src/languageMappings.json',
-  DEVICON_BASEURL: 'https://github.com/devicons/devicon/blob/master/icons',
-  LINGUIST_GITHUB: 'https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml',
-};

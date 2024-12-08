@@ -1,12 +1,14 @@
 import fs from 'fs';
 import { parse as yamlParse } from 'yaml';
-import { CONSTANTS } from '../src/utils';
+import { CONSTANTS } from '../config/consts';
+import imageToBase64 from 'image-to-base64';
 
 // Known language name discrepancies map (GitHub vs Devicon)
 const languageDiscrepancies: Record<string, string> = {
   'c#': 'csharp',
   'c++': 'cplusplus',
   'objective-c': 'objectivec',
+  'css': 'css3',
   // TODO: Add more discrepancies
 };
 
@@ -35,10 +37,19 @@ async function fetchLanguageColors(): Promise<Record<string, { color: string }>>
   }
 }
 
-function mapIconsToLanguages(
+async function convertImageToBase64(url) {
+  try {
+    const base64 = await imageToBase64(url);
+    return `data:image/svg+xml;base64,${base64}`;
+  } catch (error) {
+    console.error('Error converting image:', error);
+  }
+}
+
+async function mapIconsToLanguages(
   languageColors: Record<string, { color: string }>,
-): Record<string, { color: string; icon?: string }> {
-  const languageMappings: Record<string, { color: string; iconUrl?: string }> = {};
+): Promise<Record<string, { color: string; icon?: string }>> {
+  const languageMappings: Record<string, { color: string; icon?: string }> = {};
 
   for (const [language, { color }] of Object.entries(languageColors)) {
     // Normalize language name using the discrepancies map
@@ -47,10 +58,10 @@ function mapIconsToLanguages(
       language.toLowerCase().replace(' ', '');
 
     const iconUrl = `${CONSTANTS.DEVICON_BASEURL}/${normalizedLanguage}/${normalizedLanguage}-original.svg`; // TODO: check for different names (like plain instead original)
-
+    const base64Icon = await convertImageToBase64(iconUrl);  
     languageMappings[language] = {
       color: color || '#000000', // Default to black if no color
-      iconUrl: iconUrl,
+      icon: base64Icon,
     };
   }
 
@@ -75,7 +86,7 @@ async function main() {
   try {
     // Fetch updated language colors
     const languageColors = await fetchLanguageColors();
-    const newMappings = mapIconsToLanguages(languageColors);
+    const newMappings = await mapIconsToLanguages(languageColors);
 
     // Load existing mappings
     let oldMappings: Record<string, { color: string; icon?: string }> = {};
