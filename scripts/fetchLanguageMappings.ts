@@ -9,6 +9,8 @@ const languageDiscrepancies: Record<string, string> = {
   'c++': 'cplusplus',
   'objective-c': 'objectivec',
   'css': 'css3',
+  'scss': 'sass',
+  'html': 'html5',
   // TODO: Add more discrepancies
 };
 
