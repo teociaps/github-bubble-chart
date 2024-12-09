@@ -5,35 +5,6 @@ import { getColor, getName, toKebabCase } from './utils.js';
 
 // TODO: add settings for bubbles style (3d, flat, shadow, inside a box with borders etc..)
 
-export function setTitle(
-  svg: string,
-  titleOptions: TitleOptions,
-  width: number,
-  titleHeight: number,
-  padding: any,
-): string {
-  const style = Object.keys(titleOptions)
-    .filter((style) => style !== 'padding' && style !== 'text' && titleOptions[style] != null)
-    .map((style) => {
-      const value = titleOptions[style];
-      if (value === null || value === undefined) return '';
-      return `${toKebabCase(style)}: ${value};`;
-    })
-    .filter((style) => style)
-    .join(' ');
-
-  // Create the title element as a string with dynamic styles
-  const titleElement = `
-    <text class="bc-title"
-          x="${width / 2 + (padding.left || 0) - (padding.right || 0)}"
-          y="${titleHeight + (padding.top || 0) - (padding.bottom || 0)}"
-          style="${style.replaceAll('"', "'")}">
-      ${titleOptions.text}
-    </text>
-  `;
-
-  return titleElement;
-}
 
 const defaultTitleOptions: TitleOptions = {
   text: 'Bubble Chart',
@@ -45,6 +16,7 @@ const defaultTitleOptions: TitleOptions = {
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
 };
+
 const defaultChartOptions: BubbleChartOptions = {
   titleOptions: defaultTitleOptions,
 };
@@ -52,92 +24,122 @@ const defaultChartOptions: BubbleChartOptions = {
 const titleHeight = 40; // Height reserved for the title text
 const maxAnimationOffset = 20; // Maximum offset introduced by the animation
 
-export const createBubbleChart = (
-  data: BubbleData[],
-  chartOptions: BubbleChartOptions,
-  width: number = 800,
-  height: number = 600,
-): string | null => {
-  if (data.length == 0) return null;
+function createTitleElement(
+  titleOptions: TitleOptions,
+  width: number,
+  titleHeight: number,
+  padding: any,
+): string {
+  const style = Object.keys(titleOptions)
+    .filter((style) => style !== 'padding' && style !== 'text' && titleOptions[style] != null)
+    .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
+    .join(' ');
 
-  const mergedChartOptions = { ...defaultChartOptions, ...chartOptions };
-  const mergedTitleOptions = { ...defaultTitleOptions, ...chartOptions.titleOptions };
-  const padding = mergedTitleOptions.padding || {};
+  return `
+    <text class="bc-title"
+          x="${width / 2 + (padding.left || 0) - (padding.right || 0)}"
+          y="${titleHeight + (padding.top || 0) - (padding.bottom || 0)}"
+          style="${style.replaceAll('"', "'")}">
+      ${titleOptions.text}
+    </text>
+  `;
+}
 
-  const baseHeight = height;
+function createBubbleElement(
+  node: any,
+  index: number,
+  totalValue: number,
+  showPercentages?: boolean,
+): string {
+  const color = getColor(node.data);
+  const radius = node.r;
+  const iconUrl = node.data.icon as string;
+  const percentage = ((node.data.value / totalValue) * 100).toFixed(2) + '%';
 
-  // Directly generate the SVG string instead of using jsdom
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${width} ${
-    baseHeight + titleHeight
-  }" preserveAspectRatio="xMidYMid meet">`;
+  // Main group for the bubble
+  let bubble = `<g class="bubble-${index}" transform="translate(${node.x},${node.y})">`;
 
-  // Create the definitions part
-  svg += createSVGDefs();
+  // Ellipses for 3D effect
+  bubble += `
+    <ellipse rx="${radius * 0.6}" ry="${radius * 0.3}" cx="0" cy="${radius * -0.6}" fill="url(#grad--spot)" transform="rotate(-45)" class="shape"></ellipse>
+    <ellipse rx="${radius * 0.4}" ry="${radius * 0.2}" cx="0" cy="${radius * -0.7}" fill="url(#grad--spot)" transform="rotate(-225)" class="shape"></ellipse>
+  `;
 
-  svg += setTitle(svg, mergedTitleOptions, width, titleHeight, padding);
+  // Circle base
+  bubble += `
+    <circle r="${radius}" cx="0" cy="0" fill="${color}" mask="url(#mask--light-bottom)" class="shape"></circle>
+    <circle r="${radius}" cx="0" cy="0" fill="lightblue" mask="url(#mask--light-top)" class="shape"></circle>
+  `;
 
-  const bubblesPack = pack<BubbleData>().size([width, baseHeight]).padding(1.5);
-  const root = hierarchy({ children: data } as any).sum((d) => d.value);
-  const bubbleNodes = bubblesPack(root).leaves();
+  // Icon or text inside the bubble
+  if (iconUrl) {
+    bubble += `<image href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
+  } else {
+    bubble += `<text dy=".3em" text-anchor="middle" style="fill: white; font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
+  }
 
-  const totalValue = sum(data, (d) => d.value); // Calculate total value
+  // Percentage text
+  if (showPercentages) {
+    bubble += `<text class="b-percentage" dy="3.5em" text-anchor="middle" style="fill: white; font-size: ${radius / 4}px;">${percentage}</text>`;
+  }
 
-  // Find the maximum y-coordinate of the bubbles considering their radii
-  const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
-  const adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
+  bubble += '</g>'; // Close the bubble group
 
-  // Update the SVG height and viewBox
-  svg = svg.replace(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${width} ${
-      baseHeight + titleHeight
-    }" preserveAspectRatio="xMidYMid meet">`,
-    `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${width} ${adjustedHeight}" preserveAspectRatio="xMidYMid meet">`,
-  );
+  // Generate animation style
+  const animationStyle = createBubbleAnimation(node, index);
 
-  // Create bubble elements
-  svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`;
+  // Append the animation style
+  bubble += `<style>${animationStyle}</style>`;
 
-  // Build each bubble
-  bubbleNodes.forEach(function (d) {
-    let color = getColor(d.data);
+  return bubble;
+}
 
-    // Add bubble shape
-    svg += `<g class="bubble" transform="translate(${d.x},${d.y})">
-              <ellipse rx="${d.r * 0.6}" ry="${d.r * 0.3}" cx="0" cy="${
-      d.r * -0.6
-    }" fill="url(#grad--spot)" transform="rotate(-45)" class="shape"></ellipse>
-              <ellipse rx="${d.r * 0.4}" ry="${d.r * 0.2}" cx="0" cy="${
-      d.r * -0.7
-    }" fill="url(#grad--spot)" transform="rotate(-225)" class="shape"></ellipse>
-              <circle r="${
-                d.r
-              }" cx="0" cy="0" fill="${color}" mask="url(#mask--light-bottom)" class="shape"></circle>
-              <circle r="${
-                d.r
-              }" cx="0" cy="0" fill="lightblue" mask="url(#mask--light-top)" class="shape"></circle>`;
+function createBubbleAnimation(node: any, index: number): string {
+  const radius = node.r;
+  
+  // Randomize animation properties
+  const duration = (Math.random() * 5 + 8).toFixed(2); // Between 8s and 13s
+  const delay = (Math.random() * 2).toFixed(2); // Between 0s and 2s
+  const randomXOffset = Math.random() * 20 - 10; // Random -10 to 10
+  const randomYOffset = Math.random() * 20 - 10; // Random -10 to 10
+  const plopDelay = radius * 0.010;
 
-    const iconUrl = d.data.icon as string;
-    if (iconUrl) {
-      svg += `<image href="${iconUrl}" width="${d.r}" height="${d.r}" x="${-d.r / 2}" y="${
-        -d.r / 2
-      }"></image>`;
-    } else {
-      svg += `<text dy=".3em" text-anchor="middle" style="fill: white; font-size: ${
-        d.r / 3
-      }px;">${getName(d.data)}</text>`;
+  // TODO: make the animation more fluid/smooth
+
+  // Define animation keyframes for this bubble
+  return `
+    .bubble-${index} {
+      scale: 0;
+      animation: float-${index} ${duration}s ease-in-out infinite ${delay}s, plop-${index} 1s ease-out forwards ${plopDelay}s;
+      transform-origin: ${node.x}px ${node.y}px;
+    }
+    @keyframes float-${index} {
+      0% {
+        transform: translate(${node.x}px, ${node.y}px);
+      }
+      25% {
+        transform: translate(${node.x + randomXOffset}px, ${node.y + randomYOffset}px);
+      }
+      50% {
+        transform: translate(${node.x - randomXOffset}px, ${node.y - randomYOffset}px);
+      }
+      75% {
+        transform: translate(${node.x + randomXOffset / 2}px, ${node.y - randomYOffset / 2}px);
+      }
+      100% {
+        transform: translate(${node.x}px, ${node.y}px);
+      }
     }
 
-    const percentage = ((d.data.value / totalValue) * 100).toFixed(2) + '%';
-    if (mergedChartOptions.showPercentages) {
-      svg += `<text class="b-percentage" dy="3.5em" text-anchor="middle" style="fill: white; font-size: ${
-        d.r / 4
-      }px;">${percentage}</text>`;
+    @keyframes plop-${index} {
+      0% {
+        scale: 0; /* Start small (invisible) */
+      }
+      100% {
+        scale: 1; /* Scale to full size */
+      }
     }
-
-    svg += `</g>`; // Close bubble group
-  });
-
-  // TODO: make animation for each bubble when appearing
+  `;
 
   // TODO: choose animation or make it customizable(?)
 
@@ -168,34 +170,44 @@ export const createBubbleChart = (
   // }
 
   // animateBubbles();
-  // svg.append('style')
-  //   .text(`
-  //     @keyframes float {
-  //       0% {
-  //         transform: translate(0, 0);
-  //       }
-  //       25% {
-  //         transform: translate(15px, -5px);
-  //       }
-  //       50% {
-  //         transform: translate(10px, 10px);
-  //       }
-  //       75% {
-  //         transform: translate(-15px, -5px);
-  //       }
-  //       100% {
-  //         transform: translate(0, 0);
-  //       }
-  //     }
+}
 
-  //     .bubble {
-  //       animation: float 3s ease-in-out infinite;
-  //       transform-origin: center;
-  //     }`)
+/**
+ * Create the SVG element for the bubble chart.
+ */
+export function createBubbleChart(
+  data: BubbleData[],
+  chartOptions: BubbleChartOptions,
+  width: number = 800,
+  height: number = 600,
+): string | null {
+  if (data.length === 0) return null;
 
-  svg += `</g>`; // Close main group
+  const mergedChartOptions = { ...defaultChartOptions, ...chartOptions };
+  const mergedTitleOptions = { ...defaultTitleOptions, ...chartOptions.titleOptions };
+  const padding = mergedTitleOptions.padding || {};
 
-  svg += `</svg>`; // Close SVG
+  const baseHeight = height;
+  const totalValue = sum(data, (d) => d.value); // Total value for percentage calculation
+  const bubblesPack = pack<BubbleData>().size([width, baseHeight]).padding(1.5);
+  const root = hierarchy({ children: data } as any).sum((d) => d.value);
+  const bubbleNodes = bubblesPack(root).leaves();
 
-  return svg || '';
-};
+  // Calculate adjusted height
+  const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
+  const adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
+
+  // Start building the SVG
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${width} ${adjustedHeight}" preserveAspectRatio="xMidYMid meet">`;
+
+  svg += createSVGDefs();
+  svg += createTitleElement(mergedTitleOptions, width, titleHeight, padding);
+
+  svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`;
+  bubbleNodes.forEach((node, index) => {
+    svg += createBubbleElement(node, index, totalValue, mergedChartOptions.showPercentages);
+  });
+  svg += '</g></svg>';
+
+  return svg;
+}
