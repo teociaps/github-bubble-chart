@@ -1,4 +1,4 @@
-import { hierarchy, max, pack, sum } from 'd3';
+import { hierarchy, HierarchyCircularNode, max, pack, sum } from 'd3';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
@@ -46,7 +46,7 @@ function createTitleElement(
 }
 
 function createBubbleElement(
-  node: any,
+  node: HierarchyCircularNode<BubbleData>,
   index: number,
   totalValue: number,
   showPercentages?: boolean,
@@ -54,10 +54,11 @@ function createBubbleElement(
   const color = getColor(node.data);
   const radius = node.r;
   const iconUrl = node.data.icon as string;
+  const language = node.data.name as string;
   const percentage = ((node.data.value / totalValue) * 100).toFixed(2) + '%';
 
   // Main group for the bubble
-  let bubble = `<g class="bubble-${index}" transform="translate(${node.x},${node.y})">`;
+  let bubble = `<g class="bubble-${index}" transform="translate(${node.x},${node.y})" data-language="${language}">`;
 
   // Ellipses for 3D effect
   bubble += `
@@ -198,7 +199,7 @@ export function createBubbleChart(
   const adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
 
   // Start building the SVG
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${width} ${adjustedHeight}" preserveAspectRatio="xMidYMid meet">`;
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
 
   svg += createSVGDefs();
   svg += createTitleElement(mergedTitleOptions, width, titleHeight, padding);
