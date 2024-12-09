@@ -7,7 +7,7 @@ export const createSVGDefs = (): string => {
     let gradient = `<radialGradient id="${id}" fx="${coordinates.fx}" fy="${coordinates.fy}">`;
     stops.forEach((stop) => {
       gradient += `<stop offset="${stop.offset}" stop-color="${stop.color}" ${
-        stop.opacity !== null || undefined ? `stop-opacity="${stop.opacity}"` : ''
+        stop.opacity !== undefined ? `stop-opacity="${stop.opacity}"` : ''
       }></stop>`;
     });
     gradient += `</radialGradient>`;
@@ -18,7 +18,7 @@ export const createSVGDefs = (): string => {
     return `
       <mask id="${id}" maskContentUnits="objectBoundingBox">
         <rect fill="url(#${gradientId})" width="1" height="1" ${
-      transform !== null || undefined ? `transform="${transform}"` : ''
+      transform !== undefined ? `transform="${transform}"` : ''
     }></rect>
       </mask>
     `;
