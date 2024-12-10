@@ -95,6 +95,10 @@ export default async (req: any, res: any) => {
     var options: BubbleChartOptions = {
       titleOptions: {},
       showPercentages: true,
+      legendOptions: {
+        show: true,
+        align: 'left'
+      }
     };
 
     const svg = createBubbleChart(bubbleData, options);
