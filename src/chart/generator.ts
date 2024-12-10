@@ -19,6 +19,10 @@ const defaultTitleOptions: TitleOptions = {
 
 const defaultChartOptions: BubbleChartOptions = {
   titleOptions: defaultTitleOptions,
+  legendOptions: {
+    show: true,
+    align: 'left'
+  }
 };
 
 const titleHeight = 40; // Height reserved for the title text
@@ -105,13 +109,13 @@ function createBubbleAnimation(node: any, index: number): string {
   const randomYOffset = Math.random() * 20 - 10; // Random -10 to 10
   const plopDelay = radius * 0.010;
 
-  // TODO: make the animation more fluid/smooth
+  // TODO: make the animation more fluid/smooth + move plop out + make only one style element
 
   // Define animation keyframes for this bubble
   return `
     .bubble-${index} {
       scale: 0;
-      animation: float-${index} ${duration}s ease-in-out infinite ${delay}s, plop-${index} 1s ease-out forwards ${plopDelay}s;
+      animation: float-${index} ${duration}s ease-in-out infinite ${delay}s, plop 1s ease-out forwards ${plopDelay}s;
       transform-origin: ${node.x}px ${node.y}px;
     }
     @keyframes float-${index} {
@@ -132,7 +136,7 @@ function createBubbleAnimation(node: any, index: number): string {
       }
     }
 
-    @keyframes plop-${index} {
+    @keyframes plop {
       0% {
         scale: 0; /* Start small (invisible) */
       }
@@ -143,34 +147,44 @@ function createBubbleAnimation(node: any, index: number): string {
   `;
 
   // TODO: choose animation or make it customizable(?)
+}
 
-  // function animateBubbles() {
-  //   bubbles.each(function (d: any) {
-  //     d.xOffset = Math.random() * 2 - 1;
-  //     d.yOffset = Math.random() * 2 - 1;
-  //     d.angle = Math.random() * 2 * Math.PI;
-  //   });
+function createLegend(data: BubbleData[], totalValue: number, width: number, maxY: number): string {
+  const legendMarginTop = 50; // Distance from the last bubble to the legend
+  const legendItemWidth = 150; // Width for each legend item (circle + text)
+  const legendItemHeight = 30; // Height for each legend row
+  const legendPadding = 10; // Padding for legend items
 
-  //   function update() {
-  //     bubbles
-  //       .transition()
-  //       .duration(3000)
-  //       .ease(d3.easeLinear)
-  //       .attr('transform', (d: any) => {
-  //         d.angle += Math.random() * 0.1 - 0.2;
-  //         const offsetX = 10 * Math.sin(d.angle) + d.xOffset;
-  //         const offsetY = 10 * Math.cos(d.angle) + d.yOffset;
-  //         return `translate(${d.x + offsetX},${d.y + offsetY})`;
-  //       })
-  //       .on('end', function () {
-  //         d3.select(this).call(animateBubbles);
-  //       });
-  //   }
+  // TODO: manage alignment of the legend based on the options
+  let legendX = legendPadding; // Starting X position for the legend
+  let legendY = maxY + legendMarginTop; // Starting Y position for the legend
+  let svgLegend = `<g class="legend" transform="translate(0, 0)">`;
 
-  //   update();
-  // }
+  data.forEach((item, index) => {
+    const percentage = ((item.value / totalValue) * 100).toFixed(2) + '%';
 
-  // animateBubbles();
+    // If the next item exceeds the width, move to the next row
+    if (legendX + legendItemWidth > width) {
+      legendX = legendPadding;
+      legendY += legendItemHeight;
+    }
+
+    // Create a legend item (circle + text)
+    svgLegend += `
+      <g transform="translate(${legendX}, ${legendY})">
+        <circle cx="0" cy="0" r="10" fill="${item.color}" />
+        <text x="20" y="5" style="fill: black; font-size: 12px;" dominant-baseline="middle">
+          ${item.name} (${percentage})
+        </text>
+      </g>
+    `;
+
+    // Move to the next X position for the next legend item
+    legendX += legendItemWidth;
+  });
+
+  svgLegend += '</g>'; // Close the legend group
+  return svgLegend;
 }
 
 /**
@@ -196,7 +210,16 @@ export function createBubbleChart(
 
   // Calculate adjusted height
   const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
-  const adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
+  
+  // Legend
+  let legend = '';
+  if (chartOptions.legendOptions.show) {
+    legend = createLegend(data, totalValue, width, maxY);
+  }
+
+  const legendHeight = Math.ceil(data.length / Math.floor(width / 150)) * 30; // Calculate legend height dynamically
+  // const adjustedHeight = maxY + titleHeight + legendHeight + 40; // Add space for the legend and padding
+  const adjustedHeight = maxY + titleHeight + legendHeight + (padding.top || 0) + (padding.bottom || 0);
 
   // Start building the SVG
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
@@ -204,11 +227,14 @@ export function createBubbleChart(
   svg += createSVGDefs();
   svg += createTitleElement(mergedTitleOptions, width, titleHeight, padding);
 
-  svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`;
+  svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
   bubbleNodes.forEach((node, index) => {
     svg += createBubbleElement(node, index, totalValue, mergedChartOptions.showPercentages);
   });
-  svg += '</g></svg>';
+  svg += '</g>'; // Close bubbles group
+
+  svg += legend; // Add the legend
+  svg += '</svg>';
 
   return svg;
 }

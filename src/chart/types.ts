@@ -8,6 +8,7 @@ export interface BubbleData {
 export interface BubbleChartOptions {
   titleOptions: TitleOptions;
   showPercentages?: boolean;
+  legendOptions: LegendOptions;
 }
 
 export interface TitleOptions {
@@ -17,4 +18,9 @@ export interface TitleOptions {
   fill?: string;
   padding?: { top?: number; right?: number; bottom?: number; left?: number };
   [key: string]: any;
+}
+
+export interface LegendOptions {
+  show: boolean,
+  align: 'left' | 'center' | 'right'
 }
