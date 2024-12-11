@@ -20,7 +20,7 @@ const defaultTitleOptions: TitleOptions = {
 const defaultChartOptions: BubbleChartOptions = {
   titleOptions: defaultTitleOptions,
   legendOptions: {
-    show: true,
+    show: false,
     align: 'left'
   }
 };
