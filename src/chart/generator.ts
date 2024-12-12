@@ -5,26 +5,6 @@ import { getColor, getName, toKebabCase } from './utils.js';
 
 // TODO: add settings for bubbles style (3d, flat, shadow, inside a box with borders etc..)
 
-
-const defaultTitleOptions: TitleOptions = {
-  text: 'Bubble Chart',
-  fontSize: '24px',
-  fontWeight: 'bold',
-  fill: 'black',
-  padding: { top: 0, right: 0, bottom: 0, left: 0 },
-  textAnchor: 'middle',
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
-};
-
-const defaultChartOptions: BubbleChartOptions = {
-  titleOptions: defaultTitleOptions,
-  legendOptions: {
-    show: false,
-    align: 'left'
-  }
-};
-
 const titleHeight = 40; // Height reserved for the title text
 const maxAnimationOffset = 20; // Maximum offset introduced by the animation
 
@@ -192,16 +172,13 @@ function createLegend(data: BubbleData[], totalValue: number, width: number, max
  */
 export function createBubbleChart(
   data: BubbleData[],
-  chartOptions: BubbleChartOptions,
-  width: number = 800,
-  height: number = 600,
+  chartOptions: BubbleChartOptions
 ): string | null {
   if (data.length === 0) return null;
 
-  const mergedChartOptions = { ...defaultChartOptions, ...chartOptions };
-  const mergedTitleOptions = { ...defaultTitleOptions, ...chartOptions.titleOptions };
-  const padding = mergedTitleOptions.padding || {};
-
+  const width = chartOptions.width;
+  const height = chartOptions.height;
+  const padding = chartOptions.titleOptions.padding || {};
   const baseHeight = height;
   const totalValue = sum(data, (d) => d.value); // Total value for percentage calculation
   const bubblesPack = pack<BubbleData>().size([width, baseHeight]).padding(1.5);
@@ -225,11 +202,11 @@ export function createBubbleChart(
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
 
   svg += createSVGDefs();
-  svg += createTitleElement(mergedTitleOptions, width, titleHeight, padding);
+  svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, padding);
 
   svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
   bubbleNodes.forEach((node, index) => {
-    svg += createBubbleElement(node, index, totalValue, mergedChartOptions.showPercentages);
+    svg += createBubbleElement(node, index, totalValue, chartOptions.showPercentages);
   });
   svg += '</g>'; // Close bubbles group
 
