@@ -17,7 +17,7 @@ export default async (req: any, res: any) => {
       width: params.getNumberValue('width', 600),
       height: params.getNumberValue('height', 400),
       titleOptions: params.parseTitleOptions(),
-      showPercentages: params.getBooleanValue('showPercentages', false),
+      showPercentages: params.getBooleanValue('percentages', false),
       legendOptions: params.parseLegendOptions(),
     };
 
