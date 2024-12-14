@@ -1,6 +1,6 @@
 import { hierarchy, HierarchyCircularNode, max, pack, sum } from 'd3';
 import { createSVGDefs } from './defs.js';
-import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
+import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
 
 // TODO: add settings for bubbles style (3d, flat, shadow, inside a box with borders etc..)
@@ -130,42 +130,65 @@ function createBubbleAnimation(node: any, index: number): string {
   // TODO: choose animation or make it customizable(?)
 }
 
-function createLegend(data: BubbleData[], totalValue: number, width: number, maxY: number): string {
+function createLegend(data: BubbleData[], totalValue: number, width: number, maxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
   const legendMarginTop = 50; // Distance from the last bubble to the legend
-  const legendItemWidth = 150; // Width for each legend item (circle + text)
-  const legendItemHeight = 30; // Height for each legend row
+  const legendItemHeight = 20; // Height for each legend row
   const legendPadding = 10; // Padding for legend items
+  const legendXPadding = 20; // Horizontal spacing between legend items
 
-  // TODO: manage alignment of the legend based on the options
-  let legendX = legendPadding; // Starting X position for the legend
-  let legendY = maxY + legendMarginTop; // Starting Y position for the legend
+  let legendX = 0; // Current X position for the legend item
+  let legendY = maxY + legendMarginTop; // Start position for the legend
+  let currentRowWidth = 0; // Track the width of the current row
+
   let svgLegend = `<g class="legend" transform="translate(0, 0)">`;
+
+  const measureTextWidth = (text: string): number => {
+    const charWidth = 6; // Approximate width per character for font-size 12px
+    return text.length * charWidth;
+  };
 
   data.forEach((item, index) => {
     const percentage = ((item.value / totalValue) * 100).toFixed(2) + '%';
+    const textWidth = measureTextWidth(`${item.name} (${percentage})`) + legendXPadding;
+    const itemWidth = textWidth + 30; // Add extra width for circle + padding
 
-    // If the next item exceeds the width, move to the next row
-    if (legendX + legendItemWidth > width) {
-      legendX = legendPadding;
-      legendY += legendItemHeight;
+    // Check if adding the next item exceeds the chart width
+    if (legendX + itemWidth > width) {
+      legendX = 0; // Reset X position
+      legendY += legendItemHeight + legendPadding; // Move to the next row
+      currentRowWidth = 0; // Reset row width
+    }
+
+    // FIX: center and right
+    // Calculate starting X position based on alignment
+    let startX = legendX;
+    if (legendOptions.align === 'center') {
+      startX = (width - currentRowWidth - itemWidth) / 2 + legendX;
+    } else if (legendOptions.align === 'right') {
+      startX = width - currentRowWidth - itemWidth + legendX;
     }
 
     // Create a legend item (circle + text)
     svgLegend += `
-      <g transform="translate(${legendX}, ${legendY})">
-        <circle cx="0" cy="0" r="10" fill="${item.color}" />
-        <text x="20" y="5" style="fill: black; font-size: 12px;" dominant-baseline="middle">
+      <g transform="translate(${startX}, ${legendY})" opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="${index * 0.2}s" fill="freeze" />
+        <circle cx="10" cy="15" r="8" fill="${item.color}" />
+        <text x="20" y="16" style="fill: black; font-size: 12px; text-anchor: start; dominant-baseline: middle;">
           ${item.name} (${percentage})
         </text>
       </g>
     `;
 
-    // Move to the next X position for the next legend item
-    legendX += legendItemWidth;
+    legendX += itemWidth; // Move X for the next item
+    currentRowWidth += itemWidth; // Add to the current row width
   });
 
-  svgLegend += '</g>'; // Close the legend group
-  return svgLegend;
+  svgLegend += '</g>';
+
+  // Calculate the total height of the legend element
+  const legendHeight = legendY - maxY;
+
+  return { legendSvg: svgLegend, legendHeight };
 }
 
 /**
@@ -188,16 +211,15 @@ export function createBubbleChart(
 
   // Calculate adjusted height
   const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
-  
+  let adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
+
   // Legend
   let legend = '';
   if (chartOptions.legendOptions.show) {
-    legend = createLegend(data, totalValue, width, maxY);
+    const legendResult = createLegend(data, totalValue, width, maxY, chartOptions.legendOptions);
+    legend = legendResult.legendSvg;
+    adjustedHeight += legendResult.legendHeight;
   }
-
-  const legendHeight = Math.ceil(data.length / Math.floor(width / 150)) * 30; // Calculate legend height dynamically
-  // const adjustedHeight = maxY + titleHeight + legendHeight + 40; // Add space for the legend and padding
-  const adjustedHeight = maxY + titleHeight + legendHeight + (padding.top || 0) + (padding.bottom || 0);
 
   // Start building the SVG
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
