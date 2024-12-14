@@ -7,6 +7,7 @@ import { getColor, getName, toKebabCase } from './utils.js';
 
 const titleHeight = 40; // Height reserved for the title text
 const maxAnimationOffset = 20; // Maximum offset introduced by the animation
+const defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"';
 
 function createTitleElement(
   titleOptions: TitleOptions,
@@ -200,8 +201,14 @@ export function createBubbleChart(
 
   // Start building the SVG
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
-
   svg += createSVGDefs();
+
+  svg += `<style>
+      svg {
+        font-family: ${defaultFontFamily};
+      }
+    </style>`
+
   svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, padding);
 
   svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions

@@ -48,9 +48,7 @@ export class CustomURLSearchParams extends URLSearchParams {
         bottom: this.getNumberValue('title-pb', 0),
         left: this.getNumberValue('title-pl', 0),
       },
-      textAnchor: 'middle',
-      fontFamily:
-        '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
+      textAnchor: 'middle'
     };
   }
 
