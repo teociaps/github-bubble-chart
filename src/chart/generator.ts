@@ -1,4 +1,4 @@
-import { hierarchy, HierarchyCircularNode, max, pack, sum } from 'd3';
+import { hierarchy, HierarchyCircularNode, max, pack, sum, svg } from 'd3';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
@@ -130,63 +130,81 @@ function createBubbleAnimation(node: any, index: number): string {
   // TODO: choose animation or make it customizable(?)
 }
 
-function createLegend(data: BubbleData[], totalValue: number, width: number, maxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
+import { createCanvas } from 'canvas';
+
+function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, svgMaxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
   const legendMarginTop = 50; // Distance from the last bubble to the legend
   const legendItemHeight = 20; // Height for each legend row
-  const legendPadding = 10; // Padding for legend items
-  const legendXPadding = 20; // Horizontal spacing between legend items
+  const legendYPadding = 10; // Vertical padding between rows
+  const legendXPadding = 50; // Horizontal spacing between legend items
 
-  let legendX = 0; // Current X position for the legend item
-  let legendY = maxY + legendMarginTop; // Start position for the legend
-  let currentRowWidth = 0; // Track the width of the current row
-
+  let legendY = svgMaxY + legendMarginTop; // Start position for the legend
   let svgLegend = `<g class="legend" transform="translate(0, 0)">`;
 
   const measureTextWidth = (text: string): number => {
-    const charWidth = 6; // Approximate width per character for font-size 12px
-    return text.length * charWidth;
+    const canvas = createCanvas(0 ,0);
+    const context = canvas.getContext('2d');
+    context.font = '12px sans-serif'; // Match SVG font style
+    return context.measureText(text).width;
   };
 
-  data.forEach((item, index) => {
+  // Prepare legend items with their measured widths
+  const legendItems = data.map((item) => {
     const percentage = ((item.value / totalValue) * 100).toFixed(2) + '%';
-    const textWidth = measureTextWidth(`${item.name} (${percentage})`) + legendXPadding;
-    const itemWidth = textWidth + 30; // Add extra width for circle + padding
+    const text = `${item.name} (${percentage})`;
+    return {
+      text,
+      width: measureTextWidth(text) + legendXPadding, // Include circle and padding
+      color: item.color
+    };
+  });
 
-    // Check if adding the next item exceeds the chart width
-    if (legendX + itemWidth > width) {
-      legendX = 0; // Reset X position
-      legendY += legendItemHeight + legendPadding; // Move to the next row
-      currentRowWidth = 0; // Reset row width
+  const rowItems: any[][] = [[]]; // Array of rows, each row contains legend items
+  let currentRowWidth = 0;
+  let currentRowIndex = 0;
+
+  // Group legend items into rows based on svgWidth
+  legendItems.forEach((item) => {
+    if (currentRowWidth + item.width > svgWidth) {
+      currentRowIndex++;
+      rowItems[currentRowIndex] = [];
+      currentRowWidth = 0;
     }
+    rowItems[currentRowIndex].push(item);
+    currentRowWidth += item.width;
+  });
 
-    // FIX: center and right
-    // Calculate starting X position based on alignment
-    let startX = legendX;
+  // Generate SVG for legend rows
+  rowItems.forEach((row, rowIndex) => {
+    let rowWidth = row.reduce((sum, item) => sum + item.width, 0);
+    let rowX = 0;
+
     if (legendOptions.align === 'center') {
-      startX = (width - currentRowWidth - itemWidth) / 2 + legendX;
+      rowX = (svgWidth - rowWidth) / 2;
     } else if (legendOptions.align === 'right') {
-      startX = width - currentRowWidth - itemWidth + legendX;
+      rowX = svgWidth - rowWidth;
     }
 
-    // Create a legend item (circle + text)
-    svgLegend += `
-      <g transform="translate(${startX}, ${legendY})" opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="${index * 0.2}s" fill="freeze" />
-        <circle cx="10" cy="15" r="8" fill="${item.color}" />
-        <text x="20" y="16" style="fill: black; font-size: 12px; text-anchor: start; dominant-baseline: middle;">
-          ${item.name} (${percentage})
-        </text>
-      </g>
-    `;
-
-    legendX += itemWidth; // Move X for the next item
-    currentRowWidth += itemWidth; // Add to the current row width
+    row.forEach((item, itemIndex) => {
+      svgLegend += `
+        <g transform="translate(${rowX}, ${legendY})" opacity="0">
+          <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="${(rowIndex * row.length + itemIndex) * 0.2}s" fill="freeze" />
+          <circle cx="10" cy="15" r="8" fill="${item.color}" />
+          <text x="20" y="16" style="fill: black; font-size: 12px; text-anchor: start; dominant-baseline: middle;">
+            ${item.text}
+          </text>
+        </g>
+      `;
+      rowX += item.width; // Next item
+    });
+    legendY += legendItemHeight + legendYPadding; // Next row
   });
 
   svgLegend += '</g>';
 
+  // FIX: legend height
   // Calculate the total height of the legend element
-  const legendHeight = legendY - maxY;
+  const legendHeight = legendY - svgMaxY;
 
   return { legendSvg: svgLegend, legendHeight };
 }
