@@ -1,4 +1,5 @@
 import { hierarchy, HierarchyCircularNode, max, pack, sum, svg } from 'd3';
+import { createCanvas } from 'canvas';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
@@ -130,8 +131,6 @@ function createBubbleAnimation(node: any, index: number): string {
   // TODO: choose animation or make it customizable(?)
 }
 
-import { createCanvas } from 'canvas';
-
 function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, svgMaxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
   const legendMarginTop = 50; // Distance from the last bubble to the legend
   const legendItemHeight = 20; // Height for each legend row
@@ -202,9 +201,8 @@ function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, 
 
   svgLegend += '</g>';
 
-  // FIX: legend height
   // Calculate the total height of the legend element
-  const legendHeight = legendY - svgMaxY;
+  const legendHeight = legendY - svgMaxY - legendMarginTop + legendYPadding;
 
   return { legendSvg: svgLegend, legendHeight };
 }
