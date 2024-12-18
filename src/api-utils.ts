@@ -51,7 +51,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       text: this.getStringValue('title', 'Bubble Chart'),
       fontSize: this.getStringValue('title-size', '24px'),
       fontWeight: this.getStringValue('title-weight', 'bold'),
-      fill: this.getStringValue('title-color', 'black'),
+      fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
       padding: {
         top: this.getNumberValue('title-pt', 0),
         right: this.getNumberValue('title-pr', 0),
