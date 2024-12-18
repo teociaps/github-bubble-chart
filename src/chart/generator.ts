@@ -189,7 +189,7 @@ function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, 
         <g transform="translate(${rowX}, ${legendY})" opacity="0">
           <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="${(rowIndex * row.length + itemIndex) * 0.2}s" fill="freeze" />
           <circle cx="10" cy="15" r="8" fill="${item.color}" />
-          <text x="20" y="16" style="fill: black; font-size: 12px; text-anchor: start; dominant-baseline: middle;">
+          <text x="20" y="15" style="font-size: 12px; text-anchor: start; dominant-baseline: central;">
             ${item.text}
           </text>
         </g>
