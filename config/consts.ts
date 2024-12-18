@@ -1,4 +1,5 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import { LightTheme } from '../src/chart/themes.js';
 dotenv.config();
 
 const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
@@ -11,4 +12,5 @@ export const CONSTANTS = {
   LANGS_OUTPUT_FILE: process.env.LANGS_OUTPUT_FILE!,
   DEVICON_BASEURL: process.env.DEVICON_BASEURL!,
   LINGUIST_GITHUB: process.env.LINGUIST_GITHUB!,
+  DEFAULT_THEME: new LightTheme(),
 };

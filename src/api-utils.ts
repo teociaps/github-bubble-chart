@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../config/consts.js';
+import { ThemeBase, themeMap } from './chart/themes.js';
 import { LegendOptions, TitleOptions } from './chart/types.js';
 import { Error400 } from './error.js';
-import { fetchLanguagesByUser } from './services/githubService.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
@@ -32,6 +32,16 @@ export class CustomURLSearchParams extends URLSearchParams {
     if (super.has(key)) {
       const param = super.get(key);
       return param !== null && param.toString() === 'true';
+    }
+    return defaultValue;
+  }
+
+  getTheme(key: string, defaultValue: ThemeBase): ThemeBase {
+    if (super.has(key)) {
+      const param = super.get(key);
+      if (param !== null) {
+        return themeMap[param.toLowerCase()] || defaultValue; // Fallback to default theme
+      }
     }
     return defaultValue;
   }

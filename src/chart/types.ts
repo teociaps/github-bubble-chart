@@ -1,3 +1,5 @@
+import { ThemeBase } from './themes.js';
+
 export interface BubbleData {
   name: string;
   value: number;
@@ -11,6 +13,7 @@ export interface BubbleChartOptions {
   titleOptions: TitleOptions;
   showPercentages?: boolean;
   legendOptions: LegendOptions;
+  theme: ThemeBase;
 }
 
 export interface TitleOptions {

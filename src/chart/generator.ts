@@ -35,7 +35,7 @@ function createBubbleElement(
   node: HierarchyCircularNode<BubbleData>,
   index: number,
   totalValue: number,
-  showPercentages?: boolean,
+  chartOptions: BubbleChartOptions,
 ): string {
   const color = getColor(node.data);
   const radius = node.r;
@@ -60,14 +60,14 @@ function createBubbleElement(
 
   // Icon or text inside the bubble
   if (iconUrl) {
-    bubble += `<image href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
+    bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
   } else {
-    bubble += `<text dy=".3em" text-anchor="middle" style="fill: white; font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
+    bubble += `<text dy=".3em" text-anchor="middle" style="font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
   }
 
   // Percentage text
-  if (showPercentages) {
-    bubble += `<text class="b-percentage" dy="3.5em" text-anchor="middle" style="fill: white; font-size: ${radius / 4}px;">${percentage}</text>`;
+  if (chartOptions.showPercentages) {
+    bubble += `<text class="b-percentage" dy="3.5em" text-anchor="middle" style="font-size: ${radius / 4}px;">${percentage}</text>`;
   }
 
   bubble += '</g>'; // Close the bubble group
@@ -75,8 +75,18 @@ function createBubbleElement(
   // Generate animation style
   const animationStyle = createBubbleAnimation(node, index);
 
+  // TODO: move out of here the common style on percentage and icon
   // Append the animation style
-  bubble += `<style>${animationStyle}</style>`;
+  bubble += `
+    <style>
+      .b-percentage {
+        text-shadow: 0 0 1px ${chartOptions.theme.textColor};
+      }
+      .b-icon {
+        filter: drop-shadow(0px 0px 1px ${chartOptions.theme.textColor});
+      }
+      ${animationStyle}
+    </style>`;
 
   return bubble;
 }
@@ -218,6 +228,7 @@ export function createBubbleChart(
 
   const width = chartOptions.width;
   const height = chartOptions.height;
+  const theme = chartOptions.theme;
   const padding = chartOptions.titleOptions.padding || {};
   const baseHeight = height;
   const totalValue = sum(data, (d) => d.value); // Total value for percentage calculation
@@ -244,6 +255,10 @@ export function createBubbleChart(
   svg += `<style>
       svg {
         font-family: ${defaultFontFamily};
+        background: ${theme.backgroundColor};
+      }
+      text {
+        fill: ${theme.textColor};
       }
     </style>`
 
@@ -251,7 +266,7 @@ export function createBubbleChart(
 
   svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
   bubbleNodes.forEach((node, index) => {
-    svg += createBubbleElement(node, index, totalValue, chartOptions.showPercentages);
+    svg += createBubbleElement(node, index, totalValue, chartOptions);
   });
   svg += '</g>'; // Close bubbles group
 

@@ -1,3 +1,4 @@
+import { CONSTANTS } from '../config/consts.js';
 import { defaultHeaders, handleMissingUsername, parseParams } from '../src/api-utils.js';
 import { createBubbleChart } from '../src/chart/generator.js';
 import { BubbleChartOptions } from '../src/chart/types.js';
@@ -13,12 +14,13 @@ export default async (req: any, res: any) => {
   }
 
   try {
-    var options: BubbleChartOptions = {
+    const options: BubbleChartOptions = {
       width: params.getNumberValue('width', 600),
       height: params.getNumberValue('height', 400),
       titleOptions: params.parseTitleOptions(),
       showPercentages: params.getBooleanValue('percentages', false),
       legendOptions: params.parseLegendOptions(),
+      theme: params.getTheme('theme', CONSTANTS.DEFAULT_THEME),
     };
 
     const bubbleData = await getBubbleData(username);
