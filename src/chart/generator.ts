@@ -3,12 +3,12 @@ import { createCanvas } from 'canvas';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
+import { getCommonStyles, generateBubbleAnimationStyle } from './styles.js';
 
 // TODO: add settings for bubbles style (3d, flat, shadow, inside a box with borders etc..)
 
 const titleHeight = 40; // Height reserved for the title text
 const maxAnimationOffset = 20; // Maximum offset introduced by the animation
-const defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"';
 
 function createTitleElement(
   titleOptions: TitleOptions,
@@ -72,73 +72,7 @@ function createBubbleElement(
 
   bubble += '</g>'; // Close the bubble group
 
-  // Generate animation style
-  const animationStyle = createBubbleAnimation(node, index);
-
-  // TODO: move out of here the common style on percentage and icon
-  // Append the animation style
-  bubble += `
-    <style>
-      .b-percentage {
-        text-shadow: 0 0 1px ${chartOptions.theme.textColor};
-      }
-      .b-icon {
-        filter: drop-shadow(0px 0px 1px ${chartOptions.theme.textColor});
-      }
-      ${animationStyle}
-    </style>`;
-
   return bubble;
-}
-
-function createBubbleAnimation(node: any, index: number): string {
-  const radius = node.r;
-  
-  // Randomize animation properties
-  const duration = (Math.random() * 5 + 8).toFixed(2); // Between 8s and 13s
-  const delay = (Math.random() * 2).toFixed(2); // Between 0s and 2s
-  const randomXOffset = Math.random() * 20 - 10; // Random -10 to 10
-  const randomYOffset = Math.random() * 20 - 10; // Random -10 to 10
-  const plopDelay = radius * 0.010;
-
-  // TODO: make the animation more fluid/smooth + move plop out + make only one style element
-
-  // Define animation keyframes for this bubble
-  return `
-    .bubble-${index} {
-      scale: 0;
-      animation: float-${index} ${duration}s ease-in-out infinite ${delay}s, plop 1s ease-out forwards ${plopDelay}s;
-      transform-origin: ${node.x}px ${node.y}px;
-    }
-    @keyframes float-${index} {
-      0% {
-        transform: translate(${node.x}px, ${node.y}px);
-      }
-      25% {
-        transform: translate(${node.x + randomXOffset}px, ${node.y + randomYOffset}px);
-      }
-      50% {
-        transform: translate(${node.x - randomXOffset}px, ${node.y - randomYOffset}px);
-      }
-      75% {
-        transform: translate(${node.x + randomXOffset / 2}px, ${node.y - randomYOffset / 2}px);
-      }
-      100% {
-        transform: translate(${node.x}px, ${node.y}px);
-      }
-    }
-
-    @keyframes plop {
-      0% {
-        scale: 0; /* Start small (invisible) */
-      }
-      100% {
-        scale: 1; /* Scale to full size */
-      }
-    }
-  `;
-
-  // TODO: choose animation or make it customizable(?)
 }
 
 function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, svgMaxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
@@ -228,7 +162,6 @@ export function createBubbleChart(
 
   const width = chartOptions.width;
   const height = chartOptions.height;
-  const theme = chartOptions.theme;
   const padding = chartOptions.titleOptions.padding || {};
   const baseHeight = height;
   const totalValue = sum(data, (d) => d.value); // Total value for percentage calculation
@@ -252,25 +185,18 @@ export function createBubbleChart(
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
   svg += createSVGDefs();
 
-  svg += `<style>
-      svg {
-        font-family: ${defaultFontFamily};
-        background: ${theme.backgroundColor};
-      }
-      text {
-        fill: ${theme.textColor};
-      }
-    </style>`
-
+  let styles = getCommonStyles(chartOptions.theme);
+  
   svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, padding);
-
+  
   svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
   bubbleNodes.forEach((node, index) => {
     svg += createBubbleElement(node, index, totalValue, chartOptions);
+    styles += generateBubbleAnimationStyle(node, index);
   });
   svg += '</g>'; // Close bubbles group
-
-  svg += legend; // Add the legend
+  svg += legend; 
+  svg += `<style>${styles}</style>`;
   svg += '</svg>';
 
   return svg;
