@@ -12,5 +12,5 @@
     "rootDir": "."
   },
   "include": ["src/*", "api/*", "config/*", "express.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "tests/*"]
 }
