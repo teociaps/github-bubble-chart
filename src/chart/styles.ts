@@ -4,6 +4,8 @@ import { BubbleData } from "./types.js";
 
 const defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"';
 
+// TODO: add more settings for styles customization (3d, flat, shadows, inside a box with borders, more themes, etc..)
+
 export function getCommonStyles(theme: ThemeBase): string {
   return `
     svg {
@@ -13,18 +15,22 @@ export function getCommonStyles(theme: ThemeBase): string {
     text {
       fill: ${theme.textColor};
     }
+    .b-text {
+      text-anchor: middle;
+    }
     .b-percentage {
       text-shadow: 0 0 1px ${theme.textColor};
+      text-anchor: middle;
     }
     .b-icon {
       filter: drop-shadow(0px 0px 1px ${theme.textColor});
     }
     @keyframes plop {
       0% {
-        scale: 0; /* Start small (invisible) */
+        scale: 0;
       }
       100% {
-        scale: 1; /* Scale to full size */
+        scale: 1;
       }
     }
   `;
@@ -40,7 +46,7 @@ export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleD
   const randomYOffset = Math.random() * 20 - 10; // Random -10 to 10
   const plopDelay = radius * 0.010;
 
-  // TODO: make the animation more fluid/smooth + make only one style element
+  // TODO: make the animation more fluid/smooth
 
   // Define animation keyframes for this bubble
   return `
@@ -64,6 +70,25 @@ export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleD
       }
       100% {
         transform: translate(${node.x}px, ${node.y}px);
+      }
+    }
+  `;
+}
+ 
+export function getLegendItemAnimationStyle(): string {
+  return `
+    .legend-item {
+      opacity: 0;
+      animation: fadeIn 0.3s forwards;
+    }
+    .legend-item text {
+      font-size: 12px;
+      text-anchor: start;
+      dominant-baseline: central;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
       }
     }
   `;

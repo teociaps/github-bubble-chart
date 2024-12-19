@@ -1,11 +1,9 @@
-import { hierarchy, HierarchyCircularNode, max, pack, sum, svg } from 'd3';
+import { hierarchy, HierarchyCircularNode, max, pack, sum } from 'd3';
 import { createCanvas } from 'canvas';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
 import { getColor, getName, toKebabCase } from './utils.js';
-import { getCommonStyles, generateBubbleAnimationStyle } from './styles.js';
-
-// TODO: add settings for bubbles style (3d, flat, shadow, inside a box with borders etc..)
+import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
 
 const titleHeight = 40; // Height reserved for the title text
 const maxAnimationOffset = 20; // Maximum offset introduced by the animation
@@ -62,12 +60,12 @@ function createBubbleElement(
   if (iconUrl) {
     bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
   } else {
-    bubble += `<text dy=".3em" text-anchor="middle" style="font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
+    bubble += `<text class="b-text" dy=".3em" style="font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
   }
 
   // Percentage text
   if (chartOptions.showPercentages) {
-    bubble += `<text class="b-percentage" dy="3.5em" text-anchor="middle" style="font-size: ${radius / 4}px;">${percentage}</text>`;
+    bubble += `<text class="b-percentage" dy="3.5em" style="font-size: ${radius / 4}px;">${percentage}</text>`;
   }
 
   bubble += '</g>'; // Close the bubble group
@@ -129,13 +127,11 @@ function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, 
     }
 
     row.forEach((item, itemIndex) => {
+      const animationDelay = (rowIndex * row.length + itemIndex) * 0.1;
       svgLegend += `
-        <g transform="translate(${rowX}, ${legendY})" opacity="0">
-          <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="${(rowIndex * row.length + itemIndex) * 0.2}s" fill="freeze" />
+        <g transform="translate(${rowX}, ${legendY})" class="legend-item" style="animation-delay: ${animationDelay}s;">
           <circle cx="10" cy="15" r="8" fill="${item.color}" />
-          <text x="20" y="15" style="font-size: 12px; text-anchor: start; dominant-baseline: central;">
-            ${item.text}
-          </text>
+          <text x="20" y="15">${item.text}</text>
         </g>
       `;
       rowX += item.width; // Next item
@@ -173,22 +169,22 @@ export function createBubbleChart(
   const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
   let adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
 
+  // Common styles
+  let styles = getCommonStyles(chartOptions.theme);
+
   // Legend
   let legend = '';
   if (chartOptions.legendOptions.show) {
     const legendResult = createLegend(data, totalValue, width, maxY, chartOptions.legendOptions);
     legend = legendResult.legendSvg;
     adjustedHeight += legendResult.legendHeight;
+    styles += getLegendItemAnimationStyle();
   }
 
   // Start building the SVG
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
   svg += createSVGDefs();
-
-  let styles = getCommonStyles(chartOptions.theme);
-  
   svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, padding);
-  
   svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
   bubbleNodes.forEach((node, index) => {
     svg += createBubbleElement(node, index, totalValue, chartOptions);
