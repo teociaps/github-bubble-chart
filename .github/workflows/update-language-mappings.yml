@@ -13,6 +13,10 @@ jobs:
   update-mappings:
     runs-on: ubuntu-latest
 
+    env:
+      DEVICON_URL: ${{ secrets.DEVICON_URL }}
+      LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
