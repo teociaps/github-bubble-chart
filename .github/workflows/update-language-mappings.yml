@@ -1,0 +1,59 @@
+name: Update Language Mappings
+
+on:
+  schedule:
+    - cron: '0 0 * * 6' # Runs every Saturday at midnight
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-mappings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run update script
+        run: yarn update-langs
+
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if [[ -n "$(git status --porcelain src/languageMappings.json)" ]]; then
+            echo "changes=true" >> $GITHUB_ENV
+          else
+            echo "changes=false" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and push changes
+        if: github.event.inputs.changes == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/languageMappings.json
+          git commit -m 'Update language mappings'
+          git push origin HEAD:refs/heads/update-language-mappings
+
+      - name: Create Pull Request
+        if: github.event.inputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Update language mappings'
+          branch: update-language-mappings
+          title: 'Update language mappings'
+          body: 'This PR updates the language mappings JSON file.'
+          assignees: teociaps
+          reviewers: teociaps

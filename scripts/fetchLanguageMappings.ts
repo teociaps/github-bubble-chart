@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { parse as yamlParse } from 'yaml';
 import { CONSTANTS } from '../config/consts';
-import imageToBase64 from 'image-to-base64';
+// import imageToBase64 from 'image-to-base64';
 
 // Known language name discrepancies map (GitHub vs Devicon)
 const languageDiscrepancies: Record<string, string> = {
@@ -12,6 +12,7 @@ const languageDiscrepancies: Record<string, string> = {
   'scss': 'sass',
   'html': 'html5',
   // TODO: Add more discrepancies
+  // : Bicep, Jupyter Notebook...
 };
 
 async function fetchLanguageColors(): Promise<Record<string, { color: string }>> {
@@ -39,31 +40,56 @@ async function fetchLanguageColors(): Promise<Record<string, { color: string }>>
   }
 }
 
-async function convertImageToBase64(url) {
+// async function convertImageToBase64(url: string) {
+//   try {
+//     const base64 = await imageToBase64(url);
+//     return `data:image/svg+xml;base64,${base64}`;
+//   } catch (error) {
+//     console.error('Error converting image:', error);
+//   }
+// }
+
+const svgVersions = [
+  '-original',
+  '-plain',
+  '-original-wordmark',
+  '-plain-wordmark'
+]
+
+async function checkUrlExists(url: string): Promise<boolean> {
   try {
-    const base64 = await imageToBase64(url);
-    return `data:image/svg+xml;base64,${base64}`;
+    const response = await fetch(url);
+    return response.ok;
   } catch (error) {
-    console.error('Error converting image:', error);
+    console.error('Error checking URL:', error);
+    return false;
   }
 }
 
 async function mapIconsToLanguages(
-  languageColors: Record<string, { color: string }>,
+  languageColors: Record<string, { color: string }>
 ): Promise<Record<string, { color: string; icon?: string }>> {
+  console.log('Fetching language icons...');
   const languageMappings: Record<string, { color: string; icon?: string }> = {};
 
   for (const [language, { color }] of Object.entries(languageColors)) {
     // Normalize language name using the discrepancies map
     const normalizedLanguage =
-      languageDiscrepancies[language.toLowerCase().replace(' ', '')] ||
-      language.toLowerCase().replace(' ', '');
+      languageDiscrepancies[language.toLowerCase().replaceAll(' ', '')] ||
+      language.toLowerCase().replaceAll(' ', '');
 
-    const iconUrl = `${CONSTANTS.DEVICON_BASEURL}/${normalizedLanguage}/${normalizedLanguage}-original.svg`; // TODO: check for different names (like plain instead original)
-    const base64Icon = await convertImageToBase64(iconUrl);  
+    let iconUrl: string | undefined;
+    for (const version of svgVersions) {
+      const potentialUrl = `${CONSTANTS.DEVICON_URL}${normalizedLanguage}/${normalizedLanguage}${version}.svg`;
+      if (await checkUrlExists(potentialUrl)) {
+        iconUrl = potentialUrl;
+        break;
+      }
+    }
+
     languageMappings[language] = {
       color: color || '#000000', // Default to black if no color
-      icon: base64Icon,
+      icon: iconUrl,
     };
   }
 
@@ -86,7 +112,7 @@ function mergeMappings(
 
 async function main() {
   try {
-    // Fetch updated language colors
+    // Fetch updated language colors and icons
     const languageColors = await fetchLanguageColors();
     const newMappings = await mapIconsToLanguages(languageColors);
 
@@ -102,6 +128,7 @@ async function main() {
     console.log(`Updated mappings written to ${CONSTANTS.LANGS_OUTPUT_FILE}`);
   } catch (error) {
     console.error('An error occurred:', error);
+    process.exit(1); // Exit with error code
   }
 }
 

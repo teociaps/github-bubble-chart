@@ -1,6 +1,8 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
 
+// TODO: remove the 0,00% ones from the list
+
 const graphqlWithAuth = graphql.defaults({
   headers: {
     authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,

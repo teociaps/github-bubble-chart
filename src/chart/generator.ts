@@ -60,7 +60,7 @@ function createBubbleElement(
   if (iconUrl) {
     bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
   } else {
-    bubble += `<text class="b-text" dy=".3em" style="font-size: ${radius / 3}px;">${getName(node.data)}</text>`;
+    bubble += `<text class="b-text" dy=".3em" style="font-size: ${radius / 3}px; text-shadow: 0 0 5px ${color};">${getName(node.data)}</text>`;
   }
 
   // Percentage text

@@ -1,5 +1,11 @@
 import { ThemeBase } from './themes.js';
 
+// TODO: add setting to choose how many languages retrieve (min: 1 - max: 20)
+
+// TODO: add setting for legend position (bottom, left, right, top of chart)?
+
+// TODO: add settings for styles customization (3d, flat, shadows, inside a box with borders, more themes, etc..)
+
 export interface BubbleData {
   name: string;
   value: number;

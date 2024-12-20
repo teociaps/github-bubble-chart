@@ -9,9 +9,9 @@ export const CONSTANTS = {
   CACHE_MAX_AGE: parseInt(process.env.CACHE_MAX_AGE!, 10),
   DEFAULT_GITHUB_RETRY_DELAY: parseInt(process.env.DEFAULT_GITHUB_RETRY_DELAY!, 10),
   REVALIDATE_TIME: HOUR_IN_MILLISECONDS,
-  LANGS_OUTPUT_FILE: process.env.LANGS_OUTPUT_FILE!,
-  DEVICON_BASEURL: process.env.DEVICON_BASEURL!,
+  LANGS_OUTPUT_FILE: 'src/languageMappings.json',
+  DEVICON_URL: process.env.DEVICON_URL!,
   LINGUIST_GITHUB: process.env.LINGUIST_GITHUB!,
-  LANGUAGE_MAPPINGS_URL: process.env.LANGUAGE_MAPPINGS_URL!,
+  LANGUAGE_MAPPINGS_URL: process.env.LANGUAGE_MAPPINGS_URL! + 'src/languageMappings.json',
   DEFAULT_THEME: new LightTheme(),
 };

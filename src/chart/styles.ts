@@ -4,8 +4,6 @@ import { BubbleData } from "./types.js";
 
 const defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"';
 
-// TODO: add more settings for styles customization (3d, flat, shadows, inside a box with borders, more themes, etc..)
-
 export function getCommonStyles(theme: ThemeBase): string {
   return `
     svg {
