@@ -11,8 +11,8 @@ const languageDiscrepancies: Record<string, string> = {
   'css': 'css3',
   'scss': 'sass',
   'html': 'html5',
-  // TODO: Add more discrepancies
-  // : Bicep, Jupyter Notebook...
+  'jupyter notebook': 'jupyter'
+  // TODO: Add more discrepancies, see more here https://github.com/devicons/devicon/pull/2270
 };
 
 async function fetchLanguageColors(): Promise<Record<string, { color: string }>> {
