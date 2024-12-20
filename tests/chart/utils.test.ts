@@ -1,5 +1,7 @@
+import { CONSTANTS } from '../../config/consts';
 import { getColor, getName, toKebabCase, getBubbleData } from '../../src/chart/utils';
 import { fetchLanguagesByUser } from '../../src/services/githubService';
+import fs from 'fs';
 
 jest.mock('../../src/services/githubService');
 
@@ -32,7 +34,7 @@ describe('utils', () => {
       ];
       (fetchLanguagesByUser as jest.Mock).mockResolvedValue(mockLanguages);
 
-      const { default: jsonLanguageMappings } = await import('../../src/languageMappings.json');
+      const { default: jsonLanguageMappings } = JSON.parse(fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'));
 
       const result = await getBubbleData('testuser');
       expect(result).toEqual([
