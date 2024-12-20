@@ -11,7 +11,7 @@ const languageDiscrepancies: Record<string, string> = {
   'css': 'css3',
   'scss': 'sass',
   'html': 'html5',
-  'jupyter notebook': 'jupyter'
+  'jupyter_notebook': 'jupyter'
   // TODO: Add more discrepancies, see more here https://github.com/devicons/devicon/pull/2270
 };
 
@@ -75,7 +75,7 @@ async function mapIconsToLanguages(
   for (const [language, { color }] of Object.entries(languageColors)) {
     // Normalize language name using the discrepancies map
     const normalizedLanguage =
-      languageDiscrepancies[language.toLowerCase().replaceAll(' ', '')] ||
+      languageDiscrepancies[language.toLowerCase().replaceAll(' ', '_')] ||
       language.toLowerCase().replaceAll(' ', '');
 
     let iconUrl: string | undefined;
