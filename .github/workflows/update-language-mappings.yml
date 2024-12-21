@@ -42,7 +42,7 @@ jobs:
           fi
 
       - name: Commit and push changes
-        if: github.event.inputs.changes == 'true'
+        if: env.changes == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
@@ -51,7 +51,7 @@ jobs:
           git push origin HEAD:refs/heads/update-language-mappings
 
       - name: Create Pull Request
-        if: github.event.inputs.changes == 'true'
+        if: env.changes == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
