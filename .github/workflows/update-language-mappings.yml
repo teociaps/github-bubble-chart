@@ -17,6 +17,7 @@ jobs:
       DEVICON_URL: ${{ secrets.DEVICON_URL }}
       LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
       CHANGES: false
+      OPEN_PR_EXISTS: false
 
     steps:
       - name: Checkout repository
@@ -42,15 +43,25 @@ jobs:
             echo "CHANGES=false" >> $GITHUB_ENV
           fi
 
-      - name: Delete existing branch if it exists
+      - name: Check for existing open PRs
         if: env.CHANGES == 'true'
+        run: |
+          OPEN_PR_EXISTS=$(gh pr list --head update-language-mappings --state open --json number --jq '.[0].number')
+          if [[ -n "$OPEN_PR_EXISTS" ]]; then
+            echo "OPEN_PR_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "OPEN_PR_EXISTS=false" >> $GITHUB_ENV
+          fi
+
+      - name: Delete existing branch
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
         run: |
           if git show-ref --verify --quiet refs/heads/update-language-mappings; then
             git push origin --delete update-language-mappings
           fi
 
       - name: Commit and push changes
-        if: env.CHANGES == 'true'
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
@@ -60,7 +71,7 @@ jobs:
           git push origin HEAD:refs/heads/update-language-mappings
 
       - name: Create Pull Request
-        if: env.CHANGES == 'true'
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
