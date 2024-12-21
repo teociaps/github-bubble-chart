@@ -853,7 +853,8 @@
     "color": "#a270ba"
   },
   "Jupyter Notebook": {
-    "color": "#DA5B0B"
+    "color": "#DA5B0B",
+    "icon": "https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg"
   },
   "Just": {
     "color": "#384d54"
