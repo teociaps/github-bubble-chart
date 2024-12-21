@@ -1,4 +1,4 @@
-import { fetchLanguagesByUser } from '../services/githubService.js';
+import { fetchTopLanguages } from '../services/githubService.js';
 import { BubbleData, LanguageMappings } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
 
@@ -21,8 +21,8 @@ export function toKebabCase(str: string): string {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-export async function getBubbleData(username: string) {
-  const languagePercentages = await fetchLanguagesByUser(username!);
+export async function getBubbleData(username: string, langsCount: number) {
+  const languagePercentages = await fetchTopLanguages(username!, langsCount);
   const languageMappings: LanguageMappings = await fetchLanguageMappings();
   return languagePercentages.map((l) => ({
     name: l.language,

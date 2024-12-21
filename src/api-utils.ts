@@ -46,6 +46,13 @@ export class CustomURLSearchParams extends URLSearchParams {
     return defaultValue;
   }
 
+  getLanguagesCount(defaultValue: number) {
+    const value = this.getNumberValue('langs-count', defaultValue);
+    if (value < 1) return 1;
+    if (value > 20) return 20;
+    return value;
+  }
+
   parseTitleOptions(): TitleOptions {
     return {
       text: this.getStringValue('title', 'Bubble Chart'),

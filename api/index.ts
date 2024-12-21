@@ -23,7 +23,9 @@ export default async (req: any, res: any) => {
       theme: params.getTheme('theme', CONSTANTS.DEFAULT_THEME),
     };
 
-    const bubbleData = await getBubbleData(username);
+    const langsCount = params.getLanguagesCount(10) // Default: 10
+
+    const bubbleData = await getBubbleData(username, langsCount);
     const svg = createBubbleChart(bubbleData, options);
 
     if (!svg) {
