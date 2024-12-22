@@ -15,24 +15,26 @@ export interface BubbleChartOptions {
   width: number; //px
   height: number; //px
   titleOptions: TitleOptions;
-  showPercentages?: boolean;
+  showPercentages: boolean;
   legendOptions: LegendOptions;
   theme: ThemeBase;
 }
 
 export interface TitleOptions {
-  text?: string;
-  fontSize?: string;
-  fontWeight?: string;
-  fill?: string;
-  padding?: { top?: number; right?: number; bottom?: number; left?: number }; // TODO: change this and make only vertical and horizontal with negative values?
+  text: string;
+  fontSize: string;
+  fontWeight: string;
+  fill: string;
+  margin: { top: number; left: number }; // Negative values allowed for right and bottom
   [key: string]: any;
 }
 
 export interface LegendOptions {
   show: boolean,
-  align: 'left' | 'center' | 'right'
+  align: TextAlign
 }
+
+export type TextAlign = 'left' | 'center' | 'right' 
 
 interface LanguageMapping {
   color: string;

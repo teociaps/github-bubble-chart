@@ -1,6 +1,6 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from './chart/themes.js';
-import { LegendOptions, TitleOptions } from './chart/types.js';
+import { TextAlign, LegendOptions, TitleOptions } from './chart/types.js';
 import { Error400 } from './error.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
@@ -59,11 +59,9 @@ export class CustomURLSearchParams extends URLSearchParams {
       fontSize: this.getStringValue('title-size', '24px'),
       fontWeight: this.getStringValue('title-weight', 'bold'),
       fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
-      padding: {
-        top: this.getNumberValue('title-pt', 0),
-        right: this.getNumberValue('title-pr', 0),
-        bottom: this.getNumberValue('title-pb', 0),
-        left: this.getNumberValue('title-pl', 0),
+      margin: {
+        top: this.getNumberValue('title-top', 0),
+        left: this.getNumberValue('title-left', 0),
       },
       textAnchor: 'middle'
     };
@@ -72,7 +70,7 @@ export class CustomURLSearchParams extends URLSearchParams {
   parseLegendOptions(): LegendOptions {
     return {
       show: this.getBooleanValue('legend', false),
-      align: this.getStringValue('legend-align', 'left') as 'left' | 'center' | 'right',
+      align: this.getStringValue('legend-align', 'left') as TextAlign,
     };
   }
 }

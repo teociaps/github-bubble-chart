@@ -1,28 +1,26 @@
-import { hierarchy, HierarchyCircularNode, max, pack, sum } from 'd3';
-import { createCanvas } from 'canvas';
+import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
-import { BubbleChartOptions, BubbleData, LegendOptions, TitleOptions } from './types.js';
-import { getColor, getName, toKebabCase } from './utils.js';
+import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
+import { getColor, getName, measureTextHeight, measureTextWidth, toKebabCase } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
-
-const titleHeight = 40; // Height reserved for the title text
-const maxAnimationOffset = 20; // Maximum offset introduced by the animation
 
 function createTitleElement(
   titleOptions: TitleOptions,
   width: number,
   titleHeight: number,
-  padding: any,
+  margin: any,
 ): string {
   const style = Object.keys(titleOptions)
-    .filter((style) => style !== 'padding' && style !== 'text' && titleOptions[style] != null)
+    .filter((style) => style !== 'margin' && style !== 'text' && titleOptions[style] != null)
     .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
     .join(' ');
 
+  // TODO: wrap text if too long + handle emojis
+
   return `
     <text class="bc-title"
-          x="${width / 2 + (padding.left || 0) - (padding.right || 0)}"
-          y="${titleHeight + (padding.top || 0) - (padding.bottom || 0)}"
+          x="${width / 2 + margin.left}"
+          y="${titleHeight + margin.top}"
           style="${style.replaceAll('"', "'")}">
       ${titleOptions.text}
     </text>
@@ -32,14 +30,13 @@ function createTitleElement(
 function createBubbleElement(
   node: HierarchyCircularNode<BubbleData>,
   index: number,
-  totalValue: number,
   chartOptions: BubbleChartOptions,
 ): string {
   const color = getColor(node.data);
   const radius = node.r;
   const iconUrl = node.data.icon as string;
   const language = node.data.name as string;
-  const percentage = ((node.data.value / totalValue) * 100).toFixed(2) + '%';
+  const percentage = node.data.value + '%';
 
   // Main group for the bubble
   let bubble = `<g class="bubble-${index}" transform="translate(${node.x},${node.y})" data-language="${language}">`;
@@ -73,8 +70,14 @@ function createBubbleElement(
   return bubble;
 }
 
-function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, svgMaxY: number, legendOptions: LegendOptions): { legendSvg: string; legendHeight: number } {
-  const legendMarginTop = 50; // Distance from the last bubble to the legend
+function createLegend(
+  data: BubbleData[],
+  svgWidth: number,
+  svgMaxY: number,
+  distanceFromBubbleChart: number,
+  chartOptions: BubbleChartOptions
+): { legendSvg: string; legendHeight: number } {
+  const legendMarginTop = distanceFromBubbleChart; // Distance from the last bubble to the legend
   const legendItemHeight = 20; // Height for each legend row
   const legendYPadding = 10; // Vertical padding between rows
   const legendXPadding = 50; // Horizontal spacing between legend items
@@ -82,20 +85,13 @@ function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, 
   let legendY = svgMaxY + legendMarginTop; // Start position for the legend
   let svgLegend = `<g class="legend" transform="translate(0, 0)">`;
 
-  const measureTextWidth = (text: string): number => {
-    const canvas = createCanvas(0 ,0);
-    const context = canvas.getContext('2d');
-    context.font = '12px sans-serif'; // Match SVG font style
-    return context.measureText(text).width;
-  };
-
   // Prepare legend items with their measured widths
   const legendItems = data.map((item) => {
-    const percentage = ((item.value / totalValue) * 100).toFixed(2) + '%';
+    const percentage = item.value + '%';
     const text = `${item.name} (${percentage})`;
     return {
       text,
-      width: measureTextWidth(text) + legendXPadding, // Include circle and padding
+      width: measureTextWidth(text, '12px') + legendXPadding, // Include circle and padding
       color: item.color
     };
   });
@@ -120,9 +116,9 @@ function createLegend(data: BubbleData[], totalValue: number, svgWidth: number, 
     let rowWidth = row.reduce((sum, item) => sum + item.width, 0);
     let rowX = 0;
 
-    if (legendOptions.align === 'center') {
+    if (chartOptions.legendOptions.align === 'center') {
       rowX = (svgWidth - rowWidth) / 2;
-    } else if (legendOptions.align === 'right') {
+    } else if (chartOptions.legendOptions.align === 'right') {
       rowX = svgWidth - rowWidth;
     }
 
@@ -158,16 +154,18 @@ export function createBubbleChart(
 
   const width = chartOptions.width;
   const height = chartOptions.height;
-  const padding = chartOptions.titleOptions.padding || {};
-  const baseHeight = height;
-  const totalValue = sum(data, (d) => d.value); // Total value for percentage calculation
-  const bubblesPack = pack<BubbleData>().size([width, baseHeight]).padding(1.5);
+
+  const bubblesPack = pack<BubbleData>().size([width, height]).padding(1.5);
   const root = hierarchy({ children: data } as any).sum((d) => d.value);
   const bubbleNodes = bubblesPack(root).leaves();
-
-  // Calculate adjusted height
-  const maxY = max(bubbleNodes, (d) => d.y + d.r + maxAnimationOffset) || baseHeight;
-  let adjustedHeight = maxY + titleHeight + (padding.top || 0) + (padding.bottom || 0);
+  
+  // Calculate full height  
+  const titleMargin = chartOptions.titleOptions.margin;
+  const titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
+  const bubbleChartMargin = 20; // Space between bubbles and title/legend 
+  const maxY = max(bubbleNodes, (d) => d.y + d.r + bubbleChartMargin) || height;
+  const distanceFromBubbleChart = titleHeight + titleMargin.top + bubbleChartMargin;
+  let fullHeight = maxY + distanceFromBubbleChart;
 
   // Common styles
   let styles = getCommonStyles(chartOptions.theme);
@@ -175,19 +173,19 @@ export function createBubbleChart(
   // Legend
   let legend = '';
   if (chartOptions.legendOptions.show) {
-    const legendResult = createLegend(data, totalValue, width, maxY, chartOptions.legendOptions);
+    const legendResult = createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
     legend = legendResult.legendSvg;
-    adjustedHeight += legendResult.legendHeight;
+    fullHeight += legendResult.legendHeight;
     styles += getLegendItemAnimationStyle();
   }
 
   // Start building the SVG
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}">`;
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fullHeight}" viewBox="0 0 ${width} ${fullHeight}">`;
   svg += createSVGDefs();
-  svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, padding);
-  svg += `<g transform="translate(0, ${titleHeight + (padding.top || 0)})">`; // TODO: set this more dynamically based on the bubble chart dimensions
+  svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, titleMargin);
+  svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
   bubbleNodes.forEach((node, index) => {
-    svg += createBubbleElement(node, index, totalValue, chartOptions);
+    svg += createBubbleElement(node, index, chartOptions);
     styles += generateBubbleAnimationStyle(node, index);
   });
   svg += '</g>'; // Close bubbles group

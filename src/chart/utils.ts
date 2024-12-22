@@ -1,6 +1,8 @@
 import { fetchTopLanguages } from '../services/githubService.js';
 import { BubbleData, LanguageMappings } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
+import { createCanvas } from 'canvas';
+import { defaultFontFamily } from './styles.js';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
@@ -31,3 +33,18 @@ export async function getBubbleData(username: string, langsCount: number) {
     icon: languageMappings[l.language]?.icon || '',
   }));
 }
+
+export function measureTextWidth(text: string, fontSize: string): number {
+  const canvas = createCanvas(0 ,0);
+  const context = canvas.getContext('2d');
+  context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
+  return context.measureText(text).width;
+};
+
+export function measureTextHeight(text: string, fontSize: string): number {
+  const canvas = createCanvas(0 ,0);
+  const context = canvas.getContext('2d');
+  context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
+  const metrics = context.measureText(text);
+  return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+};

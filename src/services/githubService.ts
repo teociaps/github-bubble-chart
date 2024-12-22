@@ -1,6 +1,8 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
 
+// TODO: implement retry logic
+
 const graphqlWithAuth = graphql.defaults({
   headers: {
     authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
