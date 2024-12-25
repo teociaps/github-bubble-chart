@@ -1,8 +1,36 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
-import { getColor, getName, measureTextHeight, measureTextWidth, toKebabCase } from './utils.js';
+import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
+
+// TODO: fix padding with multiline text + enhance calculation to wrap text
+
+function wrapText(text: string, maxWidth: number, fontSize: string): string[] {
+  const words = text.split(' ');
+  let lines: string[] = [];
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const width = measureTextWidth(currentLine + ' ' + word, fontSize);
+    if (width < maxWidth) {
+      currentLine += ' ' + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+}
+
+function truncateText(text: string, maxChars: number): string {
+  if (text.length > maxChars) {
+    return text.substring(0, maxChars - 1) + '…';
+  }
+  return text;
+}
 
 function createTitleElement(
   titleOptions: TitleOptions,
@@ -15,14 +43,37 @@ function createTitleElement(
     .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
     .join(' ');
 
-  // TODO: wrap text if too long + handle emojis
+  titleOptions.text = parseEmojis(titleOptions.text);
+
+  const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize);
+  let textElement = '';
+
+  if (textWidth > width - margin.left) {
+    let lines = wrapText(titleOptions.text, width - margin.left, titleOptions.fontSize);
+    const lineHeight = measureTextHeight('M', titleOptions.fontSize); // Approximate line height
+    const linePadding = 10; // Padding between lines
+
+    if (lines.length > 3) {
+      lines = lines.slice(0, 3);
+      lines[2] = truncateText(lines[2], lines[2].length - 3);
+    }
+
+    lines.forEach((line, index) => {
+      textElement += `
+        <tspan x="${width / 2 + margin.left}" dy="${index === 0 ? 0 : lineHeight + linePadding}">${line}</tspan>
+      `;
+    });
+  } else {
+    textElement = titleOptions.text;
+  }
 
   return `
     <text class="bc-title"
           x="${width / 2 + margin.left}"
           y="${titleHeight + margin.top}"
-          style="${style.replaceAll('"', "'")}">
-      ${titleOptions.text}
+          style="${style.replaceAll('"', "'")}"
+          text-anchor="middle">
+      ${textElement}
     </text>
   `;
 }

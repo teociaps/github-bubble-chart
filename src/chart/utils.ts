@@ -3,6 +3,7 @@ import { BubbleData, LanguageMappings } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
 import { createCanvas } from 'canvas';
 import { defaultFontFamily } from './styles.js';
+import { emojify } from 'node-emoji';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
@@ -47,4 +48,13 @@ export function measureTextHeight(text: string, fontSize: string): number {
   context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
   const metrics = context.measureText(text);
   return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+};
+
+export const parseEmojis = (str: string) => {
+  if (!str) {
+    throw new Error("[parseEmoji]: str argument not provided");
+  }
+  return str.replace(/:\w+:/gm, (emoji: string) => {
+    return emojify(emoji) || "";
+  });
 };
