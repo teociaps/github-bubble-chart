@@ -1,43 +1,15 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
-import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase } from './utils.js';
+import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, truncateText } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
-
-// TODO: fix padding with multiline text + enhance calculation to wrap text
-
-function wrapText(text: string, maxWidth: number, fontSize: string): string[] {
-  const words = text.split(' ');
-  let lines: string[] = [];
-  let currentLine = words[0];
-
-  for (let i = 1; i < words.length; i++) {
-    const word = words[i];
-    const width = measureTextWidth(currentLine + ' ' + word, fontSize);
-    if (width < maxWidth) {
-      currentLine += ' ' + word;
-    } else {
-      lines.push(currentLine);
-      currentLine = word;
-    }
-  }
-  lines.push(currentLine);
-  return lines;
-}
-
-function truncateText(text: string, maxChars: number): string {
-  if (text.length > maxChars) {
-    return text.substring(0, maxChars - 1) + '…';
-  }
-  return text;
-}
 
 function createTitleElement(
   titleOptions: TitleOptions,
   width: number,
   titleHeight: number,
   margin: any,
-): string {
+): { svgTitle: string; titleLines: number } {
   const style = Object.keys(titleOptions)
     .filter((style) => style !== 'margin' && style !== 'text' && titleOptions[style] != null)
     .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
@@ -47,10 +19,9 @@ function createTitleElement(
 
   const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize);
   let textElement = '';
-
+  let lines: string[] | null = null;
   if (textWidth > width - margin.left) {
-    let lines = wrapText(titleOptions.text, width - margin.left, titleOptions.fontSize);
-    const lineHeight = measureTextHeight('M', titleOptions.fontSize); // Approximate line height
+    lines = wrapText(titleOptions.text, width - margin.left, titleOptions.fontSize);
     const linePadding = 10; // Padding between lines
 
     if (lines.length > 3) {
@@ -60,22 +31,24 @@ function createTitleElement(
 
     lines.forEach((line, index) => {
       textElement += `
-        <tspan x="${width / 2 + margin.left}" dy="${index === 0 ? 0 : lineHeight + linePadding}">${line}</tspan>
+        <tspan x="${width / 2 + margin.left}" dy="${index === 0 ? 0 : titleHeight + linePadding}">${line}</tspan>
       `;
     });
   } else {
     textElement = titleOptions.text;
   }
 
-  return `
+  return {
+    svgTitle: `
     <text class="bc-title"
           x="${width / 2 + margin.left}"
           y="${titleHeight + margin.top}"
-          style="${style.replaceAll('"', "'")}"
-          text-anchor="middle">
+          style="${style.replaceAll('"', "'")}">
       ${textElement}
     </text>
-  `;
+  `,
+    titleLines: lines?.length || 1,
+  };
 }
 
 function createBubbleElement(
@@ -86,7 +59,7 @@ function createBubbleElement(
   const color = getColor(node.data);
   const radius = node.r;
   const iconUrl = node.data.icon as string;
-  const language = node.data.name as string;
+  const language = getName(node.data);
   const percentage = node.data.value + '%';
 
   // Main group for the bubble
@@ -108,7 +81,24 @@ function createBubbleElement(
   if (iconUrl) {
     bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
   } else {
-    bubble += `<text class="b-text" dy=".3em" style="font-size: ${radius / 3}px; text-shadow: 0 0 5px ${color};">${getName(node.data)}</text>`;
+    const fontSize = radius / 3 + 'px';
+    const textLines = wrapText(language, radius * 2, fontSize);
+    
+    let displayedText = '';
+    if (textLines.length > 1) {
+      const lineHeight = measureTextHeight(language, fontSize);
+      const adjustPos = radius / 5;
+      textLines.forEach((line, i) => {
+        displayedText += `
+          <tspan x="0" dy="${i === 0 ? 0 - adjustPos : lineHeight + adjustPos}">${line}</tspan>
+        `;
+      });
+    }
+    else {
+      displayedText = language;
+    }
+
+    bubble += `<text class="b-text" dy=".3em" style="font-size: ${fontSize}; text-shadow: 0 0 5px ${color};">${displayedText}</text>`;
   }
 
   // Percentage text
@@ -127,7 +117,7 @@ function createLegend(
   svgMaxY: number,
   distanceFromBubbleChart: number,
   chartOptions: BubbleChartOptions
-): { legendSvg: string; legendHeight: number } {
+): { svgLegend: string; legendHeight: number } {
   const legendMarginTop = distanceFromBubbleChart; // Distance from the last bubble to the legend
   const legendItemHeight = 20; // Height for each legend row
   const legendYPadding = 10; // Vertical padding between rows
@@ -191,7 +181,7 @@ function createLegend(
   // Calculate the total height of the legend element
   const legendHeight = legendY - svgMaxY - legendMarginTop + legendYPadding;
 
-  return { legendSvg: svgLegend, legendHeight };
+  return { svgLegend: svgLegend, legendHeight };
 }
 
 /**
@@ -210,22 +200,25 @@ export function createBubbleChart(
   const root = hierarchy({ children: data } as any).sum((d) => d.value);
   const bubbleNodes = bubblesPack(root).leaves();
   
-  // Calculate full height  
+  // Title
   const titleMargin = chartOptions.titleOptions.margin;
   const titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
+  const { svgTitle, titleLines } = createTitleElement(chartOptions.titleOptions, width, titleHeight, titleMargin);
+
+  // Calculate full height  
   const bubbleChartMargin = 20; // Space between bubbles and title/legend 
   const maxY = max(bubbleNodes, (d) => d.y + d.r + bubbleChartMargin) || height;
-  const distanceFromBubbleChart = titleHeight + titleMargin.top + bubbleChartMargin;
+  const distanceFromBubbleChart = titleHeight * titleLines + titleMargin.top + bubbleChartMargin;
   let fullHeight = maxY + distanceFromBubbleChart;
 
   // Common styles
   let styles = getCommonStyles(chartOptions.theme);
 
   // Legend
-  let legend = '';
+  let svgLegend = '';
   if (chartOptions.legendOptions.show) {
     const legendResult = createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
-    legend = legendResult.legendSvg;
+    svgLegend = legendResult.svgLegend;
     fullHeight += legendResult.legendHeight;
     styles += getLegendItemAnimationStyle();
   }
@@ -233,14 +226,14 @@ export function createBubbleChart(
   // Start building the SVG
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fullHeight}" viewBox="0 0 ${width} ${fullHeight}">`;
   svg += createSVGDefs();
-  svg += createTitleElement(chartOptions.titleOptions, width, titleHeight, titleMargin);
+  svg += svgTitle;
   svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
   bubbleNodes.forEach((node, index) => {
     svg += createBubbleElement(node, index, chartOptions);
     styles += generateBubbleAnimationStyle(node, index);
   });
   svg += '</g>'; // Close bubbles group
-  svg += legend; 
+  svg += svgLegend; 
   svg += `<style>${styles}</style>`;
   svg += '</svg>';
 

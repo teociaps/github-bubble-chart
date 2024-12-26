@@ -58,3 +58,29 @@ export const parseEmojis = (str: string) => {
     return emojify(emoji) || "";
   });
 };
+
+export function wrapText(text: string, maxWidth: number, fontSize: string): string[] {
+  const words = text.split(' ');
+  let lines: string[] = [];
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const width = measureTextWidth(currentLine + ' ' + word, fontSize); // TODO: enhance calculation to wrap text
+    if (width < maxWidth) {
+      currentLine += ' ' + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+}
+
+export function truncateText(text: string, maxChars: number): string {
+  if (text.length > maxChars) {
+    return text.substring(0, maxChars - 1) + '…';
+  }
+  return text;
+}
