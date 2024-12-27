@@ -1,14 +1,6 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
 
-// TODO: implement retry logic
-
-const graphqlWithAuth = graphql.defaults({
-  headers: {
-    authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
-  },
-});
-
 export const fetchTopLanguages = async (username: string, langsCount: number) => {
   const query = `
       query UserLanguages($username: String!, $first: Int!, $after: String) {
@@ -36,15 +28,17 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
     `;
 
   let hasNextPage = true;
-  let after = null;
+  let after: any = null;
   const languageMap: Record<string, number> = {};
 
   while (hasNextPage) {
-    const response: any = await graphqlWithAuth(query, {
-      username,
-      first: 100, // Fetch up to 100 repositories per request
-      after,
-    });
+    const response: any = await retry(() =>
+      graphqlWithAuth(query, {
+        username,
+        first: 100, // Fetch up to 100 repositories per request
+        after,
+      }),
+    );
 
     const repositories = response.user.repositories.nodes;
     hasNextPage = response.user.repositories.pageInfo.hasNextPage;
@@ -79,3 +73,26 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
 
   return languagePercentages;
 };
+
+const retry = async (
+  fn: () => Promise<any>,
+  retries: number = CONSTANTS.DEFAULT_GITHUB_MAX_RETRY,
+  delay: number = CONSTANTS.DEFAULT_GITHUB_RETRY_DELAY,
+): Promise<any> => {
+  try {
+    return await fn();
+  } catch (error) {
+    if (retries > 0) {
+      await new Promise((res) => setTimeout(res, delay));
+      return retry(fn, retries - 1, delay);
+    } else {
+      throw error;
+    }
+  }
+};
+
+const graphqlWithAuth = graphql.defaults({
+  headers: {
+    authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
+  },
+});
