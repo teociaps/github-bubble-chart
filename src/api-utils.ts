@@ -73,10 +73,6 @@ export class CustomURLSearchParams extends URLSearchParams {
       fontSize: this.getNumberValue('title-size', 24) + 'px',
       fontWeight: this.getStringValue('title-weight', 'bold'),
       fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
-      margin: {
-        top: this.getNumberValue('title-top', 0),
-        left: this.getNumberValue('title-left', 0),
-      },
       textAnchor: this.getTextAnchorValue('title-align', 'middle')
     };
   }

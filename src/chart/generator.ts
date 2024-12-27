@@ -7,14 +7,13 @@ import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationSt
 function createTitleElement(
   titleOptions: TitleOptions,
   width: number,
-  titleHeight: number,
-  margin: any,
+  titleHeight: number
 ): { svgTitle: string; titleLines: number } {
   const style = Object.keys(titleOptions)
-    .filter((style) => style !== 'margin' && style !== 'text' && style !== 'textAnchor' && titleOptions[style] != null)
+    .filter((style) => style !== 'text' && style !== 'textAnchor' && titleOptions[style] != null)
     .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
     .join(' ');
-  
+
   const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
 
   titleOptions.text = parseEmojis(titleOptions.text);
@@ -22,8 +21,8 @@ function createTitleElement(
 
   let textElement = '';
   let lines: string[] | null = null;
-  if (textWidth > width - margin.left) {
-    lines = wrapText(titleOptions.text, width - titleAlign, titleOptions.fontSize);
+  if (textWidth > width) {
+    lines = wrapText(titleOptions.text, width, titleOptions.fontSize);
     const linePadding = 10; // Padding between lines
 
     if (lines.length > 3) {
@@ -33,7 +32,7 @@ function createTitleElement(
 
     lines.forEach((line, index) => {
       textElement += `
-        <tspan x="${titleAlign + margin.left}" dy="${index === 0 ? 0 : titleHeight + linePadding}">${line}</tspan>
+        <tspan x="${titleAlign}" dy="${index === 0 ? 0 : titleHeight + linePadding}">${line}</tspan>
       `;
     });
   } else {
@@ -43,8 +42,8 @@ function createTitleElement(
   return {
     svgTitle: `
     <text class="bc-title"
-          x="${titleAlign + margin.left}"
-          y="${titleHeight + margin.top}"
+          x="${titleAlign}"
+          y="${titleHeight}"
           text-anchor="${titleOptions.textAnchor}"
           style="${style.replaceAll('"', "'")}">
       ${textElement}
@@ -204,14 +203,13 @@ export function createBubbleChart(
   const bubbleNodes = bubblesPack(root).leaves();
   
   // Title
-  const titleMargin = chartOptions.titleOptions.margin;
   const titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
-  const { svgTitle, titleLines } = createTitleElement(chartOptions.titleOptions, width, titleHeight, titleMargin);
+  const { svgTitle, titleLines } = createTitleElement(chartOptions.titleOptions, width, titleHeight);
 
   // Calculate full height  
   const bubbleChartMargin = 20; // Space between bubbles and title/legend 
   const maxY = max(bubbleNodes, (d) => d.y + d.r + bubbleChartMargin) || height;
-  const distanceFromBubbleChart = titleHeight * titleLines + titleMargin.top + bubbleChartMargin;
+  const distanceFromBubbleChart = titleHeight * titleLines + bubbleChartMargin;
   let fullHeight = maxY + distanceFromBubbleChart;
 
   // Common styles

@@ -25,7 +25,6 @@ export interface TitleOptions {
   fontSize: string; //px
   fontWeight: string;
   fill: string;
-  margin: { top: number; left: number }; // Negative values allowed for right and bottom
   textAnchor: TextAnchor;
   [key: string]: any;
 }
