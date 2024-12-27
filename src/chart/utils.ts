@@ -1,5 +1,5 @@
 import { fetchTopLanguages } from '../services/githubService.js';
-import { BubbleData, LanguageMappings } from './types.js';
+import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
 import { createCanvas } from 'canvas';
 import { defaultFontFamily } from './styles.js';
@@ -83,4 +83,17 @@ export function truncateText(text: string, maxChars: number): string {
     return text.substring(0, maxChars - 1) + '…';
   }
   return text;
+}
+
+export function getAlignmentPosition(textAnchor: TextAnchor, width: number): number {
+  switch (textAnchor) {
+    case 'start':
+      return 0;
+    case 'middle':
+      return width / 2;
+    case 'end':
+      return width;
+    default:
+      return width / 2;
+  }
 }

@@ -1,7 +1,7 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
 import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
-import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, truncateText } from './utils.js';
+import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, truncateText, getAlignmentPosition } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
 
 function createTitleElement(
@@ -11,17 +11,19 @@ function createTitleElement(
   margin: any,
 ): { svgTitle: string; titleLines: number } {
   const style = Object.keys(titleOptions)
-    .filter((style) => style !== 'margin' && style !== 'text' && titleOptions[style] != null)
+    .filter((style) => style !== 'margin' && style !== 'text' && style !== 'textAnchor' && titleOptions[style] != null)
     .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
     .join(' ');
+  
+  const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
 
   titleOptions.text = parseEmojis(titleOptions.text);
-
   const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize);
+
   let textElement = '';
   let lines: string[] | null = null;
   if (textWidth > width - margin.left) {
-    lines = wrapText(titleOptions.text, width - margin.left, titleOptions.fontSize);
+    lines = wrapText(titleOptions.text, width - titleAlign, titleOptions.fontSize);
     const linePadding = 10; // Padding between lines
 
     if (lines.length > 3) {
@@ -31,7 +33,7 @@ function createTitleElement(
 
     lines.forEach((line, index) => {
       textElement += `
-        <tspan x="${width / 2 + margin.left}" dy="${index === 0 ? 0 : titleHeight + linePadding}">${line}</tspan>
+        <tspan x="${titleAlign + margin.left}" dy="${index === 0 ? 0 : titleHeight + linePadding}">${line}</tspan>
       `;
     });
   } else {
@@ -41,8 +43,9 @@ function createTitleElement(
   return {
     svgTitle: `
     <text class="bc-title"
-          x="${width / 2 + margin.left}"
+          x="${titleAlign + margin.left}"
           y="${titleHeight + margin.top}"
+          text-anchor="${titleOptions.textAnchor}"
           style="${style.replaceAll('"', "'")}">
       ${textElement}
     </text>

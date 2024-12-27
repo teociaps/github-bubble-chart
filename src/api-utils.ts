@@ -1,6 +1,6 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from './chart/themes.js';
-import { TextAlign, LegendOptions, TitleOptions } from './chart/types.js';
+import { TextAlign, LegendOptions, TitleOptions, TextAnchor } from './chart/types.js';
 import { Error400 } from './error.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
@@ -46,6 +46,20 @@ export class CustomURLSearchParams extends URLSearchParams {
     return defaultValue;
   }
 
+  getTextAnchorValue(key: string, defaultValue: TextAnchor): TextAnchor {
+    const value = this.getStringValue(key, defaultValue);
+    switch (value) {
+      case 'left':
+        return 'start';
+      case 'center':
+        return 'middle';
+      case 'right':
+        return 'end';
+      default:
+        return defaultValue;
+    }
+  }
+
   getLanguagesCount(defaultValue: number) {
     const value = this.getNumberValue('langs-count', defaultValue);
     if (value < 1) return 1;
@@ -63,7 +77,7 @@ export class CustomURLSearchParams extends URLSearchParams {
         top: this.getNumberValue('title-top', 0),
         left: this.getNumberValue('title-left', 0),
       },
-      textAnchor: 'middle'
+      textAnchor: this.getTextAnchorValue('title-align', 'middle')
     };
   }
 
@@ -134,6 +148,3 @@ export async function handleMissingUsername(req: any, res: any) {
   console.error(error);
   res.send(error.render());
 }
-
-
-

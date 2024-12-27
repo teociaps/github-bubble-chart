@@ -26,6 +26,7 @@ export interface TitleOptions {
   fontWeight: string;
   fill: string;
   margin: { top: number; left: number }; // Negative values allowed for right and bottom
+  textAnchor: TextAnchor;
   [key: string]: any;
 }
 
@@ -34,7 +35,8 @@ export interface LegendOptions {
   align: TextAlign
 }
 
-export type TextAlign = 'left' | 'center' | 'right' 
+export type TextAlign = 'left' | 'center' | 'right';
+export type TextAnchor = 'start' | 'middle' | 'end';
 
 interface LanguageMapping {
   color: string;
