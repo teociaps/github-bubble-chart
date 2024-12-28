@@ -203,8 +203,14 @@ export function createBubbleChart(
   const bubbleNodes = bubblesPack(root).leaves();
   
   // Title
-  const titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
-  const { svgTitle, titleLines } = createTitleElement(chartOptions.titleOptions, width, titleHeight);
+  let titleHeight = 0;
+  let { svgTitle, titleLines } = { svgTitle: '', titleLines: 0};
+  if (chartOptions.titleOptions.text) {
+    titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
+    const title = createTitleElement(chartOptions.titleOptions, width, titleHeight);
+    svgTitle = title.svgTitle;
+    titleLines = title.titleLines;
+  }
 
   // Calculate full height  
   const bubbleChartMargin = 20; // Space between bubbles and title/legend 
