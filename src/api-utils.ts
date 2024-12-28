@@ -1,7 +1,11 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from './chart/themes.js';
 import { TextAlign, LegendOptions, TitleOptions, TextAnchor } from './chart/types.js';
-import { Error400 } from './error.js';
+import { Error400 } from './common/error.js';
+import { isDevEnvironment } from './common/utils.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
@@ -143,4 +147,28 @@ export async function handleMissingUsername(req: any, res: any) {
   );
   console.error(error);
   res.send(error.render());
+}
+
+export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<any> {
+  if (isDevEnvironment()) {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const localPath = path.resolve(__dirname, '../../', 'example-config.json');
+    if (fs.existsSync(localPath)) {
+      return JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+    } else {
+      throw new Error(`Local config file not found at ${localPath}`);
+    }
+  } else {
+    const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch config from ${filePath} in ${username} repository`);
+    }
+    return response.json();
+  }
 }

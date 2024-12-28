@@ -125,3 +125,5 @@ export class Error404 extends BaseError {
   readonly status = 404;
   readonly message = 'Not Found';
 }
+
+// TODO: enhance error management
