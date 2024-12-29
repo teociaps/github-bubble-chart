@@ -2,23 +2,19 @@
   "options": {
     "width": 800,
     "height": 600,
-    "titleOptions": {
+    "showPercentages": true,
+    "title": {
       "text": "Custom Bubble Chart",
       "fontSize": "30px",
       "fontWeight": "bold",
-      "fill": "#fff",
-      "textAnchor": "middle"
+      "color": "#fff",
+      "align": "middle"
     },
-    "showPercentages": true,
-    "legendOptions": {
+    "legend": {
       "show": true,
       "align": "left"
     },
-    "theme": "dark",
-    "theme": {
-      "backgroundColor": "#000",
-      "textColor": "#fff"
-    }
+    "theme": "dark"
   },
   "data": [
     { "name": "JavaScript", "value": 40, "color": "green", "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg" },

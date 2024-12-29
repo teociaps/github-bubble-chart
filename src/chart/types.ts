@@ -42,3 +42,30 @@ interface LanguageMapping {
   icon: string;
 }
 export type LanguageMappings = Record<string, LanguageMapping>;
+
+export interface CustomConfig {
+  options: ConfigOptions;
+  data: BubbleData[];
+}
+
+export interface ConfigOptions {
+  width: number;
+  height: number;
+  showPercentages: boolean;
+  title: TitleConfig;
+  legend: LegendConfig;
+  theme: ThemeBase | string;
+}
+
+export interface TitleConfig {
+  text: string;
+  fontSize: string;
+  fontWeight: string;
+  color: string;
+  align: TextAnchor;
+}
+
+export interface LegendConfig {
+  show: boolean;
+  align: TextAlign;
+}

@@ -1,6 +1,6 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from './chart/themes.js';
-import { TextAlign, LegendOptions, TitleOptions, TextAnchor } from './chart/types.js';
+import { TextAlign, LegendOptions, TitleOptions, TextAnchor, ConfigOptions, BubbleChartOptions, BubbleData, CustomConfig } from './chart/types.js';
 import { Error400 } from './common/error.js';
 import { isDevEnvironment } from './common/utils.js';
 import fs from 'fs';
@@ -149,13 +149,17 @@ export async function handleMissingUsername(req: any, res: any) {
   res.send(error.render());
 }
 
-export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<any> {
+export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
   if (isDevEnvironment()) {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const localPath = path.resolve(__dirname, '../../', 'example-config.json');
     if (fs.existsSync(localPath)) {
-      return JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+
+      const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
+      const options = mapConfigToBubbleChartOptions(customConfig.options)
+
+      return { options: options, data: customConfig.data };
     } else {
       throw new Error(`Local config file not found at ${localPath}`);
     }
@@ -169,6 +173,31 @@ export async function fetchConfigFromRepo(username: string, filePath: string, br
     if (!response.ok) {
       throw new Error(`Failed to fetch config from ${filePath} in ${username} repository`);
     }
-    return response.json();
+
+    const customConfig = await response.json() as CustomConfig;
+    const options = mapConfigToBubbleChartOptions(customConfig.options)
+
+    return { options: options, data: customConfig.data };
   }
+}
+
+function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChartOptions {
+  const theme = typeof config.theme === 'string' ? themeMap[config.theme.toLowerCase()] : config.theme;
+  return {
+    width: config.width,
+    height: config.height,
+    showPercentages: config.showPercentages,
+    titleOptions: {
+      text: config.title.text,
+      fontSize: config.title.fontSize,
+      fontWeight: config.title.fontWeight,
+      fill: config.title.color,
+      textAnchor: config.title.align,
+    },
+    legendOptions: {
+      show: config.legend.show,
+      align: config.legend.align,
+    },
+    theme: theme,
+  };
 }
