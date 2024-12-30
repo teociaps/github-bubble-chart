@@ -1,8 +1,5 @@
 {
-  "functions": {
-    "dist/api/*.js": {
-      "memory": 128,
-      "maxDuration": 10
-    }
-  }
+  "buildCommand": "yarn run build",
+  "installCommand": "yarn install",
+  "outputDirectory": "dist"
 }
