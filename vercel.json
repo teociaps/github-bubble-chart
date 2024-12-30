@@ -1,15 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "dist/express.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/*.js": {
+      "memory": 128,
+      "maxDuration": 10
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "dist/express.js"
-    }
-  ]
+  }
 }
