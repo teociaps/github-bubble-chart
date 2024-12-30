@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   update-mappings:
+    if: github.repository == 'teociaps/github-bubble-chart'
     runs-on: ubuntu-latest
 
     env:
