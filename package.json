@@ -1,12 +1,12 @@
 {
   "name": "github-bubble-chart",
   "version": "1.0.0",
-  "main": "express.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "npx tsc",
     "test": "jest",
-    "start": "node dist/express.js",
+    "start": "node dist/api/index.js",
     "update-langs": "npx tsx scripts/fetchLanguageMappings.ts"
   },
   "repository": "https://github.com/teociaps/github-bubble-chart.git",
