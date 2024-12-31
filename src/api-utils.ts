@@ -103,36 +103,36 @@ export const defaultHeaders = new Headers({
 });
 
 export async function handleMissingUsername(req: any, res: any) {
-  const [base] = req.url.split('?');
+  const base = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
   const error = new Error400(
-    `<section>
-      <div>
-        <h2>"username" is a required query parameter</h2>
-        <p>The URL should look like</p>
-        <div>
+    `${getMissingUsernameCSS()}
+    <section>
+      <div class="container">
+        <h2 class="error-title">Missing Required Parameter</h2>
+        <p>The URL should include the <code>username</code> query parameter:</p>
+        <div class="url-container">
           <p id="base-show">${base}?username=USERNAME</p>
-          <button>Copy Base Url</button>
-          <span id="temporary-span"></span>
-        </div>where
-        <code>USERNAME</code> is <em>your GitHub username.</em>
+          <button class="copy-button">Copy URL</button>
+          <span id="temporary-span" class="copy-status"></span>
+        </div>
+        <p>Replace <code>USERNAME</code> with your GitHub username.</p>
       </div>
-      <div>
-        <h2>You can use this form: </h2>
-        <p>Enter your username and click get chart</p>
+      <div class="form-container">
+        <h2 class="form-title">Quick Form</h2>
+        <p>Enter your GitHub username and click the button to generate the chart:</p>
         <form action="https://github-bubble-chart.vercel.app/" method="get">
           <label for="username">GitHub Username</label>
           <input type="text" name="username" id="username" placeholder="Ex. teociaps" required>
-          <text>
-            See all the available options
-            <a href="https://github.com/teociaps/github-bubble-chart?tab=readme-ov-file" target="_blank">here</a>
-          </text>
-          <br>
-          <button type="submit">Get Chart</button>
+          <p>
+            For more options, visit
+            <a href="https://github.com/teociaps/github-bubble-chart?tab=readme-ov-file" target="_blank">this page</a>.
+          </p>
+          <button type="submit">Generate Chart</button>
         </form>
       </div>
       <script>
         const base = "https://github-bubble-chart.vercel.app/";
-        const button = document.querySelector("button");
+        const button = document.querySelector(".copy-button");
         const temporarySpan = document.querySelector("#temporary-span");
 
         button.addEventListener("click", () => {
@@ -200,4 +200,75 @@ function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChartOption
     },
     theme: theme,
   };
+}
+
+function getMissingUsernameCSS(): string {
+  return `
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .container {
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .error-title {
+        color: #d9534f;
+      }
+      .url-container {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      #base-show {
+        font-family: monospace;
+      }
+      .copy-button {
+        background-color: #5bc0de;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .copy-status {
+        margin-left: 10px;
+        color: #5cb85c;
+      }
+      .form-container {
+        margin-top: 20px;
+      }
+      .form-title {
+        color: #5bc0de;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      label {
+        margin-bottom: 5px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 300px;
+      }
+      a {
+        color: #5bc0de;
+      }
+      button[type="submit"] {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  `;
 }
