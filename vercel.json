@@ -1,5 +1,12 @@
 {
+  "version": 2,
   "buildCommand": "yarn run build",
   "installCommand": "yarn install",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "src": "/api/(.*)",
+      "dest": "dist/express.js"
+    }
+  ]
 }
