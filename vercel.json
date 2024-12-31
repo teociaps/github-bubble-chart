@@ -5,8 +5,8 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "dist/express.js"
+      "source": "/api/(.*)",
+      "destination": "dist/express.js"
     }
   ]
 }
