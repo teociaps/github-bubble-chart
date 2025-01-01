@@ -103,8 +103,12 @@ export const defaultHeaders = new Headers({
 });
 
 export async function handleMissingUsername(req: any, res: any) {
-  const base = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
-  console.log(base)
+  let protocol = req.protocol;
+  if (!isDevEnvironment() && protocol === 'http') {
+    protocol = 'https';
+  }
+  const url = new URL(req.url, `${protocol}://${req.get('host')}`);
+  const base = `${url.origin}${req.baseUrl}`;
   const error = new Error400(
     `${getMissingUsernameCSS()}
     <section>
@@ -132,7 +136,6 @@ export async function handleMissingUsername(req: any, res: any) {
         </form>
       </div>
       <script>
-        const base = "${base}";
         const button = document.querySelector(".copy-button");
         const temporarySpan = document.querySelector("#temporary-span");
 
