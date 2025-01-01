@@ -104,6 +104,7 @@ export const defaultHeaders = new Headers({
 
 export async function handleMissingUsername(req: any, res: any) {
   const base = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
+  console.log(base)
   const error = new Error400(
     `${getMissingUsernameCSS()}
     <section>
@@ -120,7 +121,7 @@ export async function handleMissingUsername(req: any, res: any) {
       <div class="form-container">
         <h2 class="form-title">Quick Form</h2>
         <p>Enter your GitHub username and click the button to generate the chart:</p>
-        <form action="https://github-bubble-chart.vercel.app/" method="get">
+        <form action="${base}" method="get">
           <label for="username">GitHub Username</label>
           <input type="text" name="username" id="username" placeholder="Ex. teociaps" required>
           <p>
@@ -131,7 +132,7 @@ export async function handleMissingUsername(req: any, res: any) {
         </form>
       </div>
       <script>
-        const base = "https://github-bubble-chart.vercel.app/";
+        const base = "${base}";
         const button = document.querySelector(".copy-button");
         const temporarySpan = document.querySelector("#temporary-span");
 
