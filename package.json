@@ -27,8 +27,8 @@
     "yaml": "^2.6.1"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.65",
     "@octokit/rest": "^21.0.2",
-    "canvas": "^3.0.0",
     "d3": "^7.9.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

@@ -1,7 +1,7 @@
 import { fetchTopLanguages } from '../services/githubService.js';
 import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
-import { createCanvas } from 'canvas';
+import { createCanvas } from '@napi-rs/canvas';
 import { defaultFontFamily } from './styles.js';
 import { emojify } from 'node-emoji';
 
