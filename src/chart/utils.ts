@@ -54,6 +54,9 @@ export const parseEmojis = (str: string) => {
   if (!str) {
     throw new Error("[parseEmoji]: str argument not provided");
   }
+  if (!/:\\w+:/gm.test(str)) {
+    return str;
+  }
   return str.replace(/:\w+:/gm, (emoji: string) => {
     return emojify(emoji) || "";
   });
