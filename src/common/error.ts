@@ -18,93 +18,28 @@ abstract class BaseError {
           font-family: Arial, sans-serif;
           margin: 0;
           padding: 0;
-          background-color: #f4f4f4;
-        }
-        h1,
-        h2 {
           color: #333;
+          background-color: #f7f7f7;
         }
-        p {
-          color: #666;
+        a {
+          text-decoration: none;
+          color: #398dff;
+        }
+        .error-title {
+          color: #d9534f;
         }
         #back-link {
           display: flex;
           justify-content: center;
-          text-decoration: none;
         }
         #back-link:hover {
           text-decoration: underline;
-        }
-        section {
-          width: 80%;
-          margin: 0 auto;
-          padding: 20px;
-        }
-        div {
-          background-color: #fff;
-          border-radius: 5px;
-          padding: 20px;
-          margin-bottom: 20px;
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        }
-        form {
-          display: flex;
-          flex-direction: column;
-        }
-        label {
-          margin-bottom: 10px;
-        }
-        input {
-          padding: 12px;
-          margin-bottom: 20px;
-          border-radius: 5px;
-          border: 1px solid #ddd;
-        }
-        button {
-          padding: 10px 20px;
-          background-color: #333;
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-        #base-show {
-          font-size: 16px;
-          color: #333;
-          background-color: #f4f4f4;
-          padding: 10px;
-          border-radius: 5px;
-          text-align: center;
-          margin: 10px 0;
-        }
-        button:hover {
-          background-color: #444;
-        }
-        @media (max-width: 768px) {
-          #base-show {
-            font-size: 14px;
-          }
-        }
-        @media (max-width: 480px) {
-          #base-show {
-            font-size: 8px;
-          }
-        }
-        @media (min-width: 768px) {
-          section {
-            width: 60%;
-          }
-        }
-        @media (min-width: 1024px) {
-          section {
-            width: 50%;
-          }
         }
       </style>
     </head>
     <body>
       <h1 style="text-align: center;">${this.status} - ${this.message}</h1>
-      <p style="text-align: center;">${this.content ?? ''}</p>
+      <main>${this.content ?? ''}</main>
       ${this.content && '<a id="back-link" href="/">Go back</a>'}
     </body>
     </html>`;

@@ -116,17 +116,17 @@ export async function handleMissingUsername(req: any, res: any) {
         <h2 class="error-title">Missing Required Parameter</h2>
         <p>The URL should include the <code>username</code> query parameter:</p>
         <div class="url-container">
-          <p id="base-show">${base}?username=USERNAME</p>
-          <button class="copy-button">Copy URL</button>
+          <p id="baseurl-show">${base}?username=USERNAME</p>
+          <button type="button" class="copy-button">Copy URL</button>
           <span id="temporary-span" class="copy-status"></span>
         </div>
         <p>Replace <code>USERNAME</code> with your GitHub username.</p>
       </div>
-      <div class="form-container">
+      <div class="container form-container">
         <h2 class="form-title">Quick Form</h2>
-        <p>Enter your GitHub username and click the button to generate the chart:</p>
+        <p>Enter your GitHub username and click the button to generate the chart.</p>
         <form action="${base}" method="get">
-          <label for="username">GitHub Username</label>
+          <label for="username">GitHub Username:</label>
           <input type="text" name="username" id="username" placeholder="Ex. teociaps" required>
           <p>
             For more options, visit
@@ -140,7 +140,7 @@ export async function handleMissingUsername(req: any, res: any) {
         const temporarySpan = document.querySelector("#temporary-span");
 
         button.addEventListener("click", () => {
-          navigator.clipboard.writeText(document.querySelector("#base-show").textContent);
+          navigator.clipboard.writeText(document.querySelector("#baseurl-show").textContent);
           temporarySpan.textContent = "Copied!";
           setTimeout(() => {
             temporarySpan.textContent = "";
@@ -149,7 +149,6 @@ export async function handleMissingUsername(req: any, res: any) {
       </script>
     </section>`,
   );
-  console.error(error);
   res.send(error.render());
 }
 
@@ -209,69 +208,101 @@ function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChartOption
 function getMissingUsernameCSS(): string {
   return `
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        color: #333;
+      section {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
       }
+      
+      button {
+        padding: 10px 20px;
+        color: #fff;
+        border: none;
+        border-radius: inherit;
+        cursor: pointer;
+      }
+      
       .container {
         padding: 20px;
+        margin-bottom: 20px;
         border: 1px solid #ccc;
+        background-color: #fff;
         border-radius: 5px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
       }
-      .error-title {
-        color: #d9534f;
-      }
+      
       .url-container {
         background-color: #f9f9f9;
         padding: 10px;
         border-radius: 5px;
+        border: 1px solid #ededed; 
       }
-      #base-show {
+      #baseurl-show {
         font-family: monospace;
+        color: #333;
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: inherit;
+        margin: 10px 0;
       }
       .copy-button {
         background-color: #5bc0de;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
+        &:hover {
+          background-color: #3da7c7;
+        }
       }
       .copy-status {
         margin-left: 10px;
         color: #5cb85c;
       }
+
       .form-container {
         margin-top: 20px;
       }
       .form-title {
-        color: #5bc0de;
+        color: #6530bb;
       }
       form {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        border-radius: inherit;
       }
       label {
-        margin-bottom: 5px;
+        margin-bottom: 2px;
       }
-      input[type="text"] {
+      input {
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 100%;
+        border-radius: inherit;
         max-width: 300px;
-      }
-      a {
-        color: #5bc0de;
       }
       button[type="submit"] {
         background-color: #5cb85c;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
+        &:hover {
+          background-color: #378a37;
+        }
+      }
+
+      @media (max-width: 768px) {
+        #baseurl-show {
+          font-size: 14px;
+        }
+      }
+      @media (max-width: 480px) {
+        #baseurl-show {
+          font-size: 10px;
+        }
+      }
+      @media (min-width: 768px) {
+        section {
+          width: 60%;
+        }
+      }
+      @media (min-width: 1024px) {
+        section {
+          width: 50%;
+        }
       }
     </style>
   `;
