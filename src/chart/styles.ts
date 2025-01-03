@@ -21,7 +21,7 @@ export function getCommonStyles(theme: ThemeBase): string {
       text-anchor: middle;
     }
     .b-icon {
-      filter: drop-shadow(0px 0px 1px ${theme.textColor});
+      filter: drop-shadow(0px 0px .3px ${theme.textColor});
     }
     @keyframes plop {
       0% {
