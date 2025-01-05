@@ -1,7 +1,14 @@
-abstract class BaseError {
+export class BaseError extends Error {
   readonly status!: number;
   readonly message!: string;
-  constructor(readonly content?: string) {}
+  constructor(message: string, public originalError?: Error, public content?: string) {
+    super(message);
+    this.name = this.constructor.name;
+    if (originalError) {
+      this.stack = originalError.stack;
+    }
+  }
+
   render() {
     return this.renderPage();
   }
@@ -46,19 +53,12 @@ abstract class BaseError {
   }
 }
 
-export class Error400 extends BaseError {
+export class BadRequestError extends BaseError {
   readonly status = 400;
   readonly message = 'Bad Request';
 }
 
-export class Error419 extends BaseError {
-  readonly status = 419;
-  readonly message = 'Rate Limit Exceeded';
-}
-
-export class Error404 extends BaseError {
+export class NotFoundError extends BaseError {
   readonly status = 404;
   readonly message = 'Not Found';
 }
-
-// TODO: enhance error management

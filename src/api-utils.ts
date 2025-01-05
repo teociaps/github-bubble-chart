@@ -1,7 +1,9 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from './chart/themes.js';
 import { TextAlign, LegendOptions, TitleOptions, TextAnchor, ConfigOptions, BubbleChartOptions, BubbleData, CustomConfig } from './chart/types.js';
-import { Error400 } from './common/error.js';
+import { BadRequestError } from './errors/base-error.js'; // Update import paths
+import { GitHubNotFoundError, GitHubRateLimitError } from './errors/github-errors.js'; // Update import paths
+import { ValidationError, FetchError } from './errors/custom-errors.js'; // Update import paths
 import { isDevEnvironment } from './common/utils.js';
 import fs from 'fs';
 import path from 'path';
@@ -9,83 +11,115 @@ import { fileURLToPath } from 'url';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
-    if (super.has(key)) {
-      const param = super.get(key);
-      if (param !== null) {
-        return param.toString();
+    try {
+      if (super.has(key)) {
+        const param = super.get(key);
+        if (param !== null) {
+          return param.toString();
+        }
       }
+      return defaultValue.toString();
+    } catch (error) {
+      throw new ValidationError('Invalid string parameter', error instanceof Error ? error : undefined);
     }
-    return defaultValue.toString();
   }
 
   getNumberValue(key: string, defaultValue: number): number {
-    if (super.has(key)) {
-      const param = super.get(key);
-      if (param !== null) {
-        const parsedValue = parseInt(param);
-        if (isNaN(parsedValue)) {
-          return defaultValue;
+    try {
+      if (super.has(key)) {
+        const param = super.get(key);
+        if (param !== null) {
+          const parsedValue = parseInt(param);
+          if (isNaN(parsedValue)) {
+            return defaultValue;
+          }
+          return parsedValue;
         }
-        return parsedValue;
       }
+      return defaultValue;
+    } catch (error) {
+      throw new ValidationError('Invalid number parameter', error instanceof Error ? error : undefined);
     }
-    return defaultValue;
   }
 
   getBooleanValue(key: string, defaultValue: boolean): boolean {
-    if (super.has(key)) {
-      const param = super.get(key);
-      return param !== null && param.toString() === 'true';
+    try {
+      if (super.has(key)) {
+        const param = super.get(key);
+        return param !== null && param.toString() === 'true';
+      }
+      return defaultValue;
+    } catch (error) {
+      throw new ValidationError('Invalid boolean parameter', error instanceof Error ? error : undefined);
     }
-    return defaultValue;
   }
 
   getTheme(key: string, defaultValue: ThemeBase): ThemeBase {
-    if (super.has(key)) {
-      const param = super.get(key);
-      if (param !== null) {
-        return themeMap[param.toLowerCase()] || defaultValue; // Fallback to default theme
+    try {
+      if (super.has(key)) {
+        const param = super.get(key);
+        if (param !== null) {
+          return themeMap[param.toLowerCase()] || defaultValue;
+        }
       }
+      return defaultValue;
+    } catch (error) {
+      throw new ValidationError('Invalid theme parameter', error instanceof Error ? error : undefined);
     }
-    return defaultValue;
   }
 
   getTextAnchorValue(key: string, defaultValue: TextAnchor): TextAnchor {
-    const value = this.getStringValue(key, defaultValue);
-    switch (value) {
-      case 'left':
-        return 'start';
-      case 'center':
-        return 'middle';
-      case 'right':
-        return 'end';
-      default:
-        return defaultValue;
+    try {
+      const value = this.getStringValue(key, defaultValue);
+      switch (value) {
+        case 'left':
+          return 'start';
+        case 'center':
+          return 'middle';
+        case 'right':
+          return 'end';
+        default:
+          return defaultValue;
+      }
+    } catch (error) {
+      throw new ValidationError('Invalid text anchor parameter', error instanceof Error ? error : undefined);
     }
   }
 
   getLanguagesCount(defaultValue: number) {
-    const value = this.getNumberValue('langs-count', defaultValue);
-    if (value < 1) return 1;
-    if (value > 20) return 20;
-    return value;
+    try {
+      const value = this.getNumberValue('langs-count', defaultValue);
+      if (value < 1) return 1;
+      if (value > 20) return 20;
+      return value;
+    } catch (error) {
+      throw new ValidationError('Invalid languages count parameter', error instanceof Error ? error : undefined);
+    }
   }
 
   parseTitleOptions(): TitleOptions {
-    return {
-      text: this.getStringValue('title', 'Bubble Chart'),
-      fontSize: this.getNumberValue('title-size', 24) + 'px',
-      fontWeight: this.getStringValue('title-weight', 'bold'),
-      fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
-      textAnchor: this.getTextAnchorValue('title-align', 'middle')
-    };
+    try {
+      return {
+        text: this.getStringValue('title', 'Bubble Chart'),
+        fontSize: this.getNumberValue('title-size', 24) + 'px',
+        fontWeight: this.getStringValue('title-weight', 'bold'),
+        fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
+        textAnchor: this.getTextAnchorValue('title-align', 'middle')
+      };
+    } catch (error) {
+      throw new ValidationError('Invalid title options', error instanceof Error ? error : undefined);
+    }
   }
 
   parseLegendOptions(): LegendOptions {
-    return {
-      show: this.getBooleanValue('legend', false),
-      align: this.getStringValue('legend-align', 'left') as TextAlign,
-    };
+    try {
+      return {
+        show: this.getBooleanValue('legend', false),
+        align: this.getStringValue('legend-align', 'left') as TextAlign,
+      };
+    } catch (error) {
+      throw new ValidationError('Invalid legend options', error instanceof Error ? error : undefined);
+    }
   }
 }
 
@@ -109,7 +143,7 @@ export async function handleMissingUsername(req: any, res: any) {
   }
   const url = new URL(req.url, `${protocol}://${req.get('host')}`);
   const base = `${url.origin}${req.baseUrl}`;
-  const error = new Error400(
+  const error = new BadRequestError(
     `${getMissingUsernameCSS()}
     <section>
       <div class="container">
@@ -153,34 +187,41 @@ export async function handleMissingUsername(req: any, res: any) {
 }
 
 export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
-  if (isDevEnvironment()) {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const localPath = path.resolve(__dirname, '../../', 'example-config.json');
-    if (fs.existsSync(localPath)) {
-
-      const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
-      const options = mapConfigToBubbleChartOptions(customConfig.options)
-
-      return { options: options, data: customConfig.data };
-    } else {
-      throw new Error(`Local config file not found at ${localPath}`);
-    }
-  } else {
-    const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
+  try {
+    if (isDevEnvironment()) {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      const localPath = path.resolve(__dirname, '../../', 'example-config.json');
+      if (fs.existsSync(localPath)) {
+        const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
+        const options = mapConfigToBubbleChartOptions(customConfig.options);
+        return { options: options, data: customConfig.data };
+      } else {
+        throw new FetchError(`Local config file not found at ${localPath}`);
       }
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch config from ${filePath} in ${username} repository`);
+    } else {
+      const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
+        }
+      });
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new GitHubNotFoundError(`The repository or file at ${filePath} was not found.`);
+        } else if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
+          throw new GitHubRateLimitError('You have exceeded the GitHub API rate limit.');
+        } else {
+          throw new FetchError(`Failed to fetch config from ${filePath} in ${username} repository`, new Error(`HTTP status ${response.status}`));
+        }
+      }
+
+      const customConfig = await response.json() as CustomConfig;
+      const options = mapConfigToBubbleChartOptions(customConfig.options);
+      return { options: options, data: customConfig.data };
     }
-
-    const customConfig = await response.json() as CustomConfig;
-    const options = mapConfigToBubbleChartOptions(customConfig.options)
-
-    return { options: options, data: customConfig.data };
+  } catch (error) {
+    throw new FetchError('Failed to fetch configuration from repository', error instanceof Error ? error : undefined);
   }
 }
 
