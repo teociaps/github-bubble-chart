@@ -1,6 +1,6 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
-import { GitHubError, GitHubRateLimitError } from '../errors/github-errors.js';
+import { GitHubError, GitHubRateLimitError, GitHubNotFoundError, GitHubBadCredentialsError, GitHubAccountSuspendedError } from '../errors/github-errors.js';
 
 export const fetchTopLanguages = async (username: string, langsCount: number) => {
   try {
@@ -71,8 +71,8 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
 
     return languagePercentages;
   } catch (error) {
-    if (error instanceof Error && error.message.includes('rate limit')) {
-      throw new GitHubRateLimitError();
+    if (error instanceof Error) {
+      handleGitHubError(error);
     }
     throw new GitHubError(400, 'Failed to fetch top languages from GitHub');
   }
@@ -86,8 +86,8 @@ const retry = async (
   try {
     return await fn();
   } catch (error) {
-    if (error instanceof Error && error.message.includes('rate limit')) {
-      throw new GitHubRateLimitError();
+    if (error instanceof Error) {
+      handleGitHubError(error);
     }
     if (retries > 0) {
       await new Promise((res) => setTimeout(res, delay));
@@ -103,3 +103,19 @@ const graphqlWithAuth = graphql.defaults({
     authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
   },
 });
+
+const handleGitHubError = (error: Error) => {
+  if (error.message.includes('rate limit')) {
+    throw new GitHubRateLimitError();
+  }
+  if (error.message.includes('Not Found')) {
+    throw new GitHubNotFoundError();
+  }
+  if (error.message.includes('Bad credentials')) {
+    throw new GitHubBadCredentialsError();
+  }
+  if (error.message.includes('Your account was suspended')) {
+    throw new GitHubAccountSuspendedError();
+  }
+  throw new GitHubError(400, 'Failed to fetch top languages from GitHub');
+};
