@@ -1,13 +1,13 @@
 import { CONSTANTS } from '../config/consts.js';
-import { ThemeBase, themeMap } from './chart/themes.js';
-import { TextAlign, LegendOptions, TitleOptions, TextAnchor, ConfigOptions, BubbleChartOptions, BubbleData, CustomConfig } from './chart/types.js';
-import { BadRequestError } from './errors/base-error.js'; // Update import paths
-import { GitHubNotFoundError, GitHubRateLimitError } from './errors/github-errors.js'; // Update import paths
-import { ValidationError, FetchError } from './errors/custom-errors.js'; // Update import paths
-import { isDevEnvironment } from './common/utils.js';
+import { ThemeBase, themeMap } from '../src/chart/themes.js';
+import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig } from '../src/chart/types.js';
+import { GitHubNotFoundError, GitHubRateLimitError, GitHubBadCredentialsError, GitHubAccountSuspendedError } from '../src/errors/github-errors.js'; // Update import paths
+import { ValidationError, FetchError, StyleError, GeneratorError, BadRequestError } from '../src/errors/custom-errors.js'; // Update import paths
+import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { BaseError } from '../src/errors/base-error.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
@@ -137,6 +137,7 @@ export const defaultHeaders = new Headers({
 });
 
 export async function handleMissingUsername(req: any, res: any) {
+  console.log('missing username');
   let protocol = req.protocol;
   if (!isDevEnvironment() && protocol === 'http') {
     protocol = 'https';
@@ -223,27 +224,6 @@ export async function fetchConfigFromRepo(username: string, filePath: string, br
   } catch (error) {
     throw new FetchError('Failed to fetch configuration from repository', error instanceof Error ? error : undefined);
   }
-}
-
-function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChartOptions {
-  const theme = typeof config.theme === 'string' ? themeMap[config.theme.toLowerCase()] : config.theme;
-  return {
-    width: config.width,
-    height: config.height,
-    showPercentages: config.showPercentages,
-    titleOptions: {
-      text: config.title.text,
-      fontSize: config.title.fontSize,
-      fontWeight: config.title.fontWeight,
-      fill: config.title.color,
-      textAnchor: config.title.align,
-    },
-    legendOptions: {
-      show: config.legend.show,
-      align: config.legend.align,
-    },
-    theme: theme,
-  };
 }
 
 function getMissingUsernameCSS(): string {
@@ -347,4 +327,14 @@ function getMissingUsernameCSS(): string {
       }
     </style>
   `;
+}
+
+export function handleErrorResponse(error: Error | undefined, res: any) {
+  console.error(error);
+  if (error instanceof BaseError) {
+    res.status(error.status).send(error.render());
+    // res.status(error.status).send({ error: error.message });
+  } else {
+    res.status(500).send({ error: 'An unexpected error occurred' });
+  }
 }

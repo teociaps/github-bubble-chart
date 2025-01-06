@@ -1,7 +1,10 @@
 export class BaseError extends Error {
-  readonly status!: number;
-  readonly message!: string;
-  constructor(message: string, public originalError?: Error, public content?: string) {
+  constructor(
+    readonly status: number,
+    readonly message: string,
+    public originalError?: Error,
+    public content?: string,
+  ) {
     super(message);
     this.name = this.constructor.name;
     if (originalError) {
@@ -51,14 +54,4 @@ export class BaseError extends Error {
     </body>
     </html>`;
   }
-}
-
-export class BadRequestError extends BaseError {
-  readonly status = 400;
-  readonly message = 'Bad Request';
-}
-
-export class NotFoundError extends BaseError {
-  readonly status = 404;
-  readonly message = 'Not Found';
 }

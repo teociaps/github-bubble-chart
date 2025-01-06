@@ -67,6 +67,7 @@ export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleD
         }
         75% {
           transform: translate(${node.x + randomXOffset / 2}px, ${node.y - randomYOffset / 2}px);
+        }
         100% {
           transform: translate(${node.x}px, ${node.y}px);
         }

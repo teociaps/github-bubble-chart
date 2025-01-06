@@ -2,7 +2,7 @@ import { BaseError } from './base-error.js';
 
 export class GitHubError extends BaseError {
   constructor(readonly status: number, readonly message: string, content?: string) {
-    super(message, undefined, content);
+    super(status, message, undefined, content);
   }
 }
 
