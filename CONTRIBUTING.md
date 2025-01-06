@@ -17,7 +17,7 @@ We are thrilled that you are considering contributing to this project! Your cont
 
 To get started, follow these steps:
 
-1. **Fork the repository**: Use the "Fork" button at the top right of this page to create a copy of the repository under your own GitHub account.
+1. **Fork the repository**: [Fork](../../fork) the project to create a copy of the repository under your own GitHub account.
 2. **Clone your fork**: Clone the repository to your local machine using:
    ```bash
    git clone https://github.com/teociaps/github-bubble-chart.git
@@ -65,7 +65,7 @@ To submit changes:
    ```bash
    git push origin feature/your-feature-name
    ```
-4. **Open a pull request (PR)**: Submit a PR against the `main` branch using the provided template.
+4. **Open a pull request (PR)**: [Submit a PR](../../pulls) against the `main` branch using the provided template.
 
 Your PR will be reviewed by the maintainers. Please be responsive to feedback and update your PR as needed.
 
