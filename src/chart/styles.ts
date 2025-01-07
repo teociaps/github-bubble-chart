@@ -35,7 +35,7 @@ export function getCommonStyles(theme: ThemeBase): string {
       }
     `;
   } catch (error) {
-    throw new StyleError('Error in getCommonStyles', error instanceof Error ? error : undefined);
+    throw new StyleError('Failed to get common styles.', error instanceof Error ? error : undefined);
   }
 }
 
@@ -74,7 +74,7 @@ export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleD
       }
     `;
   } catch (error) {
-    throw new StyleError('Error in generateBubbleAnimationStyle', error instanceof Error ? error : undefined);
+    throw new StyleError('Failed to generate bubble animation style.', error instanceof Error ? error : undefined);
   }
 }
 
@@ -97,6 +97,6 @@ export function getLegendItemAnimationStyle(): string {
       }
     `;
   } catch (error) {
-    throw new StyleError('Error in getLegendItemAnimationStyle', error instanceof Error ? error : undefined);
+    throw new StyleError('Failed to get legend item animation style.', error instanceof Error ? error : undefined);
   }
 }

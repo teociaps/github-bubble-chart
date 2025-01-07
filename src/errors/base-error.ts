@@ -49,7 +49,7 @@ export class BaseError extends Error {
     </head>
     <body>
       <h1 style="text-align: center;">${this.status} - ${this.message}</h1>
-      <main>${this.content ?? ''}</main>
+      <main>${this.content ?? this.message}</main>
       ${this.content && '<a id="back-link" href="/">Go back</a>'}
     </body>
     </html>`;

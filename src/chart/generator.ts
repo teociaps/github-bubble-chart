@@ -54,7 +54,7 @@ function createTitleElement(
       titleLines: lines?.length || 1,
     };
   } catch (error) {
-    throw new GeneratorError('Error in createTitleElement', error instanceof Error ? error : undefined);
+    throw new GeneratorError('Failed to create title element.', error instanceof Error ? error : undefined);
   }
 }
 
@@ -118,7 +118,7 @@ function createBubbleElement(
 
     return bubble;
   } catch (error) {
-    throw new GeneratorError('Error in createBubbleElement', error instanceof Error ? error : undefined);
+    throw new GeneratorError('Failed to create bubble element.', error instanceof Error ? error : undefined);
   }
 }
 
@@ -195,7 +195,7 @@ function createLegend(
 
     return { svgLegend: svgLegend, legendHeight };
   } catch (error) {
-    throw new GeneratorError('Error in createLegend', error instanceof Error ? error : undefined);
+    throw new GeneratorError('Failed to create legend.', error instanceof Error ? error : undefined);
   }
 }
 
@@ -260,6 +260,6 @@ export function createBubbleChart(
 
     return svg;
   } catch (error) {
-    throw new GeneratorError('Error in createBubbleChart', error instanceof Error ? error : undefined);
+    throw new GeneratorError('Failed to create bubble chart.', error instanceof Error ? error : undefined);
   }
 }

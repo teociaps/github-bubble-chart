@@ -105,6 +105,7 @@ const graphqlWithAuth = graphql.defaults({
 });
 
 const handleGitHubError = (error: Error) => {
+  console.log(error);
   if (error.message.includes('rate limit')) {
     throw new GitHubRateLimitError();
   }

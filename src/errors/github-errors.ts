@@ -8,24 +8,24 @@ export class GitHubError extends BaseError {
 
 export class GitHubNotFoundError extends GitHubError {
   constructor(content?: string) {
-    super(404, 'GitHub Repository Not Found', content);
+    super(404, 'The requested GitHub repository could not be found.', content);
   }
 }
 
 export class GitHubRateLimitError extends GitHubError {
   constructor(content?: string) {
-    super(403, 'GitHub API Rate Limit Exceeded', content);
+    super(403, 'You have exceeded the GitHub API rate limit.', content);
   }
 }
 
 export class GitHubBadCredentialsError extends GitHubError {
   constructor(content?: string) {
-    super(401, 'GitHub Bad Credentials', content);
+    super(401, 'The provided GitHub credentials are invalid.', content);
   }
 }
 
 export class GitHubAccountSuspendedError extends GitHubError {
   constructor(content?: string) {
-    super(403, 'GitHub Account Suspended', content);
+    super(403, 'The GitHub account has been suspended.', content);
   }
 }

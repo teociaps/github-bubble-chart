@@ -20,7 +20,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       }
       return defaultValue.toString();
     } catch (error) {
-      throw new ValidationError('Invalid string parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid string parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -38,7 +38,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       }
       return defaultValue;
     } catch (error) {
-      throw new ValidationError('Invalid number parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid number parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -50,7 +50,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       }
       return defaultValue;
     } catch (error) {
-      throw new ValidationError('Invalid boolean parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid boolean parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -64,7 +64,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       }
       return defaultValue;
     } catch (error) {
-      throw new ValidationError('Invalid theme parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid theme parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -82,7 +82,7 @@ export class CustomURLSearchParams extends URLSearchParams {
           return defaultValue;
       }
     } catch (error) {
-      throw new ValidationError('Invalid text anchor parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid text anchor parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -93,7 +93,7 @@ export class CustomURLSearchParams extends URLSearchParams {
       if (value > 20) return 20;
       return value;
     } catch (error) {
-      throw new ValidationError('Invalid languages count parameter', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid languages count parameter.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -107,7 +107,7 @@ export class CustomURLSearchParams extends URLSearchParams {
         textAnchor: this.getTextAnchorValue('title-align', 'middle')
       };
     } catch (error) {
-      throw new ValidationError('Invalid title options', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid title options.', error instanceof Error ? error : undefined);
     }
   }
 
@@ -118,7 +118,7 @@ export class CustomURLSearchParams extends URLSearchParams {
         align: this.getStringValue('legend-align', 'left') as TextAlign,
       };
     } catch (error) {
-      throw new ValidationError('Invalid legend options', error instanceof Error ? error : undefined);
+      throw new ValidationError('Invalid legend options.', error instanceof Error ? error : undefined);
     }
   }
 }
