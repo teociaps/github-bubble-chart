@@ -35,3 +35,9 @@ export class ValidationError extends BaseError {
     super(400, 'Validation Error', originalError, content);
   }
 }
+
+export class SVGGenerationError extends BaseError {
+  constructor(content?: string, public originalError?: Error) {
+    super(500, 'SVG Generation Error', originalError, content);
+  }
+}
