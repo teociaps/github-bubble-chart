@@ -38,11 +38,19 @@ export class BaseError extends Error {
         .error-title {
           color: #d9534f;
         }
-        #back-link {
+        #link-container {
           display: flex;
-          justify-content: center;
+          flex-direction: row;
+          justify-content: space-evenly;
+          align-items: center;
+          margin: 1rem auto;
+          text-align: center;
+          width: 60%;
         }
-        #back-link:hover {
+        #link-container a {
+          margin: 0.5rem 0;
+        }
+        #link-container a:hover {
           text-decoration: underline;
         }
       </style>
@@ -50,7 +58,11 @@ export class BaseError extends Error {
     <body>
       <h1 style="text-align: center;">${this.status} - ${this.message}</h1>
       <main>${this.content}</main>
-      ${this.content && '<a id="back-link" href="/">Go back</a>'}
+      <div id="link-container">
+        ${this.content && '<a id="back-link" href="/">Go back</a>'}
+        <a id="contact-link" href="https://github.com/teociaps/github-bubble-chart/discussions" target="_blank">Contact us</a>
+        <a id="bug-link" href="https://github.com/teociaps/github-bubble-chart/issues/new?assignees=&labels=needs%3A+triage%2Cbug&projects=&template=bug_report.yml&title=%5BBug%5D%3A+" target="_blank">Report a bug</a>
+      </div>
     </body>
     </html>`;
   }
