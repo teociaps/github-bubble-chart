@@ -1,8 +1,9 @@
 import { CONSTANTS } from '../config/consts.js';
-import { defaultHeaders, fetchConfigFromRepo, handleMissingUsername, parseParams } from '../src/api-utils.js';
+import { defaultHeaders, fetchConfigFromRepo, handleMissingUsername, parseParams, handleErrorResponse } from './utils.js';
 import { createBubbleChart } from '../src/chart/generator.js';
 import { BubbleChartOptions } from '../src/chart/types.js';
 import { getBubbleData } from '../src/chart/utils.js';
+import { SVGGenerationError } from '../src/errors/custom-errors.js';
 
 export default async (req: any, res: any) => {
   const params = parseParams(req);
@@ -41,14 +42,12 @@ export default async (req: any, res: any) => {
     const svg = createBubbleChart(bubbleData, options);
 
     if (!svg) {
-      console.error('svg not generated.');
-      return res.send('svg not generated.');
+      throw new SVGGenerationError('SVG generation failed: No data available or invalid configuration.');
     }
 
     res.setHeaders(defaultHeaders);
     res.send(svg.trim());
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch languages for specified user' });
+    handleErrorResponse(error instanceof Error ? error : undefined, res);
   }
 };
