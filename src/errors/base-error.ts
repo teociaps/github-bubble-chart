@@ -3,7 +3,7 @@ export class BaseError extends Error {
     readonly status: number,
     readonly message: string,
     public originalError?: Error,
-    public content?: string,
+    public content: string = 'An unexpected error occurred. Please try again later.'
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -49,7 +49,7 @@ export class BaseError extends Error {
     </head>
     <body>
       <h1 style="text-align: center;">${this.status} - ${this.message}</h1>
-      <main>${this.content ?? this.message}</main>
+      <main>${this.content}</main>
       ${this.content && '<a id="back-link" href="/">Go back</a>'}
     </body>
     </html>`;

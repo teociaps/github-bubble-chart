@@ -206,60 +206,56 @@ export function createBubbleChart(
   data: BubbleData[],
   chartOptions: BubbleChartOptions
 ): string | null {
-  try {
-    if (data.length === 0) return null;
+  if (data.length === 0) return null;
 
-    const width = chartOptions.width;
-    const height = chartOptions.height;
+  const width = chartOptions.width;
+  const height = chartOptions.height;
 
-    const bubblesPack = pack<BubbleData>().size([width, height]).padding(1.5);
-    const root = hierarchy({ children: data } as any).sum((d) => d.value);
-    const bubbleNodes = bubblesPack(root).leaves();
-    
-    // Title
-    let titleHeight = 0;
-    let { svgTitle, titleLines } = { svgTitle: '', titleLines: 0};
-    if (chartOptions.titleOptions.text) {
-      titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
-      const title = createTitleElement(chartOptions.titleOptions, width, titleHeight);
-      svgTitle = title.svgTitle;
-      titleLines = title.titleLines;
-    }
-
-    // Calculate full height  
-    const bubbleChartMargin = 20; // Space between bubbles and title/legend 
-    const maxY = max(bubbleNodes, (d) => d.y + d.r + bubbleChartMargin) || height;
-    const distanceFromBubbleChart = titleHeight * titleLines + bubbleChartMargin;
-    let fullHeight = maxY + distanceFromBubbleChart;
-
-    // Common styles
-    let styles = getCommonStyles(chartOptions.theme);
-
-    // Legend
-    let svgLegend = '';
-    if (chartOptions.legendOptions.show) {
-      const legendResult = createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
-      svgLegend = legendResult.svgLegend;
-      fullHeight += legendResult.legendHeight;
-      styles += getLegendItemAnimationStyle();
-    }
-
-    // Start building the SVG
-    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fullHeight}" viewBox="0 0 ${width} ${fullHeight}">`;
-    svg += createSVGDefs();
-    svg += svgTitle;
-    svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
-    bubbleNodes.forEach((node, index) => {
-      svg += createBubbleElement(node, index, chartOptions);
-      styles += generateBubbleAnimationStyle(node, index);
-    });
-    svg += '</g>'; // Close bubbles group
-    svg += svgLegend; 
-    svg += `<style>${styles}</style>`;
-    svg += '</svg>';
-
-    return svg;
-  } catch (error) {
-    throw new GeneratorError('Failed to create bubble chart.', error instanceof Error ? error : undefined);
+  const bubblesPack = pack<BubbleData>().size([width, height]).padding(1.5);
+  const root = hierarchy({ children: data } as any).sum((d) => d.value);
+  const bubbleNodes = bubblesPack(root).leaves();
+  
+  // Title
+  let titleHeight = 0;
+  let { svgTitle, titleLines } = { svgTitle: '', titleLines: 0};
+  if (chartOptions.titleOptions.text) {
+    titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
+    const title = createTitleElement(chartOptions.titleOptions, width, titleHeight);
+    svgTitle = title.svgTitle;
+    titleLines = title.titleLines;
   }
+
+  // Calculate full height  
+  const bubbleChartMargin = 20; // Space between bubbles and title/legend 
+  const maxY = max(bubbleNodes, (d) => d.y + d.r + bubbleChartMargin) || height;
+  const distanceFromBubbleChart = titleHeight * titleLines + bubbleChartMargin;
+  let fullHeight = maxY + distanceFromBubbleChart;
+
+  // Common styles
+  let styles = getCommonStyles(chartOptions.theme);
+
+  // Legend
+  let svgLegend = '';
+  if (chartOptions.legendOptions.show) {
+    const legendResult = createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
+    svgLegend = legendResult.svgLegend;
+    fullHeight += legendResult.legendHeight;
+    styles += getLegendItemAnimationStyle();
+  }
+
+  // Start building the SVG
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fullHeight}" viewBox="0 0 ${width} ${fullHeight}">`;
+  svg += createSVGDefs();
+  svg += svgTitle;
+  svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
+  bubbleNodes.forEach((node, index) => {
+    svg += createBubbleElement(node, index, chartOptions);
+    styles += generateBubbleAnimationStyle(node, index);
+  });
+  svg += '</g>'; // Close bubbles group
+  svg += svgLegend; 
+  svg += `<style>${styles}</style>`;
+  svg += '</svg>';
+
+  return svg;
 }

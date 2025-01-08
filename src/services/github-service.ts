@@ -74,7 +74,7 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
     if (error instanceof Error) {
       handleGitHubError(error);
     }
-    throw new GitHubError(400, 'Failed to fetch top languages from GitHub');
+    throw new GitHubError(400, 'GitHub API Error', 'Failed to fetch top languages from GitHub');
   }
 };
 
@@ -93,7 +93,7 @@ const retry = async (
       await new Promise((res) => setTimeout(res, delay));
       return retry(fn, retries - 1, delay);
     } else {
-      throw new GitHubError(400, 'Exceeded maximum retries for GitHub API. Try again later.');
+      throw new GitHubError(400, 'GitHub API Error', 'Exceeded maximum retries for GitHub API. Try again later.');
     }
   }
 };
@@ -105,7 +105,7 @@ const graphqlWithAuth = graphql.defaults({
 });
 
 const handleGitHubError = (error: Error) => {
-  console.log(error);
+  console.error('GitHub API Error:', error.message);
   if (error.message.includes('rate limit')) {
     throw new GitHubRateLimitError();
   }
@@ -118,5 +118,5 @@ const handleGitHubError = (error: Error) => {
   if (error.message.includes('Your account was suspended')) {
     throw new GitHubAccountSuspendedError();
   }
-  throw new GitHubError(400, 'Failed to fetch top languages from GitHub');
+  throw error;
 };
