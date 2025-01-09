@@ -19,12 +19,12 @@ function createTitleElement(
     const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
 
     titleOptions.text = parseEmojis(titleOptions.text);
-    const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize);
+    const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize, titleOptions.fontWeight);
 
     let textElement = '';
     let lines: string[] | null = null;
     if (textWidth > width) {
-      lines = wrapText(titleOptions.text, width, titleOptions.fontSize);
+      lines = wrapText(titleOptions.text, width, titleOptions.fontSize, titleOptions.fontWeight);
       const linePadding = 10; // Padding between lines
 
       if (lines.length > 3) {
@@ -90,11 +90,11 @@ function createBubbleElement(
       bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
     } else {
       const fontSize = radius / 3 + 'px';
-      const textLines = wrapText(language, radius * 2, fontSize);
+      const textLines = wrapText(language, radius * 2, fontSize, 'bold');
       
       let displayedText = '';
       if (textLines.length > 1) {
-        const lineHeight = measureTextHeight(language, fontSize);
+        const lineHeight = measureTextHeight(language, fontSize, 'bold');
         const adjustPos = radius / 5;
         textLines.forEach((line, i) => {
           displayedText += `
@@ -144,7 +144,7 @@ function createLegend(
       const text = `${item.name} (${percentage})`;
       return {
         text,
-        width: measureTextWidth(text, '12px') + legendXPadding, // Include circle and padding
+        width: measureTextWidth(text, '12px', 'bold') + legendXPadding, // Include circle and padding
         color: item.color
       };
     });
@@ -219,7 +219,7 @@ export function createBubbleChart(
   let titleHeight = 0;
   let { svgTitle, titleLines } = { svgTitle: '', titleLines: 0};
   if (chartOptions.titleOptions.text) {
-    titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
+    titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize, chartOptions.titleOptions.fontWeight);
     const title = createTitleElement(chartOptions.titleOptions, width, titleHeight);
     svgTitle = title.svgTitle;
     titleLines = title.titleLines;

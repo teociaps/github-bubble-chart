@@ -35,17 +35,17 @@ export async function getBubbleData(username: string, langsCount: number) {
   }));
 }
 
-export function measureTextWidth(text: string, fontSize: string): number {
+export function measureTextWidth(text: string, fontSize: string, fontWeight: string = 'bold'): number {
   const canvas = createCanvas(500, 200);
   const context = canvas.getContext('2d');
-  context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
+  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // Include font weight
   return context.measureText(text).width;
 };
 
-export function measureTextHeight(text: string, fontSize: string): number {
+export function measureTextHeight(text: string, fontSize: string, fontWeight: string = 'bold'): number {
   const canvas = createCanvas(500, 200);
   const context = canvas.getContext('2d');
-  context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
+  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // Include font weight
   const metrics = context.measureText(text);
   return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 };
@@ -62,14 +62,14 @@ export const parseEmojis = (str: string) => {
   });
 };
 
-export function wrapText(text: string, maxWidth: number, fontSize: string): string[] {
+export function wrapText(text: string, maxWidth: number, fontSize: string, fontWeight: string = 'normal'): string[] {
   const words = text.split(' ');
   let lines: string[] = [];
   let currentLine = words[0];
 
   for (let i = 1; i < words.length; i++) {
     const word = words[i];
-    const width = measureTextWidth(currentLine + ' ' + word, fontSize); // TODO: enhance calculation to wrap text
+    const width = measureTextWidth(currentLine + ' ' + word, fontSize, fontWeight); // Include font weight
     if (width < maxWidth) {
       currentLine += ' ' + word;
     } else {
