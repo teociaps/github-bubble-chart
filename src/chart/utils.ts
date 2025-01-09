@@ -35,17 +35,16 @@ export async function getBubbleData(username: string, langsCount: number) {
   }));
 }
 
-export function measureTextWidth(text: string, fontSize: string, fontWeight: string = 'bold'): number {
-  const canvas = createCanvas(500, 200);
-  const context = canvas.getContext('2d');
-  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // Include font weight
+const canvas = createCanvas(500, 200);
+const context = canvas.getContext('2d');
+
+export function measureTextWidth(text: string, fontSize: string, fontWeight: string = 'normal'): number {
+  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`;
   return context.measureText(text).width;
 };
 
-export function measureTextHeight(text: string, fontSize: string, fontWeight: string = 'bold'): number {
-  const canvas = createCanvas(500, 200);
-  const context = canvas.getContext('2d');
-  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // Include font weight
+export function measureTextHeight(text: string, fontSize: string, fontWeight: string = 'normal'): number {
+  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`;
   const metrics = context.measureText(text);
   return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 };
