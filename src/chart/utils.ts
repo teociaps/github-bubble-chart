@@ -36,18 +36,18 @@ export async function getBubbleData(username: string, langsCount: number) {
 }
 
 export function measureTextWidth(text: string, fontSize: string): number {
-  const canvas = createCanvas(0 ,0);
+  const canvas = createCanvas(500, 200);
   const context = canvas.getContext('2d');
   context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
   return context.measureText(text).width;
 };
 
 export function measureTextHeight(text: string, fontSize: string): number {
-  const canvas = createCanvas(0 ,0);
+  const canvas = createCanvas(500, 200);
   const context = canvas.getContext('2d');
   context.font = `${fontSize} ${defaultFontFamily}`; // Match SVG font style
   const metrics = context.measureText(text);
-  return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+  return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 };
 
 export const parseEmojis = (str: string) => {
