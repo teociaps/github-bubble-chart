@@ -45,20 +45,13 @@ jobs:
           fi
 
       - name: Check for existing open PRs
+        id: check_pr
         if: env.CHANGES == 'true'
         run: |
-          OPEN_PR_EXISTS=$(gh pr list --head update-language-mappings --state open --json number --jq '.[0].number')
-          if [[ -n "$OPEN_PR_EXISTS" ]]; then
+          if gh pr list --head update-language-mappings --state open --json number --jq '.[0].number' > /dev/null; then
             echo "OPEN_PR_EXISTS=true" >> $GITHUB_ENV
           else
             echo "OPEN_PR_EXISTS=false" >> $GITHUB_ENV
-          fi
-
-      - name: Delete existing branch
-        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
-        run: |
-          if git show-ref --verify --quiet refs/heads/update-language-mappings; then
-            git push origin --delete update-language-mappings
           fi
 
       - name: Commit and push changes
@@ -70,6 +63,16 @@ jobs:
           git add src/languageMappings.json
           git commit -m 'Update language mappings'
           git push origin HEAD:refs/heads/update-language-mappings
+
+      - name: Update existing PR
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout update-language-mappings
+          git add src/languageMappings.json
+          git commit --amend --no-edit
+          git push origin update-language-mappings --force
 
       - name: Create Pull Request
         if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
