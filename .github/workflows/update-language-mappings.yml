@@ -19,7 +19,7 @@ jobs:
       LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
       CHANGES: false
       OPEN_PR_EXISTS: false
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

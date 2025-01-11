@@ -1,40 +1,16 @@
-import { CONSTANTS } from '../config/consts.js';
-import { defaultHeaders, handleMissingUsername, parseParams } from '../src/api-utils.js';
-import { createBubbleChart } from '../src/chart/generator.js';
-import { BubbleChartOptions } from '../src/chart/types.js';
-import { getBubbleData } from '../src/chart/utils.js';
+import express, { Application } from 'express';
+import dotenv from 'dotenv';
+import api from './default.js';
 
-export default async (req: any, res: any) => {
-  const params = parseParams(req);
-  const username = params.get('username');
+dotenv.config();
 
-  if (!username) {
-    handleMissingUsername(req, res);
-    return;
-  }
+const PORT = process.env.PORT || 9000;
+const app: Application = express();
 
-  try {
-    const options: BubbleChartOptions = {
-      width: params.getNumberValue('width', 600),
-      height: params.getNumberValue('height', 400),
-      titleOptions: params.parseTitleOptions(),
-      showPercentages: params.getBooleanValue('percentages', false),
-      legendOptions: params.parseLegendOptions(),
-      theme: params.getTheme('theme', CONSTANTS.DEFAULT_THEME),
-    };
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-    const bubbleData = await getBubbleData(username);
-    const svg = createBubbleChart(bubbleData, options);
+app.get('/', api);
 
-    if (!svg) {
-      console.error('svg not generated.');
-      return res.send('svg not generated.');
-    }
-
-    res.setHeaders(defaultHeaders);
-    res.send(svg.trim());
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch languages for specified user' });
-  }
-};
+export default app;

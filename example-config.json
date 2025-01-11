@@ -1,0 +1,39 @@
+{
+  "options": {
+    "width": 800,
+    "height": 600,
+    "showPercentages": true,
+    "title": {
+      "text": "Custom Bubble Chart",
+      "fontSize": "30px",
+      "fontWeight": "bold",
+      "color": "#fff",
+      "align": "middle"
+    },
+    "legend": {
+      "show": true,
+      "align": "left"
+    },
+    "theme": "dark"
+  },
+  "data": [
+    { "name": "JavaScript", "value": 40, "color": "green", "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Python", "value": 30, "color": "#3572A5" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "Java", "value": 20, "color": "#b07219" },
+    { "name": "C++", "value": 10, "color": "#f34b7d" },
+    { "name": "C++", "value": 10, "color": "#f34b7d" }
+  ]
+}

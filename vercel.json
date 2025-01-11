@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "yarn run build",
+  "installCommand": "yarn install",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index.ts"
+    }
+  ]
+}

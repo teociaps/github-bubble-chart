@@ -1,0 +1,67 @@
+name: 🐞 Bug Report
+description: Report an anomaly or unexpected behavior from this repository.
+title: "[Bug]: "
+labels: ['needs: triage', 'bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to complete this bug report!
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Guidelines
+      description: By submitting this issue, you agree to follow our [Contributing Guidelines](https://github.com/teociaps/github-bubble-chart/blob/main/CONTRIBUTING.md).
+      options:
+        - label: I agree to follow this project's Contributing Guidelines.
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Clearly and concisely describe the bug you encountered.
+      placeholder: Describe the issue you faced.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How do you reproduce this issue? Please provide as much step-by-step detail as possible.
+      placeholder: |
+        1. Step one
+        2. Step two
+        3. Step three
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+      placeholder: Explain the expected outcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Information
+      description: Add any other useful information about the problem here.
+      placeholder: Provide any additional helpful information.
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or Screenshots
+      description: Please provide any relevant logs or screenshots to help us understand the issue.
+      placeholder: Attach logs or screenshots here.
+    validations:
+      required: false
