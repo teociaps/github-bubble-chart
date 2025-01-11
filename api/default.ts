@@ -39,7 +39,7 @@ export default async (req: any, res: any) => {
       bubbleData = await getBubbleData(username, langsCount);
     }
 
-    const svg = createBubbleChart(bubbleData, options);
+    const svg = await createBubbleChart(bubbleData, options);
 
     if (!svg) {
       throw new SVGGenerationError('SVG generation failed: No data available or invalid configuration.');

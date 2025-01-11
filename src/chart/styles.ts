@@ -3,7 +3,7 @@ import { ThemeBase } from "./themes.js";
 import { BubbleData } from "./types.js";
 import { StyleError } from "../errors/custom-errors.js";
 
-export const defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"';
+export const defaultFontFamily = '-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'Noto Sans\',Helvetica,Arial,sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\'';
 
 export function getCommonStyles(theme: ThemeBase): string {
   try {

@@ -1,15 +1,15 @@
 import { fetchTopLanguages } from '../services/github-service.js';
 import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
-import { createCanvas } from 'canvas';
 import { defaultFontFamily } from './styles.js';
 import { emojify } from 'node-emoji';
+import puppeteer from 'puppeteer';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
     headers: {
-      Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
-    }
+      Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
+    },
   });
   if (!response.ok) {
     throw new Error('Failed to fetch language mappings');
@@ -35,40 +35,108 @@ export async function getBubbleData(username: string, langsCount: number) {
   }));
 }
 
-const canvas = createCanvas(500, 200);
-const context = canvas.getContext('2d');
+let browserInstance: puppeteer.Browser | null = null;
+let reusablePage: puppeteer.Page | null = null;
 
-export function measureTextWidth(text: string, fontSize: string, fontWeight: string = 'normal'): number {
-  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`;
-  return context.measureText(text).width;
-};
+async function getBrowserInstance(): Promise<puppeteer.Browser> {
+  if (!browserInstance) {
+    browserInstance = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+    process.on('exit', async () => {
+      if (browserInstance) {
+        await browserInstance.close();
+        browserInstance = null;
+        reusablePage = null;
+      }
+    });
+  }
+  return browserInstance;
+}
 
-export function measureTextHeight(text: string, fontSize: string, fontWeight: string = 'normal'): number {
-  context.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`;
-  const metrics = context.measureText(text);
-  return metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-};
+async function getReusablePage(): Promise<puppeteer.Page> {
+  const browser = await getBrowserInstance();
+
+  if (!reusablePage) {
+    reusablePage = await browser.newPage();
+
+    const html = `
+      <html>
+      <body style="margin: 0; padding: 0;">
+        <div id="text" style="visibility: hidden; white-space: nowrap;"></div>
+      </body>
+      </html>
+    `;
+    await reusablePage.setContent(html);
+  }
+
+  return reusablePage;
+}
+
+async function measureTextDimension(
+  text: string,
+  fontSize: string,
+  fontWeight: string = 'normal',
+  dimension: 'width' | 'height',
+): Promise<number> {
+  const page = await getReusablePage();
+  const size = await page.evaluate(
+    ({ text, fontSize, fontWeight, defaultFontFamily, dimension }) => {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context!.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // E.g., "bold 16px Arial"
+      const metrics = context!.measureText(text);
+      return dimension === 'width'
+        ? metrics.width
+        : metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    },
+    { text, fontSize, fontWeight, defaultFontFamily, dimension },
+  );
+
+  return size;
+}
+
+export async function measureTextWidth(
+  text: string,
+  fontSize: string,
+  fontWeight: string = 'normal',
+): Promise<number> {
+  return measureTextDimension(text, fontSize, fontWeight, 'width');
+}
+
+export async function measureTextHeight(
+  text: string,
+  fontSize: string,
+  fontWeight: string = 'normal',
+): Promise<number> {
+  return measureTextDimension(text, fontSize, fontWeight, 'height');
+}
 
 export const parseEmojis = (str: string) => {
   if (!str) {
-    throw new Error("[parseEmoji]: str argument not provided");
+    throw new Error('[parseEmoji]: str argument not provided');
   }
   if (!/:\\w+:/gm.test(str)) {
     return str;
   }
   return str.replace(/:\w+:/gm, (emoji: string) => {
-    return emojify(emoji) || "";
+    return emojify(emoji) || '';
   });
 };
 
-export function wrapText(text: string, maxWidth: number, fontSize: string, fontWeight: string = 'normal'): string[] {
+export async function wrapText(
+  text: string,
+  maxWidth: number,
+  fontSize: string,
+  fontWeight: string = 'normal',
+): Promise<string[]> {
   const words = text.split(' ');
   let lines: string[] = [];
   let currentLine = words[0];
 
   for (let i = 1; i < words.length; i++) {
     const word = words[i];
-    const width = measureTextWidth(currentLine + ' ' + word, fontSize, fontWeight); // Include font weight
+    const width = await measureTextWidth(currentLine + ' ' + word, fontSize, fontWeight);
     if (width < maxWidth) {
       currentLine += ' ' + word;
     } else {
