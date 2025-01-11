@@ -11,12 +11,15 @@ permissions:
 
 jobs:
   update-mappings:
+    if: github.repository == 'teociaps/github-bubble-chart'
     runs-on: ubuntu-latest
 
     env:
       DEVICON_URL: ${{ secrets.DEVICON_URL }}
       LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
-
+      CHANGES: false
+      OPEN_PR_EXISTS: false
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,22 +39,43 @@ jobs:
         id: check_changes
         run: |
           if [[ -n "$(git status --porcelain src/languageMappings.json)" ]]; then
-            echo "changes=true" >> $GITHUB_ENV
+            echo "CHANGES=true" >> $GITHUB_ENV
           else
-            echo "changes=false" >> $GITHUB_ENV
+            echo "CHANGES=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check for existing open PRs
+        id: check_pr
+        if: env.CHANGES == 'true'
+        run: |
+          if gh pr list --head update-language-mappings --state open --json number --jq '.[0].number' > /dev/null; then
+            echo "OPEN_PR_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "OPEN_PR_EXISTS=false" >> $GITHUB_ENV
           fi
 
       - name: Commit and push changes
-        if: env.changes == 'true'
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b update-language-mappings
           git add src/languageMappings.json
           git commit -m 'Update language mappings'
           git push origin HEAD:refs/heads/update-language-mappings
 
+      - name: Update existing PR
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout update-language-mappings
+          git add src/languageMappings.json
+          git commit --amend --no-edit
+          git push origin update-language-mappings --force
+
       - name: Create Pull Request
-        if: env.changes == 'true'
+        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,3 +85,4 @@ jobs:
           body: 'This PR updates the language mappings JSON file.'
           assignees: teociaps
           reviewers: teociaps
+          labels: 'language-mappings-update'
