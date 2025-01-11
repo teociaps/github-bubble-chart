@@ -82,6 +82,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'Update language mappings'
           branch: update-language-mappings
+          base: main
           title: 'Update language mappings'
           body: 'This PR updates the language mappings JSON file.'
           assignees: teociaps
