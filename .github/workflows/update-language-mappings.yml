@@ -59,10 +59,11 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout -b update-language-mappings
+          git checkout -b update-language-mappings || git checkout update-language-mappings
+          git pull origin update-language-mappings || true
           git add src/languageMappings.json
           git commit -m 'Update language mappings'
-          git push origin HEAD:refs/heads/update-language-mappings
+          git push origin HEAD:refs/heads/update-language-mappings --force
 
       - name: Update existing PR
         if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'true'
