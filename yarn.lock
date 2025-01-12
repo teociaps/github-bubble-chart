@@ -1080,6 +1080,11 @@
   resolved "https://registry.yarnpkg.com/@types/http-errors/-/http-errors-2.0.4.tgz#7eb47726c391b7345a6ec35ad7f4de469cf5ba4f"
   integrity sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==
 
+"@types/image-to-base64@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@types/image-to-base64/-/image-to-base64-2.1.2.tgz#bd0a0378767543bebeedd5be2c599bdeab5c9cbb"
+  integrity sha512-SD9M2pVsB5N67IbeTS9VBy6ojoXnj1Nh1VwigkYKtUbjAVEiFHjWygb2Y8NlMQM889APRqekZIRpSdYkmQ9rsQ==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.6.tgz#7739c232a1fee9b4d3ce8985f314c0c6d33549d7"
