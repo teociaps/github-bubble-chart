@@ -5,11 +5,11 @@ import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, to
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
 import { GeneratorError } from '../errors/custom-errors.js';
 
-function createTitleElement(
+async function createTitleElement(
   titleOptions: TitleOptions,
   width: number,
   titleHeight: number
-): { svgTitle: string; titleLines: number } {
+): Promise<{ svgTitle: string; titleLines: number }> {
   try {
     const style = Object.keys(titleOptions)
       .filter((style) => style !== 'text' && style !== 'textAnchor' && titleOptions[style] != null)
@@ -19,13 +19,13 @@ function createTitleElement(
     const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
 
     titleOptions.text = parseEmojis(titleOptions.text);
-    const textWidth = measureTextWidth(titleOptions.text, titleOptions.fontSize);
+    const textWidth = await measureTextWidth(titleOptions.text, titleOptions.fontSize, titleOptions.fontWeight);
 
     let textElement = '';
     let lines: string[] | null = null;
     if (textWidth > width) {
-      lines = wrapText(titleOptions.text, width, titleOptions.fontSize);
-      const linePadding = 10; // Padding between lines
+      lines = await wrapText(titleOptions.text, width, titleOptions.fontSize, titleOptions.fontWeight);
+      const linePadding = 0; // Padding between lines
 
       if (lines.length > 3) {
         lines = lines.slice(0, 3);
@@ -58,11 +58,11 @@ function createTitleElement(
   }
 }
 
-function createBubbleElement(
+async function createBubbleElement(
   node: HierarchyCircularNode<BubbleData>,
   index: number,
   chartOptions: BubbleChartOptions,
-): string {
+): Promise<string> {
   try {
     const color = getColor(node.data);
     const radius = node.r;
@@ -90,11 +90,11 @@ function createBubbleElement(
       bubble += `<image class="b-icon" href="${iconUrl}" width="${radius}" height="${radius}" x="${-radius / 2}" y="${-radius / 2}"></image>`;
     } else {
       const fontSize = radius / 3 + 'px';
-      const textLines = wrapText(language, radius * 2, fontSize);
+      const textLines = await wrapText(language, radius * 2, fontSize);
       
       let displayedText = '';
       if (textLines.length > 1) {
-        const lineHeight = measureTextHeight(language, fontSize);
+        const lineHeight = await measureTextHeight(language, fontSize);
         const adjustPos = radius / 5;
         textLines.forEach((line, i) => {
           displayedText += `
@@ -115,20 +115,20 @@ function createBubbleElement(
     }
 
     bubble += '</g>'; // Close the bubble group
-
+    
     return bubble;
   } catch (error) {
     throw new GeneratorError('Failed to create bubble element.', error instanceof Error ? error : undefined);
   }
 }
 
-function createLegend(
+async function createLegend(
   data: BubbleData[],
   svgWidth: number,
   svgMaxY: number,
   distanceFromBubbleChart: number,
   chartOptions: BubbleChartOptions
-): { svgLegend: string; legendHeight: number } {
+): Promise<{ svgLegend: string; legendHeight: number }> {
   try {
     const legendMarginTop = distanceFromBubbleChart; // Distance from the last bubble to the legend
     const legendItemHeight = 20; // Height for each legend row
@@ -139,12 +139,13 @@ function createLegend(
     let svgLegend = `<g class="legend" transform="translate(0, 0)">`;
 
     // Prepare legend items with their measured widths
-    const legendItems = data.map((item) => {
+    const legendItems = data.map(async (item) => {
       const percentage = item.value + '%';
       const text = `${item.name} (${percentage})`;
+      const textWidth = await measureTextWidth(text, '12px');
       return {
         text,
-        width: measureTextWidth(text, '12px') + legendXPadding, // Include circle and padding
+        width: textWidth + legendXPadding, // Include circle and padding
         color: item.color
       };
     });
@@ -154,15 +155,15 @@ function createLegend(
     let currentRowIndex = 0;
 
     // Group legend items into rows based on svgWidth
-    legendItems.forEach((item) => {
-      if (currentRowWidth + item.width > svgWidth) {
+    for await (const i of legendItems) {
+      if (currentRowWidth + i.width > svgWidth) {
         currentRowIndex++;
         rowItems[currentRowIndex] = [];
         currentRowWidth = 0;
       }
-      rowItems[currentRowIndex].push(item);
-      currentRowWidth += item.width;
-    });
+      rowItems[currentRowIndex].push(i);
+      currentRowWidth += i.width;
+    }
 
     // Generate SVG for legend rows
     rowItems.forEach((row, rowIndex) => {
@@ -202,10 +203,10 @@ function createLegend(
 /**
  * Create the SVG element for the bubble chart.
  */
-export function createBubbleChart(
+export async function createBubbleChart(
   data: BubbleData[],
   chartOptions: BubbleChartOptions
-): string | null {
+): Promise<string | null> {
   if (data.length === 0) return null;
 
   const width = chartOptions.width;
@@ -219,8 +220,8 @@ export function createBubbleChart(
   let titleHeight = 0;
   let { svgTitle, titleLines } = { svgTitle: '', titleLines: 0};
   if (chartOptions.titleOptions.text) {
-    titleHeight = measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize);
-    const title = createTitleElement(chartOptions.titleOptions, width, titleHeight);
+    titleHeight = await measureTextHeight(chartOptions.titleOptions.text, chartOptions.titleOptions.fontSize, chartOptions.titleOptions.fontWeight);
+    const title = await createTitleElement(chartOptions.titleOptions, width, titleHeight);
     svgTitle = title.svgTitle;
     titleLines = title.titleLines;
   }
@@ -237,7 +238,7 @@ export function createBubbleChart(
   // Legend
   let svgLegend = '';
   if (chartOptions.legendOptions.show) {
-    const legendResult = createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
+    const legendResult = await createLegend(data, width, maxY, distanceFromBubbleChart, chartOptions);
     svgLegend = legendResult.svgLegend;
     fullHeight += legendResult.legendHeight;
     styles += getLegendItemAnimationStyle();
@@ -248,10 +249,12 @@ export function createBubbleChart(
   svg += createSVGDefs();
   svg += svgTitle;
   svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
-  bubbleNodes.forEach((node, index) => {
-    svg += createBubbleElement(node, index, chartOptions);
-    styles += generateBubbleAnimationStyle(node, index);
-  });
+  
+  for await (const [index, element] of bubbleNodes.entries()) {
+    svg += await createBubbleElement(element, index, chartOptions);
+    styles += generateBubbleAnimationStyle(element, index);
+  }
+
   svg += '</g>'; // Close bubbles group
   svg += svgLegend; 
   svg += `<style>${styles}</style>`;

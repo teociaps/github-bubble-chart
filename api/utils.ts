@@ -114,8 +114,8 @@ export class CustomURLSearchParams extends URLSearchParams {
   parseLegendOptions(): LegendOptions {
     try {
       return {
-        show: this.getBooleanValue('legend', false),
-        align: this.getStringValue('legend-align', 'left') as TextAlign,
+        show: this.getBooleanValue('legend', true),
+        align: this.getStringValue('legend-align', 'center') as TextAlign,
       };
     } catch (error) {
       throw new ValidationError('Invalid legend options.', error instanceof Error ? error : undefined);
