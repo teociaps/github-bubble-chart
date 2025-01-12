@@ -3,7 +3,8 @@ import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
 import { defaultFontFamily } from './styles.js';
 import { emojify } from 'node-emoji';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
@@ -38,16 +39,28 @@ export async function getBubbleData(username: string, langsCount: number) {
 let browserInstance: puppeteer.Browser | null = null;
 let reusablePage: puppeteer.Page | null = null;
 
-async function getBrowserInstance(): Promise<puppeteer.Browser> {
+export async function getBrowserInstance(): Promise<puppeteer.Browser> {
   if (!browserInstance) {
+    const executablePath = await chromium.executablePath();
+    if (!executablePath) {
+      throw new Error('Failed to locate Chromium binary.');
+    }
+
     browserInstance = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath,
+      args: [
+        ...chromium.args,
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+      ],
+      headless: chromium.headless,
+      defaultViewport: chromium.defaultViewport,
     });
+
     process.on('exit', async () => {
       if (browserInstance) {
         await browserInstance.close();
         browserInstance = null;
-        reusablePage = null;
       }
     });
   }
