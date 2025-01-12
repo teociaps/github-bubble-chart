@@ -41,12 +41,12 @@ const fontWeightMultipliers: Record<string | number, number> = {
   400: 1.0, // Normal
   500: 1.03, // Medium
   600: 1.06, // Semi-Bold
-  700: 1.1, // Bold
-  800: 1.15, // Extra Bold
-  900: 1.2, // Black
+  700: 1.08, // Bold
+  800: 1.1, // Extra Bold
+  900: 1.15, // Black
   normal: 1.0,
-  bold: 1.1,
-  bolder: 1.2, // Relative boldness (mapped to Black)
+  bold: 1.08,
+  bolder: 1.15, // Relative boldness (mapped to Black)
   lighter: 0.9, // Relative lightness (mapped to Thin)
 };
 
