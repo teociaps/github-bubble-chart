@@ -34,8 +34,28 @@ export async function getBubbleData(username: string, langsCount: number) {
   }));
 }
 
+const fontWeightMultipliers: Record<string | number, number> = {
+  100: 0.9, // Thin
+  200: 0.95, // Extra Light
+  300: 0.97, // Light
+  400: 1.0, // Normal
+  500: 1.03, // Medium
+  600: 1.06, // Semi-Bold
+  700: 1.1, // Bold
+  800: 1.15, // Extra Bold
+  900: 1.2, // Black
+  normal: 1.0,
+  bold: 1.1,
+  bolder: 1.2, // Relative boldness (mapped to Black)
+  lighter: 0.9, // Relative lightness (mapped to Thin)
+};
+
+let textToSVG: TextToSVG | null = null;
+
 async function getTextToSVG(): Promise<TextToSVG> {
-  const textToSVG = TextToSVG.loadSync();
+  if (!textToSVG) {
+    textToSVG = TextToSVG.loadSync();
+  }
   return textToSVG;
 }
 
@@ -49,10 +69,13 @@ async function measureTextDimension(
 
   // Convert the font size from a string to a number
   const size = parseFloat(fontSize);
+  
+  const sizeMultiplier = fontWeightMultipliers[fontWeight] || 1.0;
+  const adjustedSize = size * sizeMultiplier;
 
   // Generate an SVG path for the text
   const attributes = {
-    fontSize: size,
+    fontSize: adjustedSize,
     fontWeight,
     anchor: 'left top' as Anchor,
   };
@@ -101,10 +124,18 @@ export async function wrapText(
   const words = text.split(' ');
   let lines: string[] = [];
   let currentLine = words[0];
+  const wordWidths: Record<string, number> = {};
 
   for (let i = 1; i < words.length; i++) {
     const word = words[i];
-    const width = await measureTextWidth(currentLine + ' ' + word, fontSize, fontWeight);
+    const combinedText = currentLine + ' ' + word;
+    let width = wordWidths[combinedText];
+
+    if (width === undefined) {
+      width = await measureTextWidth(combinedText, fontSize, fontWeight);
+      wordWidths[combinedText] = width;
+    }
+
     if (width < maxWidth) {
       currentLine += ' ' + word;
     } else {
