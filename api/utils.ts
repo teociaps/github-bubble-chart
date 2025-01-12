@@ -2,7 +2,7 @@ import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
 import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig } from '../src/chart/types.js';
 import { GitHubNotFoundError, GitHubRateLimitError, GitHubBadCredentialsError, GitHubAccountSuspendedError } from '../src/errors/github-errors.js'; // Update import paths
-import { ValidationError, FetchError, StyleError, GeneratorError, BadRequestError } from '../src/errors/custom-errors.js'; // Update import paths
+import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js'; // Update import paths
 import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';
 import fs from 'fs';
 import path from 'path';
@@ -144,46 +144,7 @@ export async function handleMissingUsername(req: any, res: any) {
   }
   const url = new URL(req.url, `${protocol}://${req.get('host')}`);
   const base = `${url.origin}${req.baseUrl}`;
-  const error = new BadRequestError(
-    `${getMissingUsernameCSS()}
-    <section>
-      <div class="container">
-        <h2 class="error-title">Missing Required Parameter</h2>
-        <p>The URL should include the <code>username</code> query parameter:</p>
-        <div class="url-container">
-          <p id="baseurl-show">${base}?username=USERNAME</p>
-          <button type="button" class="copy-button">Copy URL</button>
-          <span id="temporary-span" class="copy-status"></span>
-        </div>
-        <p>Replace <code>USERNAME</code> with your GitHub username.</p>
-      </div>
-      <div class="container form-container">
-        <h2 class="form-title">Quick Form</h2>
-        <p>Enter your GitHub username and click the button to generate the chart.</p>
-        <form action="${base}" method="get">
-          <label for="username">GitHub Username:</label>
-          <input type="text" name="username" id="username" placeholder="Ex. teociaps" required>
-          <p>
-            For more options, visit
-            <a href="https://github.com/teociaps/github-bubble-chart?tab=readme-ov-file" target="_blank">this page</a>.
-          </p>
-          <button type="submit">Generate Chart</button>
-        </form>
-      </div>
-      <script>
-        const button = document.querySelector(".copy-button");
-        const temporarySpan = document.querySelector("#temporary-span");
-
-        button.addEventListener("click", () => {
-          navigator.clipboard.writeText(document.querySelector("#baseurl-show").textContent);
-          temporarySpan.textContent = "Copied!";
-          setTimeout(() => {
-            temporarySpan.textContent = "";
-          }, 1500);
-        });
-      </script>
-    </section>`,
-  );
+  const error = new MissingUsernameError(base);
   res.send(error.render());
 }
 
