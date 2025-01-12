@@ -1,10 +1,8 @@
 import { fetchTopLanguages } from '../services/github-service.js';
 import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
 import { CONSTANTS } from '../../config/consts.js';
-import { defaultFontFamily } from './styles.js';
 import { emojify } from 'node-emoji';
-import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
+import TextToSVG, { Anchor } from 'text-to-svg';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
@@ -36,83 +34,39 @@ export async function getBubbleData(username: string, langsCount: number) {
   }));
 }
 
-let browserInstance: puppeteer.Browser | null = null;
-let reusablePage: puppeteer.Page | null = null;
-
-export async function getBrowserInstance(): Promise<puppeteer.Browser> {
-  if (!browserInstance) {
-    const executablePath = await chromium.executablePath();
-    if (!executablePath) {
-      throw new Error('Failed to locate Chromium binary.');
-    }
-
-    browserInstance = await puppeteer.launch({
-      executablePath,
-      args: [
-        ...chromium.args,
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-      ],
-      headless: chromium.headless,
-      defaultViewport: chromium.defaultViewport,
-    });
-
-    process.on('exit', async () => {
-      if (browserInstance) {
-        await browserInstance.close();
-        browserInstance = null;
-      }
-    });
-  }
-  return browserInstance;
-}
-
-async function getReusablePage(): Promise<puppeteer.Page> {
-  const browser = await getBrowserInstance();
-
-  if (!reusablePage) {
-    reusablePage = await browser.newPage();
-
-    const html = `
-      <html>
-      <body style="margin: 0; padding: 0;">
-        <div id="text" style="visibility: hidden; white-space: nowrap;"></div>
-      </body>
-      </html>
-    `;
-    await reusablePage.setContent(html);
-  }
-
-  return reusablePage;
+async function getTextToSVG(): Promise<TextToSVG> {
+  const textToSVG = TextToSVG.loadSync();
+  return textToSVG;
 }
 
 async function measureTextDimension(
   text: string,
   fontSize: string,
   fontWeight: string = 'normal',
-  dimension: 'width' | 'height',
+  dimension: 'width' | 'height'
 ): Promise<number> {
-  const page = await getReusablePage();
-  const size = await page.evaluate(
-    ({ text, fontSize, fontWeight, defaultFontFamily, dimension }) => {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      context!.font = `${fontWeight} ${fontSize} ${defaultFontFamily}`; // E.g., "bold 16px Arial"
-      const metrics = context!.measureText(text);
-      return dimension === 'width'
-        ? metrics.width
-        : metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-    },
-    { text, fontSize, fontWeight, defaultFontFamily, dimension },
-  );
+  const textToSVG = await getTextToSVG();
 
-  return size;
+  // Convert the font size from a string to a number
+  const size = parseFloat(fontSize);
+
+  // Generate an SVG path for the text
+  const attributes = {
+    fontSize: size,
+    fontWeight,
+    anchor: 'left top' as Anchor,
+  };
+
+  const svgMetrics = textToSVG.getMetrics(text, attributes);
+
+  // Return the required dimension
+  return dimension === 'width' ? svgMetrics.width : svgMetrics.height;
 }
 
 export async function measureTextWidth(
   text: string,
   fontSize: string,
-  fontWeight: string = 'normal',
+  fontWeight: string = 'normal'
 ): Promise<number> {
   return measureTextDimension(text, fontSize, fontWeight, 'width');
 }
@@ -120,10 +74,11 @@ export async function measureTextWidth(
 export async function measureTextHeight(
   text: string,
   fontSize: string,
-  fontWeight: string = 'normal',
+  fontWeight: string = 'normal'
 ): Promise<number> {
   return measureTextDimension(text, fontSize, fontWeight, 'height');
 }
+
 
 export const parseEmojis = (str: string) => {
   if (!str) {
