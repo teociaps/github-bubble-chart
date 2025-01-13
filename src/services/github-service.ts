@@ -1,6 +1,6 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
-import { GitHubError, GitHubRateLimitError, GitHubNotFoundError, GitHubBadCredentialsError, GitHubAccountSuspendedError } from '../errors/github-errors.js';
+import { GitHubError, GitHubRateLimitError, GitHubNotFoundError, GitHubBadCredentialsError, GitHubAccountSuspendedError, GitHubUsernameNotFoundError } from '../errors/github-errors.js';
 
 export const fetchTopLanguages = async (username: string, langsCount: number) => {
   try {
@@ -117,6 +117,9 @@ const handleGitHubError = (error: Error) => {
   }
   if (error.message.includes('Your account was suspended')) {
     throw new GitHubAccountSuspendedError();
+  }
+  if (error.message.includes('Could not resolve to a User with the login of')) {
+    throw new GitHubUsernameNotFoundError();
   }
   throw error;
 };

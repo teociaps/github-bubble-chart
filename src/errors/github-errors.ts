@@ -29,3 +29,9 @@ export class GitHubAccountSuspendedError extends GitHubError {
     super(403, 'GitHub Account Suspended', content ?? 'The GitHub account has been suspended.');
   }
 }
+
+export class GitHubUsernameNotFoundError extends GitHubError {
+  constructor(content?: string) {
+    super(404, 'GitHub Username Not Found', content ?? 'The requested GitHub username could not be found.');
+  }
+}
