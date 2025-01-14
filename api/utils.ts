@@ -1,8 +1,8 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
 import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig } from '../src/chart/types.js';
-import { GitHubNotFoundError, GitHubRateLimitError, GitHubBadCredentialsError, GitHubAccountSuspendedError } from '../src/errors/github-errors.js'; // Update import paths
-import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js'; // Update import paths
+import { GitHubNotFoundError, GitHubRateLimitError } from '../src/errors/github-errors.js';
+import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js';
 import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';
 import fs from 'fs';
 import path from 'path';
@@ -150,14 +150,19 @@ export async function handleMissingUsername(req: any, res: any) {
 
 export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
   try {
+    const processConfig = (customConfig: CustomConfig) => {
+      const options = mapConfigToBubbleChartOptions(customConfig.options);
+      customConfig.data.forEach(d => d.name = d.name);
+      return { options: options, data: customConfig.data };
+    };
+
     if (isDevEnvironment()) {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
-      const localPath = path.resolve(__dirname, '../../', 'example-config.json');
+      const localPath = path.resolve(__dirname, '../example-config.json');
       if (fs.existsSync(localPath)) {
         const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
-        const options = mapConfigToBubbleChartOptions(customConfig.options);
-        return { options: options, data: customConfig.data };
+        return processConfig(customConfig);
       } else {
         throw new FetchError(`Local config file not found at ${localPath}`);
       }
@@ -179,115 +184,11 @@ export async function fetchConfigFromRepo(username: string, filePath: string, br
       }
 
       const customConfig = await response.json() as CustomConfig;
-      const options = mapConfigToBubbleChartOptions(customConfig.options);
-      return { options: options, data: customConfig.data };
+      return processConfig(customConfig);
     }
   } catch (error) {
     throw new FetchError('Failed to fetch configuration from repository', error instanceof Error ? error : undefined);
   }
-}
-
-function getMissingUsernameCSS(): string {
-  return `
-    <style>
-      section {
-        width: 80%;
-        margin: 0 auto;
-        padding: 20px;
-      }
-      
-      button {
-        padding: 10px 20px;
-        color: #fff;
-        border: none;
-        border-radius: inherit;
-        cursor: pointer;
-      }
-      
-      .container {
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      }
-      
-      .url-container {
-        background-color: #f9f9f9;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ededed; 
-      }
-      #baseurl-show {
-        font-family: monospace;
-        color: #333;
-        background-color: #f4f4f4;
-        padding: 10px;
-        border-radius: inherit;
-        margin: 10px 0;
-      }
-      .copy-button {
-        background-color: #5bc0de;
-        &:hover {
-          background-color: #3da7c7;
-        }
-      }
-      .copy-status {
-        margin-left: 10px;
-        color: #5cb85c;
-      }
-
-      .form-container {
-        margin-top: 20px;
-      }
-      .form-title {
-        color: #6530bb;
-      }
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        border-radius: inherit;
-      }
-      label {
-        margin-bottom: 2px;
-      }
-      input {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: inherit;
-        max-width: 300px;
-      }
-      button[type="submit"] {
-        background-color: #5cb85c;
-        &:hover {
-          background-color: #378a37;
-        }
-      }
-
-      @media (max-width: 768px) {
-        #baseurl-show {
-          font-size: 14px;
-        }
-      }
-      @media (max-width: 480px) {
-        #baseurl-show {
-          font-size: 10px;
-        }
-      }
-      @media (min-width: 768px) {
-        section {
-          width: 60%;
-        }
-      }
-      @media (min-width: 1024px) {
-        section {
-          width: 50%;
-        }
-      }
-    </style>
-  `;
 }
 
 export function handleErrorResponse(error: Error | undefined, res: any) {

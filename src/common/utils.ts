@@ -29,3 +29,10 @@ export function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChar
     theme: theme,
   };
 }
+
+export function truncateText(text: string, maxChars: number): string {
+  if (text.length > maxChars) {
+    return text.substring(0, maxChars - 1) + '…';
+  }
+  return text;
+}

@@ -102,6 +102,17 @@ export async function measureTextHeight(
   return measureTextDimension(text, fontSize, fontWeight, 'height');
 }
 
+export function escapeSpecialChars(text: string): string {
+  return text.replace(/&/g, '&amp;')
+             .replace(/</g, '&lt;')
+             .replace(/>/g, '&gt;')
+             .replace(/"/g, '&quot;')
+             .replace(/'/g, '&#39;')
+             .replace(/\\/g, '&#92;')
+             .replace(/`/g, '&#96;')
+             .replace(/{/g, '&#123;')
+             .replace(/}/g, '&#125;');
+}
 
 export const parseEmojis = (str: string) => {
   if (!str) {
@@ -121,7 +132,7 @@ export async function wrapText(
   fontSize: string,
   fontWeight: string = 'normal',
 ): Promise<string[]> {
-  const words = text.split(' ');
+  const words = escapeSpecialChars(text).split(' ');
   let lines: string[] = [];
   let currentLine = words[0];
   const wordWidths: Record<string, number> = {};
@@ -145,13 +156,6 @@ export async function wrapText(
   }
   lines.push(currentLine);
   return lines;
-}
-
-export function truncateText(text: string, maxChars: number): string {
-  if (text.length > maxChars) {
-    return text.substring(0, maxChars - 1) + '…';
-  }
-  return text;
 }
 
 export function getAlignmentPosition(textAnchor: TextAnchor, width: number): number {
