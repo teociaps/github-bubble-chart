@@ -1,6 +1,8 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
-import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig, Mode } from '../src/chart/types.js';
+import { BubbleData } from '../src/chart/types/bubbleData.js';
+import { TextAnchor, TitleOptions, LegendOptions, TextAlign, BubbleChartOptions } from '../src/chart/types/chartOptions.js';
+import { CustomConfig, Mode } from '../src/chart/types/config.js';
 import { GitHubNotFoundError, GitHubRateLimitError } from '../src/errors/github-errors.js';
 import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js';
 import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';

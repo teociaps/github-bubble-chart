@@ -1,5 +1,6 @@
 import { themeMap } from "../chart/themes.js";
-import { ConfigOptions, BubbleChartOptions } from "../chart/types.js";
+import { ConfigOptions } from "../chart/types/config.js";
+import { BubbleChartOptions } from "../chart/types/chartOptions.js";
 
 export const isDevEnvironment = (): boolean => {
   return process.env.NODE_ENV === 'dev';

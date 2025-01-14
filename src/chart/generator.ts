@@ -1,6 +1,7 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
-import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
+import { BubbleData } from './types/bubbleData.js';
+import { BubbleChartOptions, TitleOptions } from './types/chartOptions.js';
 import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, getAlignmentPosition, escapeSpecialChars } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
 import { GeneratorError } from '../errors/custom-errors.js';

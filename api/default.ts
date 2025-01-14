@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../config/consts.js';
 import { defaultHeaders, fetchConfigFromRepo, handleMissingUsername, parseParams, handleErrorResponse } from './utils.js';
 import { createBubbleChart } from '../src/chart/generator.js';
-import { BubbleChartOptions } from '../src/chart/types.js';
+import { BubbleChartOptions } from '../src/chart/types/chartOptions.js';
 import { getBubbleData } from '../src/chart/utils.js';
 import { SVGGenerationError } from '../src/errors/custom-errors.js';
 

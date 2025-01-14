@@ -1,5 +1,6 @@
 import { fetchTopLanguages } from '../services/github-service.js';
-import { BubbleData, LanguageMappings, TextAnchor } from './types.js';
+import { BubbleData, LanguageMappings } from './types/bubbleData.js';
+import { TextAnchor } from './types/chartOptions.js';
 import { CONSTANTS } from '../../config/consts.js';
 import { emojify } from 'node-emoji';
 import TextToSVG, { Anchor } from 'text-to-svg';
