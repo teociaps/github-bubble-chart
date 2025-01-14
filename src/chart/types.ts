@@ -69,3 +69,5 @@ export interface LegendConfig {
   show: boolean;
   align: TextAlign;
 }
+
+export type Mode = 'top-langs' | 'custom-config';

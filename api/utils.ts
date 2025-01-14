@@ -1,6 +1,6 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
-import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig } from '../src/chart/types.js';
+import { TextAlign, LegendOptions, TitleOptions, TextAnchor, BubbleChartOptions, BubbleData, CustomConfig, Mode } from '../src/chart/types.js';
 import { GitHubNotFoundError, GitHubRateLimitError } from '../src/errors/github-errors.js';
 import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js';
 import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';
@@ -120,6 +120,13 @@ export class CustomURLSearchParams extends URLSearchParams {
     } catch (error) {
       throw new ValidationError('Invalid legend options.', error instanceof Error ? error : undefined);
     }
+  }
+
+  getMode(): Mode {
+    const defaultValue: Mode = 'top-langs';
+    const mode = this.getStringValue('mode', defaultValue) as Mode;
+    const validModes: Mode[] = ['top-langs', 'custom-config'];
+    return validModes.includes(mode) ? mode : defaultValue;
   }
 }
 
