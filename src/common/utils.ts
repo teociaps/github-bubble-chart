@@ -1,5 +1,6 @@
 import { themeMap } from "../chart/themes.js";
-import { ConfigOptions, BubbleChartOptions } from "../chart/types.js";
+import { ConfigOptions } from "../chart/types/config.js";
+import { BubbleChartOptions } from "../chart/types/chartOptions.js";
 
 export const isDevEnvironment = (): boolean => {
   return process.env.NODE_ENV === 'dev';
@@ -28,4 +29,11 @@ export function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChar
     },
     theme: theme,
   };
+}
+
+export function truncateText(text: string, maxChars: number): string {
+  if (text.length > maxChars) {
+    return text.substring(0, maxChars - 1) + '…';
+  }
+  return text;
 }

@@ -1,9 +1,11 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
-import { BubbleChartOptions, BubbleData, TitleOptions } from './types.js';
-import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, truncateText, getAlignmentPosition } from './utils.js';
+import { BubbleData } from './types/bubbleData.js';
+import { BubbleChartOptions, TitleOptions } from './types/chartOptions.js';
+import { getColor, getName, measureTextHeight, measureTextWidth, parseEmojis, toKebabCase, wrapText, getAlignmentPosition, escapeSpecialChars } from './utils.js';
 import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from './styles.js';
 import { GeneratorError } from '../errors/custom-errors.js';
+import { truncateText } from '../common/utils.js';
 
 async function createTitleElement(
   titleOptions: TitleOptions,
@@ -18,7 +20,7 @@ async function createTitleElement(
 
     const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
 
-    titleOptions.text = parseEmojis(titleOptions.text);
+    titleOptions.text = escapeSpecialChars(parseEmojis(titleOptions.text));
     const textWidth = await measureTextWidth(titleOptions.text, titleOptions.fontSize, titleOptions.fontWeight);
 
     let textElement = '';
@@ -208,6 +210,11 @@ export async function createBubbleChart(
   chartOptions: BubbleChartOptions
 ): Promise<string | null> {
   if (data.length === 0) return null;
+
+  // Escape special characters in data names so they can be shown correctly in the chart
+  data.forEach(item => {
+    item.name = escapeSpecialChars(item.name);
+  });
 
   const width = chartOptions.width;
   const height = chartOptions.height;

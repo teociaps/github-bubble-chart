@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../config/consts.js';
 import { defaultHeaders, fetchConfigFromRepo, handleMissingUsername, parseParams, handleErrorResponse } from './utils.js';
 import { createBubbleChart } from '../src/chart/generator.js';
-import { BubbleChartOptions } from '../src/chart/types.js';
+import { BubbleChartOptions } from '../src/chart/types/chartOptions.js';
 import { getBubbleData } from '../src/chart/utils.js';
 import { SVGGenerationError } from '../src/errors/custom-errors.js';
 
@@ -10,7 +10,7 @@ export default async (req: any, res: any) => {
   const username = params.get('username');
   const configBranch = params.get('config-branch') || undefined;
   const configPath = params.get('config-path');
-  const mode = params.get('mode') || 'top-langs'; // TODO: enhance "mode" management -> Default to 'top-langs'
+  const mode = params.getMode();
 
   if (!username) {
     handleMissingUsername(req, res);

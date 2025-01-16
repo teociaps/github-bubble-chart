@@ -1,6 +1,6 @@
 import { HierarchyCircularNode } from "d3";
 import { ThemeBase } from "./themes.js";
-import { BubbleData } from "./types.js";
+import { BubbleData } from "./types/bubbleData.js";
 import { StyleError } from "../errors/custom-errors.js";
 
 export const defaultFontFamily = '-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'Noto Sans\',Helvetica,Arial,sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\'';
