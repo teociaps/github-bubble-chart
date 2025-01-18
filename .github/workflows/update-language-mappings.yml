@@ -29,6 +29,16 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Delete existing branch and recreate from main
+        run: |
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/update-language-mappings; then
+            git push origin --delete update-language-mappings
+          fi
+          git checkout main
+          git pull origin main
+          git checkout -b update-language-mappings
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
@@ -42,14 +52,6 @@ jobs:
             echo "CHANGES=true" >> $GITHUB_ENV
           else
             echo "CHANGES=false" >> $GITHUB_ENV
-          fi
-
-      - name: Delete existing branch (if exists)
-        if: env.CHANGES == 'true'
-        run: |
-          git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/update-language-mappings; then
-            git push origin --delete update-language-mappings
           fi
 
       - name: Check for existing open PRs
@@ -67,7 +69,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout -b update-language-mappings
           git add src/languageMappings.json
           git commit -m 'Update language mappings'
           git push origin HEAD:refs/heads/update-language-mappings --force-with-lease
