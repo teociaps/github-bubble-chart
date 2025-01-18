@@ -48,10 +48,11 @@ jobs:
       - name: Check for Changes
         id: check_changes
         run: |
-          if [[ -n "$(git status --porcelain src/languageMappings.json)" ]]; then
-            echo "CHANGES=true" >> $GITHUB_ENV
-          else
+          git fetch origin main
+          if git diff --quiet origin/main src/languageMappings.json; then
             echo "CHANGES=false" >> $GITHUB_ENV
+          else
+            echo "CHANGES=true" >> $GITHUB_ENV
           fi
 
       - name: Check for existing open PRs
