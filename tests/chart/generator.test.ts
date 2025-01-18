@@ -1,14 +1,16 @@
 import { createBubbleChart } from '../../src/chart/generator';
-import { BubbleData, BubbleChartOptions } from '../../src/chart/types';
 import { LightTheme } from '../../src/chart/themes';
+import { describe, it, expect } from 'vitest';
+import { BubbleData } from '../../src/chart/types/bubbleData';
+import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
 
-describe('generator', () => {
+describe('Generator', () => {
   describe('createBubbleChart', () => {
     it('should return null if no data is provided', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' },
+        titleOptions: { text: 'Test Chart' } as any,
         showPercentages: false,
         legendOptions: { show: false, align: 'left' },
         theme: new LightTheme(),
@@ -24,7 +26,7 @@ describe('generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' },
+        titleOptions: { text: 'Test Chart' } as any,
         showPercentages: true,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),

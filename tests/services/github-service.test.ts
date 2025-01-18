@@ -1,11 +1,12 @@
-import { fetchLanguagesByUser } from '../../src/services/githubService';
 import { graphql } from '@octokit/graphql';
+import { describe, it, expect, vi, MockedFunction } from 'vitest';
+import { fetchTopLanguages } from '../../src/services/github-service';
 
-jest.mock('@octokit/graphql', () => ({
-  graphql: jest.fn(),
+vi.mock('@octokit/graphql', () => ({
+  graphql: vi.fn(),
 }));
 
-describe('githubService', () => {
+describe('GH Service', () => {
   describe('fetchLanguagesByUser', () => {
     it('should fetch and aggregate languages correctly', async () => {
       const mockResponse = {
@@ -30,9 +31,9 @@ describe('githubService', () => {
         },
       };
 
-      (graphql as jest.MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
+      (graphql as unknown as MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
 
-      const result = await fetchLanguagesByUser('testuser');
+      const result = await fetchTopLanguages('testuser', 2);
       expect(result).toEqual([
         { language: 'JavaScript', percentage: '70.00' },
         { language: 'TypeScript', percentage: '30.00' },
@@ -83,11 +84,11 @@ describe('githubService', () => {
         },
       };
 
-      (graphql as jest.MockedFunction<typeof graphql>)
+      (graphql as unknown as MockedFunction<typeof graphql>)
         .mockResolvedValueOnce(mockResponsePage1)
         .mockResolvedValueOnce(mockResponsePage2);
 
-      const result = await fetchLanguagesByUser('testuser');
+      const result = await fetchTopLanguages('testuser', 2);
       expect(result).toEqual([
         { language: 'JavaScript', percentage: '70.00' },
         { language: 'TypeScript', percentage: '30.00' },
@@ -107,9 +108,9 @@ describe('githubService', () => {
         },
       };
 
-      (graphql as jest.MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
+      (graphql as unknown as MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
 
-      const result = await fetchLanguagesByUser('testuser');
+      const result = await fetchTopLanguages('testuser', 2);
       expect(result).toEqual([]);
     });
   });
