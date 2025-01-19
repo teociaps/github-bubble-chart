@@ -17,8 +17,6 @@ jobs:
     env:
       DEVICON_URL: ${{ secrets.DEVICON_URL }}
       LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
-      CHANGES: false
-      OPEN_PR_EXISTS: false
 
     steps:
       - name: Checkout repository
@@ -29,85 +27,42 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Delete existing branch and recreate from main
-        run: |
-          echo "Fetching branches from remote..."
-          git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/update-language-mappings; then
-            echo "Branch 'update-language-mappings' exists remotely. Deleting it."
-            git push origin --delete update-language-mappings
-          else
-            echo "Branch 'update-language-mappings' does not exist. Skipping deletion."
-          fi
-          echo "Switching to 'main' and pulling the latest changes..."
-          git checkout main
-          git pull origin main
-          echo "Creating and switching to a new branch 'update-language-mappings'."
-          git checkout -b update-language-mappings
-
       - name: Install dependencies
-        run: |
-          yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Run update script and stage changes
-        run: |
-          yarn update-langs
-          git add src/languageMappings.json
+        run: yarn update-langs
 
       - name: Check for Changes
         id: check_changes
         run: |
-          echo "Checking for changes against the 'main' branch..."
-          git fetch origin main
-          if git diff --cached --quiet origin/main src/languageMappings.json; then
-            echo "No changes detected in 'src/languageMappings.json'."
-            echo "CHANGES=false" >> $GITHUB_ENV
+          echo "Checking for changes in src/languageMappings.json..."
+          if [[ -n "$(git status --porcelain src/languageMappings.json)" ]]; then
+            echo "Changes detected."
+            echo "changes=true" >> $GITHUB_ENV
           else
-            echo "Changes detected in 'src/languageMappings.json'."
-            echo "CHANGES=true" >> $GITHUB_ENV
-          fi
-
-      - name: Check for existing open PRs
-        id: check_pr
-        if: env.CHANGES == 'true'
-        run: |
-          echo "Checking for existing open pull requests..."
-          if gh pr list --head update-language-mappings --state open --json number --jq '.[0].number' > /dev/null; then
-            echo "An open pull request already exists for 'update-language-mappings'."
-            echo "OPEN_PR_EXISTS=true" >> $GITHUB_ENV
-          else
-            echo "No open pull requests found for 'update-language-mappings'."
-            echo "OPEN_PR_EXISTS=false" >> $GITHUB_ENV
+            echo "No changes detected."
+            echo "changes=false" >> $GITHUB_ENV
           fi
 
       - name: Commit and push changes
-        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
+        if: env.changes == 'true'
         run: |
-          echo "Committing and pushing changes..."
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/languageMappings.json
           git commit -m 'Update language mappings'
-          git push origin HEAD:refs/heads/update-language-mappings --force-with-lease
-
-      - name: Update existing PR
-        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'true'
-        run: |
-          echo "Updating the existing pull request with the latest changes..."
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit --amend --no-edit
-          git push origin update-language-mappings --force-with-lease
+          echo "Pushing changes to update-language-mappings branch..."
+          git push origin HEAD:refs/heads/update-language-mappings --force
 
       - name: Create Pull Request
-        if: env.CHANGES == 'true' && env.OPEN_PR_EXISTS == 'false'
+        if: env.changes == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'Update language mappings'
           branch: update-language-mappings
-          base: main
           title: 'Update language mappings'
           body: 'This PR updates the language mappings JSON file.'
           assignees: teociaps
           reviewers: teociaps
-          labels: 'language-mappings-update'
