@@ -66,3 +66,4 @@ jobs:
           body: 'This PR updates the language mappings JSON file.'
           assignees: teociaps
           reviewers: teociaps
+          labels: 'language-mappings-update'
