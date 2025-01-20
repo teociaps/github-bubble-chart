@@ -210,6 +210,10 @@ export async function createBubbleChart(
   chartOptions: BubbleChartOptions
 ): Promise<string | null> {
   if (data.length === 0) return null;
+  
+  if (isNaN(chartOptions.width) || isNaN(chartOptions.height)) {
+    throw new GeneratorError('Invalid width or hight.');
+  }
 
   // Escape special characters in data names so they can be shown correctly in the chart
   data.forEach(item => {
