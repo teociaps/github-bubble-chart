@@ -1,13 +1,17 @@
 import { graphql } from '@octokit/graphql';
-import { describe, it, expect, vi, MockedFunction } from 'vitest';
+import { describe, it, expect, vi, MockedFunction, Mock } from 'vitest';
 import { fetchTopLanguages } from '../../src/services/github-service';
 
 vi.mock('@octokit/graphql', () => ({
-  graphql: vi.fn(),
+  graphql: {
+    defaults: vi.fn().mockReturnValue(vi.fn()),
+  },
 }));
 
+const mockGraphQL = graphql.defaults({});
+
 describe('GH Service', () => {
-  describe('fetchLanguagesByUser', () => {
+  describe('fetchTopLanguages', () => {
     it('should fetch and aggregate languages correctly', async () => {
       const mockResponse = {
         user: {
@@ -31,7 +35,7 @@ describe('GH Service', () => {
         },
       };
 
-      (graphql as unknown as MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
+      (mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>).mockResolvedValue(mockResponse);
 
       const result = await fetchTopLanguages('testuser', 2);
       expect(result).toEqual([
@@ -47,9 +51,7 @@ describe('GH Service', () => {
             nodes: [
               {
                 languages: {
-                  edges: [
-                    { node: { name: 'JavaScript' }, size: 500 },
-                  ],
+                  edges: [{ node: { name: 'JavaScript' }, size: 500 }],
                   totalSize: 500,
                 },
               },
@@ -84,7 +86,7 @@ describe('GH Service', () => {
         },
       };
 
-      (graphql as unknown as MockedFunction<typeof graphql>)
+      (mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>)
         .mockResolvedValueOnce(mockResponsePage1)
         .mockResolvedValueOnce(mockResponsePage2);
 
@@ -108,7 +110,7 @@ describe('GH Service', () => {
         },
       };
 
-      (graphql as unknown as MockedFunction<typeof graphql>).mockResolvedValue(mockResponse);
+      (mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>).mockResolvedValue(mockResponse);
 
       const result = await fetchTopLanguages('testuser', 2);
       expect(result).toEqual([]);
