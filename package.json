@@ -7,6 +7,7 @@
     "build": "npx tsc",
     "test": "vitest",
     "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
     "start": "node dist/api/index.js",
     "update-langs": "npx tsx scripts/fetchLanguageMappings.ts"
   },
@@ -20,11 +21,12 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.10.6",
     "@types/text-to-svg": "^3.1.4",
+    "@vitest/coverage-v8": "^3.0.3",
     "image-to-base64": "^2.2.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.2",
+    "vitest": "^3.0.3",
     "yaml": "^2.7.0"
   },
   "dependencies": {
