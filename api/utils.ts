@@ -146,7 +146,6 @@ export const defaultHeaders = new Headers({
 });
 
 export async function handleMissingUsername(req: any, res: any) {
-  console.log('missing username');
   let protocol = req.protocol;
   if (!isDevEnvironment() && protocol === 'http') {
     protocol = 'https';
@@ -154,7 +153,7 @@ export async function handleMissingUsername(req: any, res: any) {
   const url = new URL(req.url, `${protocol}://${req.get('host')}`);
   const base = `${url.origin}${req.baseUrl}`;
   const error = new MissingUsernameError(base);
-  res.send(error.render());
+  handleErrorResponse(error, res);
 }
 
 export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
