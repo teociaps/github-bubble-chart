@@ -3,7 +3,7 @@ import { LightTheme } from '../../src/chart/themes';
 import { describe, it, expect } from 'vitest';
 import { BubbleData } from '../../src/chart/types/bubbleData';
 import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
-import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from '../../src/chart/styles';
+import { getCommonStyles, getLegendItemAnimationStyle } from '../../src/chart/styles';
 import { GeneratorError } from '../../src/errors/custom-errors';
 
 describe('Generator', () => {
