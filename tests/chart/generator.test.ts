@@ -60,5 +60,118 @@ describe('Generator', () => {
       };
       await expect(createBubbleChart(data, options)).rejects.toThrow(GeneratorError);
     });
+
+    it('should escape special characters in data names', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript & TypeScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('JavaScript &amp; TypeScript');
+    });
+
+    it('should handle invalid width or height', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: NaN,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      await expect(createBubbleChart(data, options)).rejects.toThrow(GeneratorError);
+    });
+
+    it('should create title element if no bubble image is provided', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart', fontSize: '16px', fontWeight: 'bold' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<text class="bc-title"');
+    });
+
+    it('should calculate full height including title and legend', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart', fontSize: '16px', fontWeight: 'bold' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('height="');
+    });
+
+    it('should include common styles in the SVG', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<style>');
+      expect(svg).toContain(getCommonStyles(options.theme));
+    });
+
+    it('should include legend if legend options are set to show', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<g class="legend"');
+    });
+
+    it('should wrap and truncate title text if it exceeds width', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 100,
+        height: 400,
+        titleOptions: { text: 'An extremely long title that should definitely be wrapped and truncated to fit within the given width of the chart, ensuring that the text handling logic works correctly', fontSize: '16px', fontWeight: 'bold', textAnchor: 'middle' } as any,
+        showPercentages: true,
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<tspan');
+      expect(svg).toContain('…');
+    });
   });
 });
