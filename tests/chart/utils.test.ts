@@ -1,11 +1,12 @@
 import { CONSTANTS } from '../../config/consts';
 import { getColor, getName, toKebabCase, getBubbleData } from '../../src/chart/utils';
-import { fetchLanguagesByUser } from '../../src/services/githubService';
+import { fetchTopLanguages } from '../../src/services/github-service';
 import fs from 'fs';
+import { describe, it, expect, vi, Mock } from 'vitest';
 
-jest.mock('../../src/services/githubService');
+vi.mock('../../src/services/github-service');
 
-describe('utils', () => {
+describe('Utils', () => {
   describe('getColor', () => {
     it('should return the color of the BubbleData', () => {
       const data = { color: 'red' };
@@ -32,11 +33,11 @@ describe('utils', () => {
         { language: 'JavaScript', percentage: '70' },
         { language: 'TypeScript', percentage: '30' },
       ];
-      (fetchLanguagesByUser as jest.Mock).mockResolvedValue(mockLanguages);
+      (fetchTopLanguages as Mock).mockResolvedValue(mockLanguages);
 
-      const { default: jsonLanguageMappings } = JSON.parse(fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'));
+      const jsonLanguageMappings = JSON.parse(fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'));
 
-      const result = await getBubbleData('testuser');
+      const result = await getBubbleData('testuser', 10);
       expect(result).toEqual([
         {
           name: 'JavaScript',

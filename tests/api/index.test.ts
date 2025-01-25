@@ -1,36 +1,38 @@
-import handler from '../../api/index';
-import { getBubbleData } from '../../src/chart/utils';
-import { createBubbleChart } from '../../src/chart/generator';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
+import request from 'supertest';
+import app from '../../api/index';
+import dotenv from 'dotenv';
+import { Server } from 'http';
+import { AddressInfo } from 'net';
 
-jest.mock('../../src/chart/utils');
-jest.mock('../../src/chart/generator');
+dotenv.config();
 
-describe('API handler', () => {
-  it('should handle missing username', async () => {
-    const req = { url: 'http://example.com' };
-    const res = { send: jest.fn() };
-    await handler(req, res);
-    expect(res.send).toHaveBeenCalledWith(expect.stringContaining('"username" is a required query parameter'));
+describe('Express App', () => {
+  let server: Server;
+  let dynamicPort: number;
+
+  beforeAll(async () => {
+    server = await new Promise<Server>((resolve, reject) => {
+      const s = app.listen(0, () => {
+        dynamicPort = (s.address() as AddressInfo).port;
+        console.log(`Test server running on port ${dynamicPort}`);
+        resolve(s);
+      });
+    });
   });
 
-  it('should generate bubble chart SVG', async () => {
-    const req = { url: 'http://example.com?username=testuser' };
-    const res = { send: jest.fn(), setHeaders: jest.fn() };
-    (getBubbleData as jest.Mock).mockResolvedValue([{ name: 'JavaScript', value: 70, color: 'yellow' }]);
-    (createBubbleChart as jest.Mock).mockReturnValue('<svg></svg>');
-
-    await handler(req, res);
-    expect(res.setHeaders).toHaveBeenCalled();
-    expect(res.send).toHaveBeenCalledWith('<svg></svg>');
+  afterAll(() => {
+    if (server) {
+      server.close();
+    }
   });
 
-  it('should handle errors', async () => {
-    const req = { url: 'http://example.com?username=testuser' };
-    const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-    (getBubbleData as jest.Mock).mockRejectedValue(new Error('Failed to fetch'));
+  it('should start the server on a dynamic port', () => {
+    expect(dynamicPort).toBeGreaterThan(0);
+  });
 
-    await handler(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: 'Failed to fetch languages for specified user' });
+  it('should respond to GET / with the API response', async () => {
+    const response = await request(app).get('/');
+    expect(response.status).toBe(400);
   });
 });

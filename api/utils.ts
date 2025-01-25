@@ -146,7 +146,6 @@ export const defaultHeaders = new Headers({
 });
 
 export async function handleMissingUsername(req: any, res: any) {
-  console.log('missing username');
   let protocol = req.protocol;
   if (!isDevEnvironment() && protocol === 'http') {
     protocol = 'https';
@@ -154,49 +153,53 @@ export async function handleMissingUsername(req: any, res: any) {
   const url = new URL(req.url, `${protocol}://${req.get('host')}`);
   const base = `${url.origin}${req.baseUrl}`;
   const error = new MissingUsernameError(base);
-  res.send(error.render());
+  handleErrorResponse(error, res);
 }
 
 export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
-  try {
-    const processConfig = (customConfig: CustomConfig) => {
-      const options = mapConfigToBubbleChartOptions(customConfig.options);
-      customConfig.data.forEach(d => d.name = d.name);
-      return { options: options, data: customConfig.data };
-    };
+  const processConfig = (customConfig: CustomConfig) => {
+    const options = mapConfigToBubbleChartOptions(customConfig.options);
+    customConfig.data.forEach(d => d.name = d.name);
+    return { options: options, data: customConfig.data };
+  };
 
-    if (isDevEnvironment()) {
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = path.dirname(__filename);
-      const localPath = path.resolve(__dirname, '../example-config.json');
-      if (fs.existsSync(localPath)) {
+  if (isDevEnvironment()) {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const localPath = path.resolve(__dirname, '../example-config.json');
+    if (fs.existsSync(localPath)) {
+      try {
         const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
         return processConfig(customConfig);
-      } else {
-        throw new FetchError(`Local config file not found at ${localPath}`);
+      } catch (error) {
+        throw new ValidationError('Failed to parse local JSON configuration.', error instanceof Error ? error : undefined);
       }
     } else {
-      const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
-        }
-      });
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new GitHubNotFoundError(`The repository or file at ${filePath} was not found.`);
-        } else if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
-          throw new GitHubRateLimitError('You have exceeded the GitHub API rate limit.');
-        } else {
-          throw new FetchError(`Failed to fetch config from ${filePath} in ${username} repository`, new Error(`HTTP status ${response.status}`));
-        }
+      throw new FetchError(`Local config file not found at ${localPath}`);
+    }
+  } else {
+    const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
       }
+    });
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new GitHubNotFoundError(`The repository or file at ${filePath} was not found.`);
+      } else if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
+        throw new GitHubRateLimitError('You have exceeded the GitHub API rate limit.');
+      } else {
+        throw new FetchError(`Failed to fetch config from ${filePath} in ${username} repository`, new Error(`HTTP status ${response.status}`));
+      }
+    }
 
+    try {
       const customConfig = await response.json() as CustomConfig;
       return processConfig(customConfig);
+    } catch (error) {
+      throw new ValidationError('Failed to parse fetched JSON configuration.', error instanceof Error ? error : undefined);
     }
-  } catch (error) {
-    throw new FetchError('Failed to fetch configuration from repository', error instanceof Error ? error : undefined);
   }
 }
 
