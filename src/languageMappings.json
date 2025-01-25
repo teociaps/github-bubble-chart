@@ -1910,5 +1910,35 @@
   },
   "PicoLisp": {
     "color": "#6067af"
+  },
+  "Answer Set Programming": {
+    "color": "#A9CC29"
+  },
+  "KDL": {
+    "color": "#ffb3b3"
+  },
+  "MiniZinc": {
+    "color": "#06a9e6"
+  },
+  "OMNeT++ MSG": {
+    "color": "#a0e0a0"
+  },
+  "OMNeT++ NED": {
+    "color": "#08607c"
+  },
+  "OverpassQL": {
+    "color": "#cce2aa"
+  },
+  "Survex data": {
+    "color": "#ffcc99"
+  },
+  "Xmake": {
+    "color": "#22a079"
+  },
+  "mdsvex": {
+    "color": "#5f9ea0"
+  },
+  "Jai": {
+    "color": "#ab8b4b"
   }
 }
