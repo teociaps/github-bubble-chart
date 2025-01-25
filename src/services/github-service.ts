@@ -71,9 +71,10 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
 
     return languagePercentages;
   } catch (error) {
-    if (error instanceof Error) {
-      handleGitHubError(error);
+    if (error instanceof GitHubError) {
+      throw error;
     }
+    console.error(error);
     throw new GitHubError(400, 'GitHub API Error', 'Failed to fetch top languages from GitHub');
   }
 };
@@ -109,6 +110,9 @@ const handleGitHubError = (error: Error) => {
   if (error.message.includes('rate limit')) {
     throw new GitHubRateLimitError();
   }
+  if (error.message.includes('Could not resolve to a User with the login of')) {
+    throw new GitHubUsernameNotFoundError();
+  }
   if (error.message.includes('Not Found')) {
     throw new GitHubNotFoundError();
   }
@@ -117,9 +121,6 @@ const handleGitHubError = (error: Error) => {
   }
   if (error.message.includes('Your account was suspended')) {
     throw new GitHubAccountSuspendedError();
-  }
-  if (error.message.includes('Could not resolve to a User with the login of')) {
-    throw new GitHubUsernameNotFoundError();
   }
   throw error;
 };
