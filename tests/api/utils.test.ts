@@ -110,6 +110,21 @@ describe('API Utils', () => {
       const params = new CustomURLSearchParams('mode=invalid-mode');
       expect(params.getMode()).toBe('top-langs');
     });
+
+    it('should return default percentage display option if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe('legend');
+    });
+
+    it('should return parsed percentage display option if key is present', () => {
+      const params = new CustomURLSearchParams('percentage-display=all');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe('all');
+    });
+
+    it('should return default percentage display option if parsed value is invalid', () => {
+      const params = new CustomURLSearchParams('percentage-display=invalid');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe('legend');
+    });
   });
 
   describe('parseParams', () => {
