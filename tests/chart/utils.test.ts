@@ -1,10 +1,10 @@
-import { CONSTANTS } from '../../config/consts';
 import { getColor, getName, toKebabCase, getBubbleData } from '../../src/chart/utils';
 import { fetchTopLanguages } from '../../src/services/github-service';
 import fs from 'fs';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
 vi.mock('../../src/services/github-service');
+vi.mock('fs');
 
 describe('Utils', () => {
   describe('getColor', () => {
@@ -30,26 +30,34 @@ describe('Utils', () => {
   describe('getBubbleData', () => {
     it('should fetch and transform bubble data', async () => {
       const mockLanguages = [
-        { language: 'JavaScript', percentage: '70' },
-        { language: 'TypeScript', percentage: '30' },
+        { language: 'JavaScript', percentage: 70 },
+        { language: 'TypeScript', percentage: 30 },
       ];
       (fetchTopLanguages as Mock).mockResolvedValue(mockLanguages);
-
-      const jsonLanguageMappings = JSON.parse(fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'));
+      
+      const mockJsonLanguageMappings = {
+        JavaScript: { color: 'yellow', icon: 'js-icon' },
+        TypeScript: { color: 'blue', icon: 'ts-icon' },
+      };
+      const mockResponse = {
+        ok: true,
+        json: async () => mockJsonLanguageMappings
+      } as any;
+      (global as any).fetch = vi.fn().mockResolvedValue(mockResponse);
 
       const result = await getBubbleData('testuser', 10);
       expect(result).toEqual([
         {
-          name: 'JavaScript',
-          value: 70,
-          color: jsonLanguageMappings['JavaScript'].color,
-          icon: jsonLanguageMappings['JavaScript'].icon,
+          name: mockLanguages[0].language,
+          value: mockLanguages[0].percentage,
+          color: mockJsonLanguageMappings['JavaScript'].color,
+          icon: mockJsonLanguageMappings['JavaScript'].icon,
         },
         {
-          name: 'TypeScript',
-          value: 30,
-          color: jsonLanguageMappings['TypeScript'].color,
-          icon: jsonLanguageMappings['TypeScript'].icon,
+          name: mockLanguages[1].language,
+          value: mockLanguages[1].percentage,
+          color: mockJsonLanguageMappings['TypeScript'].color,
+          icon: mockJsonLanguageMappings['TypeScript'].icon,
         },
       ]);
     });
