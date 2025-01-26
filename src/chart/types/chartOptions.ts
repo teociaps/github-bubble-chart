@@ -6,7 +6,7 @@ export interface BubbleChartOptions {
   width: number; //px
   height: number; //px
   titleOptions: TitleOptions;
-  showPercentages: boolean;
+  showPercentages: PercentageDisplay;
   legendOptions: LegendOptions;
   theme: ThemeBase;
 }
@@ -28,3 +28,5 @@ export interface LegendOptions {
 
 export type TextAlign = 'left' | 'center' | 'right';
 export type TextAnchor = 'start' | 'middle' | 'end';
+
+export type PercentageDisplay = 'none' | 'all' | 'legend' | 'bubbles';

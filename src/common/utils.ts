@@ -1,5 +1,5 @@
 import { themeMap } from "../chart/themes.js";
-import { ConfigOptions } from "../chart/types/config.js";
+import { CustomConfigOptions } from "../chart/types/config.js";
 import { BubbleChartOptions } from "../chart/types/chartOptions.js";
 
 export const isDevEnvironment = (): boolean => {
@@ -10,7 +10,7 @@ export const isProdEnvironment = (): boolean => {
   return process.env.NODE_ENV === 'prod';
 };
 
-export function mapConfigToBubbleChartOptions(config: ConfigOptions): BubbleChartOptions {
+export function mapConfigToBubbleChartOptions(config: CustomConfigOptions): BubbleChartOptions {
   const theme = typeof config.theme === 'string' ? themeMap[config.theme.toLowerCase()] : config.theme;
   return {
     width: config.width,

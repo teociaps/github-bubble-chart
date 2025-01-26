@@ -1,7 +1,7 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
 import { BubbleData } from '../src/chart/types/bubbleData.js';
-import { TextAnchor, TitleOptions, LegendOptions, TextAlign, BubbleChartOptions } from '../src/chart/types/chartOptions.js';
+import { TextAnchor, TitleOptions, LegendOptions, TextAlign, BubbleChartOptions, PercentageDisplay } from '../src/chart/types/chartOptions.js';
 import { CustomConfig, Mode } from '../src/chart/types/config.js';
 import { GitHubNotFoundError, GitHubRateLimitError } from '../src/errors/github-errors.js';
 import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js';
@@ -96,6 +96,18 @@ export class CustomURLSearchParams extends URLSearchParams {
       return value;
     } catch (error) {
       throw new ValidationError('Invalid languages count parameter.', error instanceof Error ? error : undefined);
+    }
+  }
+
+  getPercentageDisplayOption(key: string): PercentageDisplay {
+    try {
+      const value = this.getStringValue(key, 'legend');
+      if (['all', 'legend', 'bubbles', 'none'].includes(value)) {
+        return value as PercentageDisplay;
+      }
+      return 'legend';
+    } catch (error) {
+      throw new ValidationError('Invalid percentage display option.', error instanceof Error ? error : undefined);
     }
   }
 

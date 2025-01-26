@@ -112,7 +112,7 @@ async function createBubbleElement(
     }
 
     // Percentage text
-    if (chartOptions.showPercentages) {
+    if (chartOptions.showPercentages === 'all' || chartOptions.showPercentages === 'bubbles') {
       bubble += `<text class="b-percentage" dy="3.5em" style="font-size: ${radius / 4}px;">${percentage}</text>`;
     }
 
@@ -142,8 +142,8 @@ async function createLegend(
 
     // Prepare legend items with their measured widths
     const legendItems = data.map(async (item) => {
-      const percentage = item.value + '%';
-      const text = `${item.name} (${percentage})`;
+      const percentage = (chartOptions.showPercentages === 'all' || chartOptions.showPercentages === 'legend') ? ` (${item.value}%)` : '';
+      const text = `${item.name}${percentage}`;
       const textWidth = await measureTextWidth(text, '12px');
       return {
         text,
@@ -183,7 +183,7 @@ async function createLegend(
         svgLegend += `
           <g transform="translate(${rowX}, ${legendY})" class="legend-item" style="animation-delay: ${animationDelay}s;">
             <circle cx="10" cy="15" r="8" fill="${item.color}" />
-            <text x="20" y="15">${item.text}</text>
+            <text x="22" y="15">${item.text}</text>
           </g>
         `;
         rowX += item.width; // Next item

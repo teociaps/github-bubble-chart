@@ -1,22 +1,22 @@
 import { ThemeBase } from '../themes.js';
 import { BubbleData } from './bubbleData.js';
-import { TextAlign, TextAnchor } from './chartOptions.js';
+import { TextAlign, TextAnchor, PercentageDisplay } from './chartOptions.js';
 
 export interface CustomConfig {
-  options: ConfigOptions;
+  options: CustomConfigOptions;
   data: BubbleData[];
 }
 
-export interface ConfigOptions {
+export interface CustomConfigOptions {
   width: number;
   height: number;
-  showPercentages: boolean;
-  title: TitleConfig;
-  legend: LegendConfig;
+  showPercentages: PercentageDisplay;
+  title: CustomTitleConfig;
+  legend: CustomLegendConfig;
   theme: ThemeBase | string;
 }
 
-export interface TitleConfig {
+export interface CustomTitleConfig {
   text: string;
   fontSize: string;
   fontWeight: string;
@@ -24,7 +24,7 @@ export interface TitleConfig {
   align: TextAnchor;
 }
 
-export interface LegendConfig {
+export interface CustomLegendConfig {
   show: boolean;
   align: TextAlign;
 }
