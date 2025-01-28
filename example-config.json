@@ -17,7 +17,12 @@
     "theme": "dark"
   },
   "data": [
-    { "name": "JavaScript", "value": 40, "color": "green", "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg" },
+    {
+      "name": "JavaScript",
+      "value": 40,
+      "color": "green",
+      "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg"
+    },
     { "name": "Python", "value": 30, "color": "#3572A5" },
     { "name": "Python", "value": 30, "color": "#3572A5" },
     { "name": "Python", "value": 30, "color": "#3572A5" },

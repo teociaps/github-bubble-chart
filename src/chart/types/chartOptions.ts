@@ -22,8 +22,8 @@ export interface TitleOptions {
 
 // TODO: add setting for legend position (bottom, left, right, top of chart)?
 export interface LegendOptions {
-  show: boolean,
-  align: TextAlign
+  show: boolean;
+  align: TextAlign;
 }
 
 export type TextAlign = 'left' | 'center' | 'right';

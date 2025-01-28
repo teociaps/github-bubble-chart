@@ -64,13 +64,13 @@ async function measureTextDimension(
   text: string,
   fontSize: string,
   fontWeight: string = 'normal',
-  dimension: 'width' | 'height'
+  dimension: 'width' | 'height',
 ): Promise<number> {
   const textToSVG = await getTextToSVG();
 
   // Convert the font size from a string to a number
   const size = parseFloat(fontSize);
-  
+
   const sizeMultiplier = fontWeightMultipliers[fontWeight] || 1.0;
   const adjustedSize = size * sizeMultiplier;
 
@@ -90,7 +90,7 @@ async function measureTextDimension(
 export async function measureTextWidth(
   text: string,
   fontSize: string,
-  fontWeight: string = 'normal'
+  fontWeight: string = 'normal',
 ): Promise<number> {
   return measureTextDimension(text, fontSize, fontWeight, 'width');
 }
@@ -98,21 +98,22 @@ export async function measureTextWidth(
 export async function measureTextHeight(
   text: string,
   fontSize: string,
-  fontWeight: string = 'normal'
+  fontWeight: string = 'normal',
 ): Promise<number> {
   return measureTextDimension(text, fontSize, fontWeight, 'height');
 }
 
 export function escapeSpecialChars(text: string): string {
-  return text.replace(/&/g, '&amp;')
-             .replace(/</g, '&lt;')
-             .replace(/>/g, '&gt;')
-             .replace(/"/g, '&quot;')
-             .replace(/'/g, '&#39;')
-             .replace(/\\/g, '&#92;')
-             .replace(/`/g, '&#96;')
-             .replace(/{/g, '&#123;')
-             .replace(/}/g, '&#125;');
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/\\/g, '&#92;')
+    .replace(/`/g, '&#96;')
+    .replace(/{/g, '&#123;')
+    .replace(/}/g, '&#125;');
 }
 
 export const parseEmojis = (str: string) => {
@@ -159,7 +160,10 @@ export async function wrapText(
   return lines;
 }
 
-export function getAlignmentPosition(textAnchor: TextAnchor, width: number): number {
+export function getAlignmentPosition(
+  textAnchor: TextAnchor,
+  width: number,
+): number {
   switch (textAnchor) {
     case 'start':
       return 0;

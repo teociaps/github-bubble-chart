@@ -1,6 +1,6 @@
 name: 🐞 Bug Report
 description: Report an anomaly or unexpected behavior from this repository.
-title: "[Bug]: "
+title: '[Bug]: '
 labels: ['needs: triage', 'bug']
 
 body:

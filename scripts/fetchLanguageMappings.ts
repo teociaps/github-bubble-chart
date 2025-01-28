@@ -8,20 +8,24 @@ const languageDiscrepancies: Record<string, string> = {
   'c#': 'csharp',
   'c++': 'cplusplus',
   'objective-c': 'objectivec',
-  'css': 'css3',
-  'scss': 'sass',
-  'html': 'html5',
-  'jupyter_notebook': 'jupyter'
+  css: 'css3',
+  scss: 'sass',
+  html: 'html5',
+  jupyter_notebook: 'jupyter',
   // TODO: Add more discrepancies, see more here https://github.com/devicons/devicon/pull/2270
 };
 
-async function fetchLanguageColors(): Promise<Record<string, { color: string }>> {
+async function fetchLanguageColors(): Promise<
+  Record<string, { color: string }>
+> {
   try {
     console.log('Fetching language colors from GitHub...');
     const response = await fetch(CONSTANTS.LINGUIST_GITHUB);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch language colors: ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch language colors: ${response.statusText}`,
+      );
     }
 
     const data = yamlParse(await response.text());
@@ -53,8 +57,8 @@ const svgVersions = [
   '-original',
   '-plain',
   '-original-wordmark',
-  '-plain-wordmark'
-]
+  '-plain-wordmark',
+];
 
 async function checkUrlExists(url: string): Promise<boolean> {
   try {
@@ -67,7 +71,7 @@ async function checkUrlExists(url: string): Promise<boolean> {
 }
 
 async function mapIconsToLanguages(
-  languageColors: Record<string, { color: string }>
+  languageColors: Record<string, { color: string }>,
 ): Promise<Record<string, { color: string; icon?: string }>> {
   console.log('Fetching language icons...');
   const languageMappings: Record<string, { color: string; icon?: string }> = {};
@@ -124,12 +128,17 @@ async function main() {
     // Load existing mappings
     let oldMappings: Record<string, { color: string; icon?: string }> = {};
     if (fs.existsSync(CONSTANTS.LANGS_OUTPUT_FILE)) {
-      oldMappings = JSON.parse(fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'));
+      oldMappings = JSON.parse(
+        fs.readFileSync(CONSTANTS.LANGS_OUTPUT_FILE, 'utf-8'),
+      );
     }
 
     // Merge and save updated mappings
     const updatedMappings = mergeMappings(oldMappings, newMappings);
-    fs.writeFileSync(CONSTANTS.LANGS_OUTPUT_FILE, JSON.stringify(updatedMappings, null, 2));
+    fs.writeFileSync(
+      CONSTANTS.LANGS_OUTPUT_FILE,
+      JSON.stringify(updatedMappings, null, 2),
+    );
     console.log(`Updated mappings written to ${CONSTANTS.LANGS_OUTPUT_FILE}`);
   } catch (error) {
     console.error('An error occurred:', error);

@@ -3,7 +3,7 @@ export class BaseError extends Error {
     readonly status: number,
     readonly message: string,
     public originalError?: Error,
-    public content: string = 'An unexpected error occurred. Please try again later.'
+    public content: string = 'An unexpected error occurred. Please try again later.',
   ) {
     super(message);
     this.name = this.constructor.name;

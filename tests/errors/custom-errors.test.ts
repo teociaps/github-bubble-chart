@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { BadRequestError, NotFoundError, StyleError, GeneratorError, FetchError, ValidationError, SVGGenerationError, MissingUsernameError } from '../../src/errors/custom-errors.js';
+import {
+  BadRequestError,
+  NotFoundError,
+  StyleError,
+  GeneratorError,
+  FetchError,
+  ValidationError,
+  SVGGenerationError,
+  MissingUsernameError,
+} from '../../src/errors/custom-errors.js';
 
 describe('BadRequestError', () => {
   it('should create a BadRequestError instance', () => {

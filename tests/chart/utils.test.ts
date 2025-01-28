@@ -1,4 +1,9 @@
-import { getColor, getName, toKebabCase, getBubbleData } from '../../src/chart/utils';
+import {
+  getColor,
+  getName,
+  toKebabCase,
+  getBubbleData,
+} from '../../src/chart/utils';
 import { fetchTopLanguages } from '../../src/services/github-service';
 import fs from 'fs';
 import { describe, it, expect, vi, Mock } from 'vitest';
@@ -34,14 +39,14 @@ describe('Utils', () => {
         { language: 'TypeScript', percentage: 30 },
       ];
       (fetchTopLanguages as Mock).mockResolvedValue(mockLanguages);
-      
+
       const mockJsonLanguageMappings = {
         JavaScript: { color: 'yellow', icon: 'js-icon' },
         TypeScript: { color: 'blue', icon: 'ts-icon' },
       };
       const mockResponse = {
         ok: true,
-        json: async () => mockJsonLanguageMappings
+        json: async () => mockJsonLanguageMappings,
       } as any;
       (global as any).fetch = vi.fn().mockResolvedValue(mockResponse);
 

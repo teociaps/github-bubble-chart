@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { isDevEnvironment, isProdEnvironment, mapConfigToBubbleChartOptions, truncateText } from '../../src/common/utils';
+import {
+  isDevEnvironment,
+  isProdEnvironment,
+  mapConfigToBubbleChartOptions,
+  truncateText,
+} from '../../src/common/utils';
 import { themeMap } from '../../src/chart/themes';
 import { ConfigOptions } from '../../src/chart/types/config';
 import { BubbleChartOptions } from '../../src/chart/types/chartOptions';

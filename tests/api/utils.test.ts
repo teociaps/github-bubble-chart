@@ -1,9 +1,19 @@
-import { CustomURLSearchParams, parseParams, fetchConfigFromRepo } from '../../api/utils';
+import {
+  CustomURLSearchParams,
+  parseParams,
+  fetchConfigFromRepo,
+} from '../../api/utils';
 import { LightTheme } from '../../src/chart/themes';
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { FetchError, ValidationError } from '../../src/errors/custom-errors';
-import { GitHubNotFoundError, GitHubRateLimitError } from '../../src/errors/github-errors';
-import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../../src/common/utils';
+import {
+  GitHubNotFoundError,
+  GitHubRateLimitError,
+} from '../../src/errors/github-errors';
+import {
+  isDevEnvironment,
+  mapConfigToBubbleChartOptions,
+} from '../../src/common/utils';
 import { CustomConfig } from '../../src/chart/types/config';
 import path from 'path';
 import fs from 'fs';
@@ -42,12 +52,16 @@ describe('API Utils', () => {
 
     it('should return default theme if key is not present', () => {
       const params = new CustomURLSearchParams('');
-      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(LightTheme);
+      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(
+        LightTheme,
+      );
     });
 
     it('should return parsed theme if key is present', () => {
       const params = new CustomURLSearchParams('theme=light');
-      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(LightTheme);
+      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(
+        LightTheme,
+      );
     });
 
     it('should return default text anchor value if key is not present', () => {
@@ -81,23 +95,27 @@ describe('API Utils', () => {
     });
 
     it('should parse title options correctly', () => {
-      const params = new CustomURLSearchParams('title=MyChart&title-size=30&title-weight=normal&title-color=#000000&title-align=center');
+      const params = new CustomURLSearchParams(
+        'title=MyChart&title-size=30&title-weight=normal&title-color=#000000&title-align=center',
+      );
       const titleOptions = params.parseTitleOptions();
       expect(titleOptions).toEqual({
         text: 'MyChart',
         fontSize: '30px',
         fontWeight: 'normal',
         fill: '#000000',
-        textAnchor: 'middle'
+        textAnchor: 'middle',
       });
     });
 
     it('should parse legend options correctly', () => {
-      const params = new CustomURLSearchParams('legend=false&legend-align=right');
+      const params = new CustomURLSearchParams(
+        'legend=false&legend-align=right',
+      );
       const legendOptions = params.parseLegendOptions();
       expect(legendOptions).toEqual({
         show: false,
-        align: 'right'
+        align: 'right',
       });
     });
 
@@ -118,22 +136,30 @@ describe('API Utils', () => {
 
     it('should return default percentage display option if key is not present', () => {
       const params = new CustomURLSearchParams('');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe('legend');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
+        'legend',
+      );
     });
 
     it('should return parsed percentage display option if key is present', () => {
       const params = new CustomURLSearchParams('percentage-display=all');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe('all');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
+        'all',
+      );
     });
 
     it('should return default percentage display option if parsed value is invalid', () => {
       const params = new CustomURLSearchParams('percentage-display=invalid');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe('legend');
+      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
+        'legend',
+      );
     });
 
     it('should return default title if key is not present', () => {
       const params = new CustomURLSearchParams('');
-      expect(params.getStringValue('title', 'Bubble Chart')).toBe('Bubble Chart');
+      expect(params.getStringValue('title', 'Bubble Chart')).toBe(
+        'Bubble Chart',
+      );
     });
 
     it('should return parsed title if key is present', () => {
@@ -210,15 +236,17 @@ describe('API Utils', () => {
   vi.mock('path');
   vi.mock('../../src/common/utils', () => ({
     isDevEnvironment: vi.fn(),
-    mapConfigToBubbleChartOptions: vi.fn().mockReturnValue({ titleOptions: { text: 'Test Chart'} } as any)
+    mapConfigToBubbleChartOptions: vi
+      .fn()
+      .mockReturnValue({ titleOptions: { text: 'Test Chart' } } as any),
   }));
   vi.stubGlobal('fetch', vi.fn());
 
   const mockConfig: CustomConfig = {
-    options: { titleOptions: { text: 'Test Chart'} } as any,
-    data: [{ name: 'Node.js', value: 50 }] as any
+    options: { titleOptions: { text: 'Test Chart' } } as any,
+    data: [{ name: 'Node.js', value: 50 }] as any,
   };
-  
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -235,12 +263,14 @@ describe('API Utils', () => {
       const result = await fetchConfigFromRepo('username', 'filePath');
 
       expect(result).toEqual({
-        options: { titleOptions: { text: 'Test Chart'} },
-        data: [{ name: 'Node.js', value: 50 }]
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [{ name: 'Node.js', value: 50 }],
       });
       expect(fs.existsSync).toHaveBeenCalledWith(localPath);
       expect(fs.readFileSync).toHaveBeenCalledWith(localPath, 'utf-8');
-      expect(mapConfigToBubbleChartOptions).toHaveBeenCalledWith(mockConfig.options);
+      expect(mapConfigToBubbleChartOptions).toHaveBeenCalledWith(
+        mockConfig.options,
+      );
     });
 
     it('throws an error if local config file is missing in development environment', async () => {
@@ -248,26 +278,30 @@ describe('API Utils', () => {
       vi.mocked(path.resolve).mockReturnValue('/example-config.json');
       vi.mocked(fs.existsSync).mockReturnValue(false);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(FetchError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        FetchError,
+      );
     });
 
     it('fetches configuration from GitHub in non-development environment', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
       const mockResponse = {
         ok: true,
-        json: async () => mockConfig
+        json: async () => mockConfig,
       } as any;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       const result = await fetchConfigFromRepo('username', 'filePath');
 
       expect(result).toEqual({
-        options: { titleOptions: { text: 'Test Chart'} },
-        data: [{ name: 'Node.js', value: 50 }]
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [{ name: 'Node.js', value: 50 }],
       });
       expect(fetch).toHaveBeenCalledWith(
         'https://raw.githubusercontent.com/username/username/main/filePath',
-        expect.objectContaining({ headers: { Authorization: expect.any(String) } })
+        expect.objectContaining({
+          headers: { Authorization: expect.any(String) },
+        }),
       );
     });
 
@@ -276,7 +310,9 @@ describe('API Utils', () => {
       const mockResponse = { ok: false, status: 404 } as any;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(GitHubNotFoundError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        GitHubNotFoundError,
+      );
     });
 
     it('throws GitHubRateLimitError if the rate limit is exceeded', async () => {
@@ -284,11 +320,13 @@ describe('API Utils', () => {
       const mockResponse = {
         ok: false,
         status: 403,
-        headers: { get: vi.fn(() => '0') }
+        headers: { get: vi.fn(() => '0') },
       } as any;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(GitHubRateLimitError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        GitHubRateLimitError,
+      );
     });
 
     it('throws FetchError for other HTTP errors', async () => {
@@ -296,18 +334,24 @@ describe('API Utils', () => {
       const mockResponse = { ok: false, status: 500 } as any;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(FetchError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        FetchError,
+      );
     });
 
     it('throws ValidationError if JSON parsing fails', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
       const mockResponse = {
-      ok: true,
-      json: async () => { throw new Error('Invalid JSON'); }
+        ok: true,
+        json: async () => {
+          throw new Error('Invalid JSON');
+        },
       } as any;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(ValidationError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        ValidationError,
+      );
     });
   });
 });

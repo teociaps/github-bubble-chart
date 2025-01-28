@@ -18,8 +18,8 @@ export const createSVGDefs = (): string => {
     return `
       <mask id="${id}" maskContentUnits="objectBoundingBox">
         <rect fill="url(#${gradientId})" width="1" height="1" ${
-      transform !== undefined ? `transform="${transform}"` : ''
-    }></rect>
+          transform !== undefined ? `transform="${transform}"` : ''
+        }></rect>
       </mask>
     `;
   };
@@ -45,7 +45,11 @@ export const createSVGDefs = (): string => {
   ]);
 
   svgDefs += createMask('mask', 'grad--bw');
-  svgDefs += createMask('mask--light-top', 'grad--bw-light', 'rotate(180, .5, .5)');
+  svgDefs += createMask(
+    'mask--light-top',
+    'grad--bw-light',
+    'rotate(180, .5, .5)',
+  );
   svgDefs += createMask('mask--light-bottom', 'grad--bw-light');
 
   svgDefs += `

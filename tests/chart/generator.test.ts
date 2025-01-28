@@ -3,7 +3,10 @@ import { LightTheme } from '../../src/chart/themes';
 import { describe, it, expect } from 'vitest';
 import { BubbleData } from '../../src/chart/types/bubbleData';
 import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
-import { getCommonStyles, getLegendItemAnimationStyle } from '../../src/chart/styles';
+import {
+  getCommonStyles,
+  getLegendItemAnimationStyle,
+} from '../../src/chart/styles';
 import { GeneratorError } from '../../src/errors/custom-errors';
 
 describe('Generator', () => {
@@ -58,7 +61,9 @@ describe('Generator', () => {
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
-      await expect(createBubbleChart(data, options)).rejects.toThrow(GeneratorError);
+      await expect(createBubbleChart(data, options)).rejects.toThrow(
+        GeneratorError,
+      );
     });
 
     it('should escape special characters in data names', async () => {
@@ -89,7 +94,9 @@ describe('Generator', () => {
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
-      await expect(createBubbleChart(data, options)).rejects.toThrow(GeneratorError);
+      await expect(createBubbleChart(data, options)).rejects.toThrow(
+        GeneratorError,
+      );
     });
 
     it('should create title element if no bubble image is provided', async () => {
@@ -99,7 +106,11 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart', fontSize: '16px', fontWeight: 'bold' } as any,
+        titleOptions: {
+          text: 'Test Chart',
+          fontSize: '16px',
+          fontWeight: 'bold',
+        } as any,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -115,7 +126,11 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart', fontSize: '16px', fontWeight: 'bold' } as any,
+        titleOptions: {
+          text: 'Test Chart',
+          fontSize: '16px',
+          fontWeight: 'bold',
+        } as any,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -164,7 +179,12 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 100,
         height: 400,
-        titleOptions: { text: 'An extremely long title that should definitely be wrapped and truncated to fit within the given width of the chart, ensuring that the text handling logic works correctly', fontSize: '16px', fontWeight: 'bold', textAnchor: 'middle' } as any,
+        titleOptions: {
+          text: 'An extremely long title that should definitely be wrapped and truncated to fit within the given width of the chart, ensuring that the text handling logic works correctly',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          textAnchor: 'middle',
+        } as any,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -178,9 +198,9 @@ describe('Generator', () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
-        { name: 'Java', value: 20, color: '#b07219' }
+        { name: 'Java', value: 20, color: '#b07219' },
       ];
-    
+
       const chartOptions: BubbleChartOptions = {
         width: 800,
         height: 600,
@@ -189,27 +209,27 @@ describe('Generator', () => {
           fontSize: '24px',
           fontWeight: 'bold',
           fill: '#000',
-          textAnchor: 'middle'
+          textAnchor: 'middle',
         },
         showPercentages: 'none',
         legendOptions: {
           show: true,
-          align: 'center'
+          align: 'center',
         },
-        theme: new LightTheme()
+        theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
       expect(svg).not.toContain('class="b-percentage"'); // HTML element
       expect(svg).not.toContain('(50%)');
     });
-  
+
     it('should show percentages in both bubbles and legend when showPercentages is All', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
-        { name: 'Java', value: 20, color: '#b07219' }
+        { name: 'Java', value: 20, color: '#b07219' },
       ];
-    
+
       const chartOptions: BubbleChartOptions = {
         width: 800,
         height: 600,
@@ -218,27 +238,27 @@ describe('Generator', () => {
           fontSize: '24px',
           fontWeight: 'bold',
           fill: '#000',
-          textAnchor: 'middle'
+          textAnchor: 'middle',
         },
         showPercentages: 'all',
         legendOptions: {
           show: true,
-          align: 'center'
+          align: 'center',
         },
-        theme: new LightTheme()
+        theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
       expect(svg).toContain('b-percentage');
       expect(svg).toContain('(50%)');
     });
-  
+
     it('should show percentages only in legend when showPercentages is Legend', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
-        { name: 'Java', value: 20, color: '#b07219' }
+        { name: 'Java', value: 20, color: '#b07219' },
       ];
-    
+
       const chartOptions: BubbleChartOptions = {
         width: 800,
         height: 600,
@@ -247,27 +267,27 @@ describe('Generator', () => {
           fontSize: '24px',
           fontWeight: 'bold',
           fill: '#000',
-          textAnchor: 'middle'
+          textAnchor: 'middle',
         },
         showPercentages: 'legend',
         legendOptions: {
           show: true,
-          align: 'center'
+          align: 'center',
         },
-        theme: new LightTheme()
+        theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
       expect(svg).not.toContain('class="b-percentage"'); // HTML element
       expect(svg).toContain('(50%)');
     });
-  
+
     it('should show percentages only in bubbles when showPercentages is Bubbles', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
-        { name: 'Java', value: 20, color: '#b07219' }
+        { name: 'Java', value: 20, color: '#b07219' },
       ];
-    
+
       const chartOptions: BubbleChartOptions = {
         width: 800,
         height: 600,
@@ -276,14 +296,14 @@ describe('Generator', () => {
           fontSize: '24px',
           fontWeight: 'bold',
           fill: '#000',
-          textAnchor: 'middle'
+          textAnchor: 'middle',
         },
         showPercentages: 'bubbles',
         legendOptions: {
           show: true,
-          align: 'center'
+          align: 'center',
         },
-        theme: new LightTheme()
+        theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
       expect(svg).toContain('b-percentage');

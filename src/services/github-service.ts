@@ -1,8 +1,18 @@
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
-import { GitHubError, GitHubRateLimitError, GitHubNotFoundError, GitHubBadCredentialsError, GitHubAccountSuspendedError, GitHubUsernameNotFoundError } from '../errors/github-errors.js';
+import {
+  GitHubError,
+  GitHubRateLimitError,
+  GitHubNotFoundError,
+  GitHubBadCredentialsError,
+  GitHubAccountSuspendedError,
+  GitHubUsernameNotFoundError,
+} from '../errors/github-errors.js';
 
-export const fetchTopLanguages = async (username: string, langsCount: number) => {
+export const fetchTopLanguages = async (
+  username: string,
+  langsCount: number,
+) => {
   try {
     const query = `
       query UserLanguages($username: String!, $first: Int!, $after: String) {
@@ -63,7 +73,10 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
       .filter(([, size]) => size > 0)
       .slice(0, langsCount);
 
-    const limitedTotalSize = sortedLanguages.reduce((sum, [, size]) => sum + size, 0);
+    const limitedTotalSize = sortedLanguages.reduce(
+      (sum, [, size]) => sum + size,
+      0,
+    );
     const languagePercentages = sortedLanguages.map(([language, size]) => ({
       language,
       percentage: ((size / limitedTotalSize) * 100).toFixed(2),
@@ -75,7 +88,11 @@ export const fetchTopLanguages = async (username: string, langsCount: number) =>
       throw error;
     }
     console.error(error);
-    throw new GitHubError(400, 'GitHub API Error', 'Failed to fetch top languages from GitHub');
+    throw new GitHubError(
+      400,
+      'GitHub API Error',
+      'Failed to fetch top languages from GitHub',
+    );
   }
 };
 
@@ -94,7 +111,11 @@ const retry = async (
       await new Promise((res) => setTimeout(res, delay));
       return retry(fn, retries - 1, delay);
     } else {
-      throw new GitHubError(400, 'GitHub API Error', 'Exceeded maximum retries for GitHub API. Try again later.');
+      throw new GitHubError(
+        400,
+        'GitHub API Error',
+        'Exceeded maximum retries for GitHub API. Try again later.',
+      );
     }
   }
 };

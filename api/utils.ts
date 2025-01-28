@@ -1,11 +1,28 @@
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
 import { BubbleData } from '../src/chart/types/bubbleData.js';
-import { TextAnchor, TitleOptions, LegendOptions, TextAlign, BubbleChartOptions, PercentageDisplay } from '../src/chart/types/chartOptions.js';
+import {
+  TextAnchor,
+  TitleOptions,
+  LegendOptions,
+  TextAlign,
+  BubbleChartOptions,
+  PercentageDisplay,
+} from '../src/chart/types/chartOptions.js';
 import { CustomConfig, Mode } from '../src/chart/types/config.js';
-import { GitHubNotFoundError, GitHubRateLimitError } from '../src/errors/github-errors.js';
-import { ValidationError, FetchError, MissingUsernameError } from '../src/errors/custom-errors.js';
-import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../src/common/utils.js';
+import {
+  GitHubNotFoundError,
+  GitHubRateLimitError,
+} from '../src/errors/github-errors.js';
+import {
+  ValidationError,
+  FetchError,
+  MissingUsernameError,
+} from '../src/errors/custom-errors.js';
+import {
+  isDevEnvironment,
+  mapConfigToBubbleChartOptions,
+} from '../src/common/utils.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -88,8 +105,11 @@ export class CustomURLSearchParams extends URLSearchParams {
       text: this.getStringValue('title', 'Bubble Chart'),
       fontSize: this.getNumberValue('title-size', 24) + 'px',
       fontWeight: this.getStringValue('title-weight', 'bold'),
-      fill: this.getStringValue('title-color', this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor),
-      textAnchor: this.getTextAnchorValue('title-align', 'middle')
+      fill: this.getStringValue(
+        'title-color',
+        this.getTheme('theme', CONSTANTS.DEFAULT_THEME).textColor,
+      ),
+      textAnchor: this.getTextAnchorValue('title-align', 'middle'),
     };
   }
 
@@ -132,10 +152,14 @@ export async function handleMissingUsername(req: any, res: any) {
   handleErrorResponse(error, res);
 }
 
-export async function fetchConfigFromRepo(username: string, filePath: string, branch?: string): Promise<{ options: BubbleChartOptions, data: BubbleData[] }> {
+export async function fetchConfigFromRepo(
+  username: string,
+  filePath: string,
+  branch?: string,
+): Promise<{ options: BubbleChartOptions; data: BubbleData[] }> {
   const processConfig = (customConfig: CustomConfig) => {
     const options = mapConfigToBubbleChartOptions(customConfig.options);
-    customConfig.data.forEach(d => d.name = d.name);
+    customConfig.data.forEach((d) => (d.name = d.name));
     return { options: options, data: customConfig.data };
   };
 
@@ -145,10 +169,15 @@ export async function fetchConfigFromRepo(username: string, filePath: string, br
     const localPath = path.resolve(__dirname, '../example-config.json');
     if (fs.existsSync(localPath)) {
       try {
-        const customConfig = JSON.parse(fs.readFileSync(localPath, 'utf-8')) as CustomConfig;
+        const customConfig = JSON.parse(
+          fs.readFileSync(localPath, 'utf-8'),
+        ) as CustomConfig;
         return processConfig(customConfig);
       } catch (error) {
-        throw new ValidationError('Failed to parse local JSON configuration.', error instanceof Error ? error : undefined);
+        throw new ValidationError(
+          'Failed to parse local JSON configuration.',
+          error instanceof Error ? error : undefined,
+        );
       }
     } else {
       throw new FetchError(`Local config file not found at ${localPath}`);
@@ -157,24 +186,37 @@ export async function fetchConfigFromRepo(username: string, filePath: string, br
     const url = `https://raw.githubusercontent.com/${username}/${username}/${branch || 'main'}/${filePath}`;
     const response = await fetch(url, {
       headers: {
-        Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`
-      }
+        Authorization: `token ${CONSTANTS.GITHUB_TOKEN}`,
+      },
     });
     if (!response.ok) {
       if (response.status === 404) {
-        throw new GitHubNotFoundError(`The repository or file at ${filePath} was not found.`);
-      } else if (response.status === 403 && response.headers.get('X-RateLimit-Remaining') === '0') {
-        throw new GitHubRateLimitError('You have exceeded the GitHub API rate limit.');
+        throw new GitHubNotFoundError(
+          `The repository or file at ${filePath} was not found.`,
+        );
+      } else if (
+        response.status === 403 &&
+        response.headers.get('X-RateLimit-Remaining') === '0'
+      ) {
+        throw new GitHubRateLimitError(
+          'You have exceeded the GitHub API rate limit.',
+        );
       } else {
-        throw new FetchError(`Failed to fetch config from ${filePath} in ${username} repository`, new Error(`HTTP status ${response.status}`));
+        throw new FetchError(
+          `Failed to fetch config from ${filePath} in ${username} repository`,
+          new Error(`HTTP status ${response.status}`),
+        );
       }
     }
 
     try {
-      const customConfig = await response.json() as CustomConfig;
+      const customConfig = (await response.json()) as CustomConfig;
       return processConfig(customConfig);
     } catch (error) {
-      throw new ValidationError('Failed to parse fetched JSON configuration.', error instanceof Error ? error : undefined);
+      throw new ValidationError(
+        'Failed to parse fetched JSON configuration.',
+        error instanceof Error ? error : undefined,
+      );
     }
   }
 }

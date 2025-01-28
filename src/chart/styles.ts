@@ -1,9 +1,10 @@
-import { HierarchyCircularNode } from "d3";
-import { ThemeBase } from "./themes.js";
-import { BubbleData } from "./types/bubbleData.js";
-import { StyleError } from "../errors/custom-errors.js";
+import { HierarchyCircularNode } from 'd3';
+import { ThemeBase } from './themes.js';
+import { BubbleData } from './types/bubbleData.js';
+import { StyleError } from '../errors/custom-errors.js';
 
-export const defaultFontFamily = '-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'Noto Sans\',Helvetica,Arial,sans-serif,\'Apple Color Emoji\',\'Segoe UI Emoji\'';
+export const defaultFontFamily =
+  "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji'";
 
 export function getCommonStyles(theme: ThemeBase): string {
   try {
@@ -35,20 +36,26 @@ export function getCommonStyles(theme: ThemeBase): string {
       }
     `;
   } catch (error) {
-    throw new StyleError('Failed to get common styles.', error instanceof Error ? error : undefined);
+    throw new StyleError(
+      'Failed to get common styles.',
+      error instanceof Error ? error : undefined,
+    );
   }
 }
 
-export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleData>, index: number): string {
+export function generateBubbleAnimationStyle(
+  node: HierarchyCircularNode<BubbleData>,
+  index: number,
+): string {
   try {
     const radius = node.r;
     const duration = (Math.random() * 5 + 8).toFixed(2);
     const delay = (Math.random() * 2).toFixed(2);
     const randomXOffset = Math.random() * 20 - 10;
     const randomYOffset = Math.random() * 20 - 10;
-    const plopDelay = radius * 0.010;
+    const plopDelay = radius * 0.01;
 
-    // TODO: make the animation more fluid/smooth    
+    // TODO: make the animation more fluid/smooth
     return `
       .bubble-${index} {
         scale: 0;
@@ -74,7 +81,10 @@ export function generateBubbleAnimationStyle(node: HierarchyCircularNode<BubbleD
       }
     `;
   } catch (error) {
-    throw new StyleError('Failed to generate bubble animation style.', error instanceof Error ? error : undefined);
+    throw new StyleError(
+      'Failed to generate bubble animation style.',
+      error instanceof Error ? error : undefined,
+    );
   }
 }
 
@@ -97,6 +107,9 @@ export function getLegendItemAnimationStyle(): string {
       }
     `;
   } catch (error) {
-    throw new StyleError('Failed to get legend item animation style.', error instanceof Error ? error : undefined);
+    throw new StyleError(
+      'Failed to get legend item animation style.',
+      error instanceof Error ? error : undefined,
+    );
   }
 }

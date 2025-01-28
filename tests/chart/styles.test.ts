@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { getCommonStyles, generateBubbleAnimationStyle, getLegendItemAnimationStyle } from '../../src/chart/styles';
+import {
+  getCommonStyles,
+  generateBubbleAnimationStyle,
+  getLegendItemAnimationStyle,
+} from '../../src/chart/styles';
 import { LightTheme } from '../../src/chart/themes';
 import { HierarchyCircularNode } from 'd3';
 import { BubbleData } from '../../src/chart/types/bubbleData';
