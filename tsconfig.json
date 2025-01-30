@@ -10,6 +10,5 @@
     "outDir": "./dist",
     "rootDir": "."
   },
-  "include": ["src/*", "api/*", "config/*"],
-  "exclude": ["node_modules", "tests/*"]
+  "include": ["src/**/*", "api/**/*", "config/**/*"]
 }

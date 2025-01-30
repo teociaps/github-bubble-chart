@@ -1,23 +1,34 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { FlatCompat } from '@eslint/eslintrc';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import prettier from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
 import importPlugin from 'eslint-plugin-import';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const compat = new FlatCompat();
 
 export default [
   {
-    files: ['**/*.ts'],
+    ignores: ['coverage/**', 'dist/**', '**/node_modules/**'],
+  },
+  {
+    files: ['**/*.{ts,js}'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: __dirname,
       },
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
       import: importPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       /* TypeScript Rules */
@@ -60,7 +71,8 @@ export default [
         },
       ],
 
-      /* Prettier */
+      /* Prettier Rules */
+      'prettier/prettier': 'error',
       ...prettier.rules,
     },
   },
