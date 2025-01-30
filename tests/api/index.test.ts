@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
-import request from 'supertest';
-import app from '../../api/index';
 import dotenv from 'dotenv';
 import { Server } from 'http';
 import { AddressInfo } from 'net';
+import request from 'supertest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import app from '../../api/index';
 
 dotenv.config();
 
@@ -12,10 +12,9 @@ describe('Express App', () => {
   let dynamicPort: number;
 
   beforeAll(async () => {
-    server = await new Promise<Server>((resolve, reject) => {
+    server = await new Promise<Server>((resolve, _) => {
       const s = app.listen(0, () => {
         dynamicPort = (s.address() as AddressInfo).port;
-        console.log(`Test server running on port ${dynamicPort}`);
         resolve(s);
       });
     });

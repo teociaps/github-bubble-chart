@@ -1,22 +1,23 @@
+import { Request } from 'express';
+import fs from 'fs';
+import path from 'path';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   CustomURLSearchParams,
   parseParams,
   fetchConfigFromRepo,
 } from '../../api/utils';
 import { LightTheme } from '../../src/chart/themes';
-import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
+import { CustomConfig } from '../../src/chart/types/config';
+import {
+  isDevEnvironment,
+  mapConfigToBubbleChartOptions,
+} from '../../src/common/utils';
 import { FetchError, ValidationError } from '../../src/errors/custom-errors';
 import {
   GitHubNotFoundError,
   GitHubRateLimitError,
 } from '../../src/errors/github-errors';
-import {
-  isDevEnvironment,
-  mapConfigToBubbleChartOptions,
-} from '../../src/common/utils';
-import { CustomConfig } from '../../src/chart/types/config';
-import path from 'path';
-import fs from 'fs';
 
 describe('API Utils', () => {
   describe('CustomURLSearchParams', () => {
@@ -221,13 +222,13 @@ describe('API Utils', () => {
   describe('parseParams', () => {
     it('should parse URL parameters', () => {
       const req = { url: 'http://example.com?key=value' };
-      const params = parseParams(req as any);
+      const params = parseParams(req as Request);
       expect(params.get('key')).toBe('value');
     });
 
     it('should return empty params if no query string is present', () => {
       const req = { url: 'http://example.com' };
-      const params = parseParams(req as any);
+      const params = parseParams(req as Request);
       expect(params.get('key')).toBeNull();
     });
   });
@@ -236,15 +237,21 @@ describe('API Utils', () => {
   vi.mock('path');
   vi.mock('../../src/common/utils', () => ({
     isDevEnvironment: vi.fn(),
-    mapConfigToBubbleChartOptions: vi
-      .fn()
-      .mockReturnValue({ titleOptions: { text: 'Test Chart' } } as any),
+    mapConfigToBubbleChartOptions: vi.fn().mockReturnValue({
+      titleOptions: { text: 'Test Chart' },
+    } as unknown as CustomConfig),
   }));
   vi.stubGlobal('fetch', vi.fn());
 
   const mockConfig: CustomConfig = {
-    options: { titleOptions: { text: 'Test Chart' } } as any,
-    data: [{ name: 'Node.js', value: 50 }] as any,
+    options: {
+      titleOptions: { text: 'Test Chart' },
+    } as unknown as CustomConfig['options'],
+    data: [{ name: 'Node.js', value: 50, color: '#68A063' }] as {
+      name: string;
+      value: number;
+      color: string;
+    }[],
   };
 
   beforeEach(() => {
@@ -264,7 +271,7 @@ describe('API Utils', () => {
 
       expect(result).toEqual({
         options: { titleOptions: { text: 'Test Chart' } },
-        data: [{ name: 'Node.js', value: 50 }],
+        data: [{ name: 'Node.js', value: 50, color: '#68A063' }],
       });
       expect(fs.existsSync).toHaveBeenCalledWith(localPath);
       expect(fs.readFileSync).toHaveBeenCalledWith(localPath, 'utf-8');
@@ -288,14 +295,14 @@ describe('API Utils', () => {
       const mockResponse = {
         ok: true,
         json: async () => mockConfig,
-      } as any;
+      } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       const result = await fetchConfigFromRepo('username', 'filePath');
 
       expect(result).toEqual({
         options: { titleOptions: { text: 'Test Chart' } },
-        data: [{ name: 'Node.js', value: 50 }],
+        data: [{ name: 'Node.js', value: 50, color: '#68A063' }],
       });
       expect(fetch).toHaveBeenCalledWith(
         'https://raw.githubusercontent.com/username/username/main/filePath',
@@ -307,7 +314,7 @@ describe('API Utils', () => {
 
     it('throws GitHubNotFoundError if the file is not found on GitHub', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
-      const mockResponse = { ok: false, status: 404 } as any;
+      const mockResponse = { ok: false, status: 404 } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
@@ -321,7 +328,7 @@ describe('API Utils', () => {
         ok: false,
         status: 403,
         headers: { get: vi.fn(() => '0') },
-      } as any;
+      } as unknown as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
@@ -331,7 +338,7 @@ describe('API Utils', () => {
 
     it('throws FetchError for other HTTP errors', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
-      const mockResponse = { ok: false, status: 500 } as any;
+      const mockResponse = { ok: false, status: 500 } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
@@ -346,7 +353,7 @@ describe('API Utils', () => {
         json: async () => {
           throw new Error('Invalid JSON');
         },
-      } as any;
+      } as unknown as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(

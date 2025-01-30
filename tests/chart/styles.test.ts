@@ -1,3 +1,4 @@
+import { HierarchyCircularNode } from 'd3';
 import { describe, it, expect } from 'vitest';
 import {
   getCommonStyles,
@@ -5,7 +6,6 @@ import {
   getLegendItemAnimationStyle,
 } from '../../src/chart/styles';
 import { LightTheme } from '../../src/chart/themes';
-import { HierarchyCircularNode } from 'd3';
 import { BubbleData } from '../../src/chart/types/bubbleData';
 
 describe('Styles Tests', () => {

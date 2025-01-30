@@ -1,5 +1,5 @@
 import { graphql } from '@octokit/graphql';
-import { describe, it, expect, vi, MockedFunction, Mock } from 'vitest';
+import { describe, it, expect, vi, MockedFunction } from 'vitest';
 import { fetchTopLanguages } from '../../src/services/github-service';
 
 vi.mock('@octokit/graphql', () => ({

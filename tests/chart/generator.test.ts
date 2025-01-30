@@ -1,12 +1,15 @@
-import { createBubbleChart } from '../../src/chart/generator';
-import { LightTheme } from '../../src/chart/themes';
 import { describe, it, expect } from 'vitest';
-import { BubbleData } from '../../src/chart/types/bubbleData';
-import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
+import { createBubbleChart } from '../../src/chart/generator';
 import {
   getCommonStyles,
   getLegendItemAnimationStyle,
 } from '../../src/chart/styles';
+import { LightTheme } from '../../src/chart/themes';
+import { BubbleData } from '../../src/chart/types/bubbleData';
+import {
+  BubbleChartOptions,
+  TitleOptions,
+} from '../../src/chart/types/chartOptions';
 import { GeneratorError } from '../../src/errors/custom-errors';
 
 describe('Generator', () => {
@@ -15,12 +18,12 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'none',
         legendOptions: { show: false, align: 'left' },
         theme: new LightTheme(),
       };
-      var result = await createBubbleChart([], options);
+      const result = await createBubbleChart([], options);
       expect(result).toBeNull();
     });
 
@@ -32,7 +35,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -56,7 +59,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: NaN,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -73,7 +76,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -89,7 +92,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: NaN,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -110,7 +113,7 @@ describe('Generator', () => {
           text: 'Test Chart',
           fontSize: '16px',
           fontWeight: 'bold',
-        } as any,
+        } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -130,7 +133,7 @@ describe('Generator', () => {
           text: 'Test Chart',
           fontSize: '16px',
           fontWeight: 'bold',
-        } as any,
+        } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -146,7 +149,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -163,7 +166,7 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        titleOptions: { text: 'Test Chart' } as any,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
@@ -184,7 +187,7 @@ describe('Generator', () => {
           fontSize: '16px',
           fontWeight: 'bold',
           textAnchor: 'middle',
-        } as any,
+        } as TitleOptions,
         showPercentages: 'all',
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
