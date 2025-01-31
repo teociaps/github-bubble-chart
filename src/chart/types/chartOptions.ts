@@ -17,7 +17,7 @@ export interface TitleOptions {
   fontWeight: string;
   fill: string;
   textAnchor: TextAnchor;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // TODO: add setting for legend position (bottom, left, right, top of chart)?

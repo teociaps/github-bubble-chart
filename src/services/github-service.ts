@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { graphql } from '@octokit/graphql';
 import { CONSTANTS } from '../../config/consts.js';
 import {
@@ -12,7 +13,7 @@ import {
 export const fetchTopLanguages = async (
   username: string,
   langsCount: number,
-) => {
+): Promise<{ language: string; percentage: string }[]> => {
   try {
     const query = `
       query UserLanguages($username: String!, $first: Int!, $after: String) {
@@ -39,7 +40,7 @@ export const fetchTopLanguages = async (
     `;
 
     let hasNextPage = true;
-    let after: any = null;
+    let after: string | null = null;
     const languageMap: Record<string, number> = {};
 
     while (hasNextPage) {
@@ -126,7 +127,7 @@ const graphqlWithAuth = graphql.defaults({
   },
 });
 
-const handleGitHubError = (error: Error) => {
+const handleGitHubError = (error: Error): void => {
   console.error('GitHub API Error:', error.message);
   if (error.message.includes('rate limit')) {
     throw new GitHubRateLimitError();

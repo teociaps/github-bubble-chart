@@ -1,4 +1,4 @@
-import { CONSTANTS } from '../config/consts.js';
+import { Request, Response } from 'express';
 import {
   defaultHeaders,
   fetchConfigFromRepo,
@@ -6,12 +6,13 @@ import {
   parseParams,
   handleErrorResponse,
 } from './utils.js';
+import { CONSTANTS } from '../config/consts.js';
 import { createBubbleChart } from '../src/chart/generator.js';
 import { BubbleChartOptions } from '../src/chart/types/chartOptions.js';
 import { getBubbleData } from '../src/chart/utils.js';
 import { SVGGenerationError } from '../src/errors/custom-errors.js';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response): Promise<void> => {
   const params = parseParams(req);
   const username = params.get('username');
   const configBranch = params.get('config-branch') || undefined;

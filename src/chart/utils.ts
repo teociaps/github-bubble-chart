@@ -1,9 +1,9 @@
+import { emojify } from 'node-emoji';
+import TextToSVG, { Anchor } from 'text-to-svg';
 import { fetchTopLanguages } from '../services/github-service.js';
 import { BubbleData, LanguageMappings } from './types/bubbleData.js';
 import { TextAnchor } from './types/chartOptions.js';
 import { CONSTANTS } from '../../config/consts.js';
-import { emojify } from 'node-emoji';
-import TextToSVG, { Anchor } from 'text-to-svg';
 
 async function fetchLanguageMappings(): Promise<LanguageMappings> {
   const response = await fetch(CONSTANTS.LANGUAGE_MAPPINGS_URL, {
@@ -17,14 +17,17 @@ async function fetchLanguageMappings(): Promise<LanguageMappings> {
   return response.json();
 }
 
-export const getColor = (d: BubbleData) => d.color;
-export const getName = (d: BubbleData) => d.name;
+export const getColor = (d: BubbleData): string => d.color;
+export const getName = (d: BubbleData): string => d.name;
 
 export function toKebabCase(str: string): string {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-export async function getBubbleData(username: string, langsCount: number) {
+export async function getBubbleData(
+  username: string,
+  langsCount: number,
+): Promise<BubbleData[]> {
   const languagePercentages = await fetchTopLanguages(username!, langsCount);
   const languageMappings: LanguageMappings = await fetchLanguageMappings();
   return languagePercentages.map((l) => ({
@@ -116,7 +119,7 @@ export function escapeSpecialChars(text: string): string {
     .replace(/}/g, '&#125;');
 }
 
-export const parseEmojis = (str: string) => {
+export const parseEmojis = (str: string): string => {
   if (!str) {
     throw new Error('[parseEmoji]: str argument not provided');
   }
@@ -135,7 +138,7 @@ export async function wrapText(
   fontWeight: string = 'normal',
 ): Promise<string[]> {
   const words = escapeSpecialChars(text).split(' ');
-  let lines: string[] = [];
+  const lines: string[] = [];
   let currentLine = words[0];
   const wordWidths: Record<string, number> = {};
 

@@ -1,3 +1,7 @@
+import { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { CONSTANTS } from '../config/consts.js';
 import { ThemeBase, themeMap } from '../src/chart/themes.js';
 import { BubbleData } from '../src/chart/types/bubbleData.js';
@@ -11,22 +15,19 @@ import {
 } from '../src/chart/types/chartOptions.js';
 import { CustomConfig, Mode } from '../src/chart/types/config.js';
 import {
-  GitHubNotFoundError,
-  GitHubRateLimitError,
-} from '../src/errors/github-errors.js';
+  isDevEnvironment,
+  mapConfigToBubbleChartOptions,
+} from '../src/common/utils.js';
+import { BaseError } from '../src/errors/base-error.js';
 import {
   ValidationError,
   FetchError,
   MissingUsernameError,
 } from '../src/errors/custom-errors.js';
 import {
-  isDevEnvironment,
-  mapConfigToBubbleChartOptions,
-} from '../src/common/utils.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { BaseError } from '../src/errors/base-error.js';
+  GitHubNotFoundError,
+  GitHubRateLimitError,
+} from '../src/errors/github-errors.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
@@ -84,7 +85,7 @@ export class CustomURLSearchParams extends URLSearchParams {
     }
   }
 
-  getLanguagesCount(defaultValue: number) {
+  getLanguagesCount(defaultValue: number): number {
     const value = this.getNumberValue('langs-count', defaultValue);
     if (value < 1) return 1;
     if (value > 20) return 20;
@@ -141,7 +142,10 @@ export const defaultHeaders = new Headers({
   'Cache-Control': `public, max-age=${CONSTANTS.CACHE_MAX_AGE}`,
 });
 
-export async function handleMissingUsername(req: any, res: any) {
+export async function handleMissingUsername(
+  req: Request,
+  res: Response,
+): Promise<void> {
   let protocol = req.protocol;
   if (!isDevEnvironment() && protocol === 'http') {
     protocol = 'https';
@@ -157,7 +161,9 @@ export async function fetchConfigFromRepo(
   filePath: string,
   branch?: string,
 ): Promise<{ options: BubbleChartOptions; data: BubbleData[] }> {
-  const processConfig = (customConfig: CustomConfig) => {
+  const processConfig = (
+    customConfig: CustomConfig,
+  ): { options: BubbleChartOptions; data: BubbleData[] } => {
     const options = mapConfigToBubbleChartOptions(customConfig.options);
     customConfig.data.forEach((d) => (d.name = d.name));
     return { options: options, data: customConfig.data };
@@ -221,7 +227,10 @@ export async function fetchConfigFromRepo(
   }
 }
 
-export function handleErrorResponse(error: Error | undefined, res: any) {
+export function handleErrorResponse(
+  error: Error | undefined,
+  res: Response,
+): void {
   console.error(error);
   if (error instanceof BaseError) {
     res.status(error.status).send(error.render());

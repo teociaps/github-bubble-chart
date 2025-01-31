@@ -1,5 +1,10 @@
 import { hierarchy, HierarchyCircularNode, max, pack } from 'd3';
 import { createSVGDefs } from './defs.js';
+import {
+  getCommonStyles,
+  generateBubbleAnimationStyle,
+  getLegendItemAnimationStyle,
+} from './styles.js';
 import { BubbleData } from './types/bubbleData.js';
 import { BubbleChartOptions, TitleOptions } from './types/chartOptions.js';
 import {
@@ -13,13 +18,8 @@ import {
   getAlignmentPosition,
   escapeSpecialChars,
 } from './utils.js';
-import {
-  getCommonStyles,
-  generateBubbleAnimationStyle,
-  getLegendItemAnimationStyle,
-} from './styles.js';
-import { GeneratorError } from '../errors/custom-errors.js';
 import { truncateText } from '../common/utils.js';
+import { GeneratorError } from '../errors/custom-errors.js';
 
 async function createTitleElement(
   titleOptions: TitleOptions,
@@ -32,7 +32,7 @@ async function createTitleElement(
         (style) =>
           style !== 'text' &&
           style !== 'textAnchor' &&
-          titleOptions[style] != null,
+          titleOptions[style] !== null,
       )
       .map((style) => `${toKebabCase(style)}: ${titleOptions[style]};`)
       .join(' ');
@@ -192,7 +192,7 @@ async function createLegend(
       };
     });
 
-    const rowItems: any[][] = [[]]; // Array of rows, each row contains legend items
+    const rowItems: { text: string; width: number; color: string }[][] = [[]]; // Array of rows, each row contains legend items
     let currentRowWidth = 0;
     let currentRowIndex = 0;
 
@@ -209,7 +209,7 @@ async function createLegend(
 
     // Generate SVG for legend rows
     rowItems.forEach((row, rowIndex) => {
-      let rowWidth = row.reduce((sum, item) => sum + item.width, 0);
+      const rowWidth = row.reduce((sum, item) => sum + item.width, 0);
       let rowX = 0;
 
       if (chartOptions.legendOptions.align === 'center') {
@@ -267,7 +267,9 @@ export async function createBubbleChart(
   const height = chartOptions.height;
 
   const bubblesPack = pack<BubbleData>().size([width, height]).padding(1.5);
-  const root = hierarchy({ children: data } as any).sum((d) => d.value);
+  const root = hierarchy<BubbleData>({
+    children: data,
+  } as unknown as BubbleData).sum((d) => d.value);
   const bubbleNodes = bubblesPack(root).leaves();
 
   // Title

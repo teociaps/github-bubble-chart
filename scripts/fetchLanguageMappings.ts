@@ -1,7 +1,7 @@
 import fs from 'fs';
+import imageToBase64 from 'image-to-base64';
 import { parse as yamlParse } from 'yaml';
 import { CONSTANTS } from '../config/consts';
-import imageToBase64 from 'image-to-base64';
 
 // Known language name discrepancies map (GitHub vs Devicon)
 const languageDiscrepancies: Record<string, string> = {
@@ -44,7 +44,7 @@ async function fetchLanguageColors(): Promise<
   }
 }
 
-async function convertImageToBase64(url: string) {
+async function convertImageToBase64(url: string): Promise<string | undefined> {
   try {
     const base64 = await imageToBase64(url);
     return `data:image/svg+xml;base64,${base64}`;
@@ -119,7 +119,7 @@ function mergeMappings(
   return mergedMappings;
 }
 
-async function main() {
+async function main(): Promise<void> {
   try {
     // Fetch updated language colors and icons
     const languageColors = await fetchLanguageColors();

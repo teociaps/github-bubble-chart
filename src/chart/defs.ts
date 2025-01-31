@@ -3,7 +3,7 @@ export const createSVGDefs = (): string => {
     id: string,
     coordinates: { fx: string; fy: string },
     stops: { offset: string; color: string; opacity?: number }[],
-  ) => {
+  ): string => {
     let gradient = `<radialGradient id="${id}" fx="${coordinates.fx}" fy="${coordinates.fy}">`;
     stops.forEach((stop) => {
       gradient += `<stop offset="${stop.offset}" stop-color="${stop.color}" ${
@@ -14,7 +14,11 @@ export const createSVGDefs = (): string => {
     return gradient;
   };
 
-  const createMask = (id: string, gradientId: string, transform?: string) => {
+  const createMask = (
+    id: string,
+    gradientId: string,
+    transform?: string,
+  ): string => {
     return `
       <mask id="${id}" maskContentUnits="objectBoundingBox">
         <rect fill="url(#${gradientId})" width="1" height="1" ${

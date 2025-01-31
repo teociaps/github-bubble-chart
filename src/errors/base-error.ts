@@ -12,11 +12,11 @@ export class BaseError extends Error {
     }
   }
 
-  render() {
+  render(): string {
     return this.renderPage();
   }
 
-  private renderPage() {
+  private renderPage(): string {
     return `<!DOCTYPE html>
     <html lang="en"><head>
       <meta charset="UTF-8">
