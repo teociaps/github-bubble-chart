@@ -80,13 +80,8 @@
     "text-to-svg": "^3.1.5"
   },
   "lint-staged": {
-    "*.{js,ts}": "lint",
-    "*.{js,ts,json,md,yml}": "format"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "*.{js,ts}": "eslint --max-warnings=0 --no-warn-ignored",
+    "*.{js,ts,json,md,yml}": "prettier --write"
   },
   "engines": {
     "node": ">=14.0.0",
