@@ -9,6 +9,7 @@
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
     "start": "node dist/api/index.js",
+    "start:vercel": "vercel dev",
     "update-langs": "tsx scripts/fetchLanguageMappings.ts",
     "lint": "eslint . --max-warnings=0 --no-warn-ignored",
     "lint:fix": "eslint . --fix",
