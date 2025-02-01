@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'fs';
 import imageToBase64 from 'image-to-base64';
 import { parse as yamlParse } from 'yaml';

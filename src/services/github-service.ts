@@ -9,6 +9,7 @@ import {
   GitHubAccountSuspendedError,
   GitHubUsernameNotFoundError,
 } from '../errors/github-errors.js';
+import logger from '../logger.js';
 
 export const fetchTopLanguages = async (
   username: string,
@@ -88,7 +89,7 @@ export const fetchTopLanguages = async (
     if (error instanceof GitHubError) {
       throw error;
     }
-    console.error(error);
+    logger.error(error);
     throw new GitHubError(
       400,
       'GitHub API Error',
@@ -128,7 +129,7 @@ const graphqlWithAuth = graphql.defaults({
 });
 
 const handleGitHubError = (error: Error): void => {
-  console.error('GitHub API Error:', error.message);
+  logger.error(`GitHub API Error: ${error.message}`);
   if (error.message.includes('rate limit')) {
     throw new GitHubRateLimitError();
   }

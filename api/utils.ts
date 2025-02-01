@@ -28,6 +28,7 @@ import {
   GitHubNotFoundError,
   GitHubRateLimitError,
 } from '../src/errors/github-errors.js';
+import logger from '../src/logger.js';
 
 export class CustomURLSearchParams extends URLSearchParams {
   getStringValue(key: string, defaultValue: string): string {
@@ -231,10 +232,9 @@ export function handleErrorResponse(
   error: Error | undefined,
   res: Response,
 ): void {
-  console.error(error);
+  logger.error(error);
   if (error instanceof BaseError) {
     res.status(error.status).send(error.render());
-    // res.status(error.status).send({ error: error.message });
   } else {
     res.status(500).send({ error: 'An unexpected error occurred' });
   }

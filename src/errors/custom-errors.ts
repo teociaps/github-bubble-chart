@@ -126,7 +126,7 @@ export class MissingUsernameError extends BaseError {
             <input type="text" name="username" id="username" placeholder="Ex. teociaps" required>
             <p>
               For more options, visit
-              <a href="https://github.com/teociaps/github-bubble-chart?tab=readme-ov-file" target="_blank">this page</a>.
+              <a href="https://github.com/teociaps/github-bubble-chart/wiki" target="_blank">this page</a>.
             </p>
             <button type="submit">Generate Chart</button>
           </form>
@@ -154,8 +154,9 @@ export class MissingUsernameError extends BaseError {
           width: 80%;
           margin: 0 auto;
           padding: 20px;
+          text-align: left;
         }
-        
+
         button {
           padding: 10px 20px;
           color: #fff;
@@ -163,7 +164,7 @@ export class MissingUsernameError extends BaseError {
           border-radius: inherit;
           cursor: pointer;
         }
-        
+
         .container {
           padding: 20px;
           margin-bottom: 20px;
@@ -172,12 +173,12 @@ export class MissingUsernameError extends BaseError {
           border-radius: 5px;
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
         }
-        
+
         .url-container {
           background-color: #f9f9f9;
           padding: 10px;
           border-radius: 5px;
-          border: 1px solid #ededed; 
+          border: 1px solid #ededed;
         }
         #baseurl-show {
           font-family: monospace;

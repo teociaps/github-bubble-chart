@@ -53,6 +53,9 @@ export class BaseError extends Error {
         #link-container a:hover {
           text-decoration: underline;
         }
+        main {
+          text-align: center;
+        }
       </style>
     </head>
     <body>
