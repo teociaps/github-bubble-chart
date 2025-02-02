@@ -4,13 +4,14 @@ import {
   getCommonStyles,
   getLegendItemAnimationStyle,
 } from '../../src/chart/styles';
-import { LightTheme } from '../../src/chart/themes';
+import { LightTheme, ThemeBase } from '../../src/chart/themes';
 import { BubbleData } from '../../src/chart/types/bubbleData';
 import {
   BubbleChartOptions,
+  LegendOptions,
   TitleOptions,
 } from '../../src/chart/types/chartOptions';
-import { GeneratorError } from '../../src/errors/custom-errors';
+import { GeneratorError, StyleError } from '../../src/errors/custom-errors';
 
 describe('Generator', () => {
   describe('createBubbleChart', () => {
@@ -311,6 +312,144 @@ describe('Generator', () => {
       const svg = await createBubbleChart(data, chartOptions);
       expect(svg).toContain('b-percentage');
       expect(svg).not.toContain('(50%)');
+    });
+  });
+
+  describe('createBubbleChart missing data', () => {
+    it('should handle missing title text', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: '' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).not.toContain('<text class="bc-title"');
+    });
+
+    it('should throw GeneratorError if legend options are missing', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: undefined as unknown as LegendOptions,
+        theme: new LightTheme(),
+      };
+      await expect(createBubbleChart(data, options)).rejects.toThrow(
+        GeneratorError,
+      );
+    });
+
+    it('should throw GeneratorError if title options are missing', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+        titleOptions: undefined as unknown as TitleOptions,
+      };
+      await expect(createBubbleChart(data, options)).rejects.toThrow(
+        GeneratorError,
+      );
+    });
+
+    it('should handle missing theme', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: undefined as unknown as ThemeBase,
+      };
+      await expect(createBubbleChart(data, options)).rejects.toThrow(
+        StyleError,
+      );
+    });
+
+    it('should handle missing bubble data', async () => {
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(undefined as unknown as [], options);
+      expect(svg).toBeNull();
+    });
+
+    it('should handle missing bubble icon', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 70, color: 'yellow' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<text class="b-text"');
+    });
+
+    it('should handle missing bubble color', async () => {
+      const data: BubbleData[] = [
+        {
+          name: 'JavaScript',
+          value: 70,
+          color: undefined as unknown as string,
+        },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<circle');
+    });
+
+    it('should handle missing bubble value', async () => {
+      const data: BubbleData[] = [
+        {
+          name: 'JavaScript',
+          color: 'yellow',
+          value: undefined as unknown as number,
+        },
+      ];
+      const options: BubbleChartOptions = {
+        width: 600,
+        height: 400,
+        titleOptions: { text: 'Test Chart' } as TitleOptions,
+        showPercentages: 'all',
+        legendOptions: { show: true, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('<circle');
     });
   });
 });

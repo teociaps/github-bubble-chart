@@ -252,10 +252,17 @@ export async function createBubbleChart(
   data: BubbleData[],
   chartOptions: BubbleChartOptions,
 ): Promise<string | null> {
-  if (data.length === 0) return null;
+  if (data === undefined || data.length === 0) return null;
 
   if (isNaN(chartOptions.width) || isNaN(chartOptions.height)) {
     throw new GeneratorError('Invalid width or hight.');
+  }
+
+  if (
+    chartOptions.titleOptions === undefined ||
+    chartOptions.legendOptions === undefined
+  ) {
+    throw new GeneratorError('Title or legend options are missing.');
   }
 
   // Escape special characters in data names so they can be shown correctly in the chart
@@ -301,7 +308,10 @@ export async function createBubbleChart(
 
   // Legend
   let svgLegend = '';
-  if (chartOptions.legendOptions.show) {
+  if (
+    chartOptions.legendOptions !== undefined &&
+    chartOptions.legendOptions.show
+  ) {
     const legendResult = await createLegend(
       data,
       width,

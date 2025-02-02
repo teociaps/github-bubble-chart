@@ -1,5 +1,6 @@
 import { graphql } from '@octokit/graphql';
 import { describe, it, expect, vi, MockedFunction } from 'vitest';
+import { GitHubError } from '../../src/errors/github-errors';
 import { fetchTopLanguages } from '../../src/services/github-service';
 
 vi.mock('@octokit/graphql', () => ({
@@ -177,6 +178,39 @@ describe('GH Service', () => {
           'GitHub Username Not Found',
         );
       });
+    });
+
+    it('should throw an error after exceeding maximum retries', async () => {
+      const mockError = new Error('Temporary error');
+      (
+        mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>
+      ).mockRejectedValue(mockError);
+
+      await expect(fetchTopLanguages('testuser', 2)).rejects.toThrow(
+        'GitHub API Error',
+      );
+    });
+
+    it('should handle GitHubError correctly', async () => {
+      const mockError = new GitHubError(400, 'GitHub API Error', 'Test error');
+      (
+        mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>
+      ).mockRejectedValue(mockError);
+
+      await expect(fetchTopLanguages('testuser', 2)).rejects.toThrow(
+        'GitHub API Error',
+      );
+    });
+
+    it('should log and throw a generic error if not a GitHubError', async () => {
+      const mockError = new Error('Generic error');
+      (
+        mockGraphQL as unknown as MockedFunction<typeof mockGraphQL>
+      ).mockRejectedValue(mockError);
+
+      await expect(fetchTopLanguages('testuser', 2)).rejects.toThrow(
+        'GitHub API Error',
+      );
     });
   });
 });
