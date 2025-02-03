@@ -1,0 +1,21 @@
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - README.md
+          - CONTRIBUTING.md
+          - CODE_OF_CONDUCT.md
+          - SECURITY.md
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - package.json
+          - yarn.lock
+
+configuration:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .eslintrc*
+          - .prettierrc*
+          - .editorconfig
+          - .stylelintrc*
