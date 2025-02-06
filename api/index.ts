@@ -16,7 +16,7 @@ const rateLimiter = rateLimit({
   headers: false,
   message: 'Too many requests from this IP, please try again after a minute',
 });
-
+app.set('trust proxy', 1);
 app.get('/', rateLimiter, api);
 
 app.listen(PORT);
