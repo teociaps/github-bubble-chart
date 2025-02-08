@@ -24,7 +24,7 @@ describe('Utils Tests', () => {
     const config: CustomConfigOptions = {
       width: 600,
       height: 400,
-      showPercentages: 'all',
+      displayValues: 'all',
       title: {
         text: 'Test Chart',
         fontSize: '16px',
@@ -41,7 +41,8 @@ describe('Utils Tests', () => {
     const expectedOptions: BubbleChartOptions = {
       width: 600,
       height: 400,
-      showPercentages: 'all',
+      displayValues: 'all',
+      usePercentages: false,
       titleOptions: {
         text: 'Test Chart',
         fontSize: '16px',

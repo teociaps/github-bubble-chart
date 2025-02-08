@@ -1,12 +1,11 @@
 import { ThemeBase } from '../themes.js';
 
-// TODO: add settings for styles customization (3d, flat, gooey, shadows, inside a box with borders, more themes, etc..)
-
 export interface BubbleChartOptions {
   width: number; //px
   height: number; //px
   titleOptions: TitleOptions;
-  showPercentages: PercentageDisplay;
+  displayValues: DisplayMode;
+  usePercentages: boolean;
   legendOptions: LegendOptions;
   theme: ThemeBase;
 }
@@ -29,4 +28,4 @@ export interface LegendOptions {
 export type TextAlign = 'left' | 'center' | 'right';
 export type TextAnchor = 'start' | 'middle' | 'end';
 
-export type PercentageDisplay = 'none' | 'all' | 'legend' | 'bubbles';
+export type DisplayMode = 'none' | 'all' | 'legend' | 'bubbles';

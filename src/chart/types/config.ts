@@ -1,6 +1,6 @@
 import { ThemeBase } from '../themes.js';
 import { BubbleData } from './bubbleData.js';
-import { TextAlign, TextAnchor, PercentageDisplay } from './chartOptions.js';
+import { DisplayMode, TextAlign, TextAnchor } from './chartOptions.js';
 
 export interface CustomConfig {
   options: CustomConfigOptions;
@@ -10,7 +10,7 @@ export interface CustomConfig {
 export interface CustomConfigOptions {
   width: number;
   height: number;
-  showPercentages: PercentageDisplay;
+  displayValues: DisplayMode;
   title: CustomTitleConfig;
   legend: CustomLegendConfig;
   theme: ThemeBase | string;

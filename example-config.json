@@ -2,7 +2,7 @@
   "options": {
     "width": 500,
     "height": 300,
-    "showPercentages": true,
+    "displayValues": "all",
     "title": {
       "text": "Custom Bubble Chart",
       "fontSize": "30px",
@@ -14,29 +14,34 @@
       "show": true,
       "align": "left"
     },
-    "theme": "dark"
+    "theme": "dark_dimmed"
   },
   "data": [
     {
       "name": "JavaScript",
-      "value": 40,
+      "value": 50,
       "color": "green",
       "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg"
     },
     {
       "name": "Python",
-      "value": 30,
+      "value": 35,
       "color": "#3572A5"
     },
     {
       "name": "Java",
-      "value": 20,
+      "value": 25,
       "color": "#b07219"
     },
     {
       "name": "C++",
       "value": 10,
       "color": "#f34b7d"
+    },
+    {
+      "name": "C",
+      "value": 10,
+      "color": "orange"
     }
   ]
 }

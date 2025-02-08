@@ -20,7 +20,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'none',
+        displayValues: 'none',
+        usePercentages: false,
         legendOptions: { show: false, align: 'left' },
         theme: new LightTheme(),
       };
@@ -37,7 +38,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: true,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -61,7 +63,8 @@ describe('Generator', () => {
         width: NaN,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: true,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -78,7 +81,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -94,7 +98,8 @@ describe('Generator', () => {
         width: NaN,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -115,7 +120,8 @@ describe('Generator', () => {
           fontSize: '16px',
           fontWeight: 'bold',
         } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -135,7 +141,8 @@ describe('Generator', () => {
           fontSize: '16px',
           fontWeight: 'bold',
         } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -151,7 +158,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -168,7 +176,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -189,7 +198,8 @@ describe('Generator', () => {
           fontWeight: 'bold',
           textAnchor: 'middle',
         } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -198,7 +208,7 @@ describe('Generator', () => {
       expect(svg).toContain('…');
     });
 
-    it('should not show percentages when showPercentages is None', async () => {
+    it('should not show values when displayValues is None', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
@@ -215,7 +225,8 @@ describe('Generator', () => {
           fill: '#000',
           textAnchor: 'middle',
         },
-        showPercentages: 'none',
+        displayValues: 'none',
+        usePercentages: true,
         legendOptions: {
           show: true,
           align: 'center',
@@ -223,11 +234,11 @@ describe('Generator', () => {
         theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
-      expect(svg).not.toContain('class="b-percentage"'); // HTML element
+      expect(svg).not.toContain('class="b-value"'); // HTML element
       expect(svg).not.toContain('(50%)');
     });
 
-    it('should show percentages in both bubbles and legend when showPercentages is All', async () => {
+    it('should show values in both bubbles and legend when displayValues is All', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
@@ -244,7 +255,8 @@ describe('Generator', () => {
           fill: '#000',
           textAnchor: 'middle',
         },
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: {
           show: true,
           align: 'center',
@@ -252,11 +264,11 @@ describe('Generator', () => {
         theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
-      expect(svg).toContain('b-percentage');
-      expect(svg).toContain('(50%)');
+      expect(svg).toContain('b-value');
+      expect(svg).toContain('(50)');
     });
 
-    it('should show percentages only in legend when showPercentages is Legend', async () => {
+    it('should show values only in legend when displayValues is Legend', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
@@ -273,7 +285,8 @@ describe('Generator', () => {
           fill: '#000',
           textAnchor: 'middle',
         },
-        showPercentages: 'legend',
+        displayValues: 'legend',
+        usePercentages: false,
         legendOptions: {
           show: true,
           align: 'center',
@@ -281,11 +294,11 @@ describe('Generator', () => {
         theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
-      expect(svg).not.toContain('class="b-percentage"'); // HTML element
-      expect(svg).toContain('(50%)');
+      expect(svg).not.toContain('class="b-value"'); // HTML element
+      expect(svg).toContain('(50)');
     });
 
-    it('should show percentages only in bubbles when showPercentages is Bubbles', async () => {
+    it('should show values only in bubbles when displayValues is Bubbles', async () => {
       const data: BubbleData[] = [
         { name: 'JavaScript', value: 50, color: '#f1e05a' },
         { name: 'Python', value: 30, color: '#3572A5' },
@@ -302,7 +315,8 @@ describe('Generator', () => {
           fill: '#000',
           textAnchor: 'middle',
         },
-        showPercentages: 'bubbles',
+        displayValues: 'bubbles',
+        usePercentages: true,
         legendOptions: {
           show: true,
           align: 'center',
@@ -310,8 +324,31 @@ describe('Generator', () => {
         theme: new LightTheme(),
       };
       const svg = await createBubbleChart(data, chartOptions);
-      expect(svg).toContain('b-percentage');
+      expect(svg).toContain('b-value');
       expect(svg).not.toContain('(50%)');
+    });
+
+    it('should display bubble values as percentages when usePercentages is true', async () => {
+      const data: BubbleData[] = [
+        { name: 'JavaScript', value: 50, color: '#f1e05a' },
+        { name: 'Python', value: 30, color: '#3572A5' },
+      ];
+      const options: BubbleChartOptions = {
+        width: 800,
+        height: 600,
+        titleOptions: {
+          text: 'Programming Languages',
+          fontSize: '24px',
+          fontWeight: 'bold',
+        } as TitleOptions,
+        displayValues: 'bubbles',
+        usePercentages: true,
+        legendOptions: { show: false, align: 'center' },
+        theme: new LightTheme(),
+      };
+      const svg = await createBubbleChart(data, options);
+      expect(svg).toContain('50%');
+      expect(svg).toContain('30%');
     });
   });
 
@@ -324,7 +361,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: '' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -340,7 +378,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: undefined as unknown as LegendOptions,
         theme: new LightTheme(),
       };
@@ -356,7 +395,8 @@ describe('Generator', () => {
       const options: BubbleChartOptions = {
         width: 600,
         height: 400,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
         titleOptions: undefined as unknown as TitleOptions,
@@ -374,7 +414,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: undefined as unknown as ThemeBase,
       };
@@ -388,7 +429,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -404,7 +446,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -424,7 +467,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };
@@ -444,7 +488,8 @@ describe('Generator', () => {
         width: 600,
         height: 400,
         titleOptions: { text: 'Test Chart' } as TitleOptions,
-        showPercentages: 'all',
+        displayValues: 'all',
+        usePercentages: false,
         legendOptions: { show: true, align: 'center' },
         theme: new LightTheme(),
       };

@@ -135,25 +135,19 @@ describe('API Utils', () => {
       expect(params.getMode()).toBe('top-langs');
     });
 
-    it('should return default percentage display option if key is not present', () => {
+    it('should return default values display option if key is not present', () => {
       const params = new CustomURLSearchParams('');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
-        'legend',
-      );
+      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
     });
 
-    it('should return parsed percentage display option if key is present', () => {
-      const params = new CustomURLSearchParams('percentage-display=all');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
-        'all',
-      );
+    it('should return parsed values display option if key is present', () => {
+      const params = new CustomURLSearchParams('display-values=all');
+      expect(params.getValuesDisplayOption('display-values')).toBe('all');
     });
 
-    it('should return default percentage display option if parsed value is invalid', () => {
-      const params = new CustomURLSearchParams('percentage-display=invalid');
-      expect(params.getPercentageDisplayOption('percentage-display')).toBe(
-        'legend',
-      );
+    it('should return default values display option if parsed value is invalid', () => {
+      const params = new CustomURLSearchParams('display-values=invalid');
+      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
     });
 
     it('should return default title if key is not present', () => {

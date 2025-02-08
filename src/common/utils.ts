@@ -20,7 +20,8 @@ export function mapConfigToBubbleChartOptions(
   return {
     width: config.width,
     height: config.height,
-    showPercentages: config.showPercentages,
+    displayValues: config.displayValues,
+    usePercentages: false,
     titleOptions: {
       text: config.title.text,
       fontSize: config.title.fontSize,

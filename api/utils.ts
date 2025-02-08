@@ -11,7 +11,7 @@ import {
   LegendOptions,
   TextAlign,
   BubbleChartOptions,
-  PercentageDisplay,
+  DisplayMode,
 } from '../src/chart/types/chartOptions.js';
 import { CustomConfig, Mode } from '../src/chart/types/config.js';
 import {
@@ -93,11 +93,11 @@ export class CustomURLSearchParams extends URLSearchParams {
     return value;
   }
 
-  getPercentageDisplayOption(key: string): PercentageDisplay {
-    const defaultValue: PercentageDisplay = 'legend';
+  getValuesDisplayOption(key: string): DisplayMode {
+    const defaultValue: DisplayMode = 'legend';
     const value = this.getStringValue(key, defaultValue);
     if (['all', 'legend', 'bubbles', 'none'].includes(value)) {
-      return value as PercentageDisplay;
+      return value as DisplayMode;
     }
     return defaultValue;
   }

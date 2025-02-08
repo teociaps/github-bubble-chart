@@ -19,7 +19,7 @@ export function getCommonStyles(theme: ThemeBase): string {
       .b-text {
         text-anchor: middle;
       }
-      .b-percentage {
+      .b-value {
         text-shadow: 0 0 1px ${theme.textColor};
         text-anchor: middle;
       }

@@ -101,7 +101,9 @@ async function createBubbleElement(
     const radius = node.r;
     const iconUrl = node.data.icon as string;
     const language = getName(node.data);
-    const percentage = node.data.value + '%';
+    const value = chartOptions.usePercentages
+      ? `${node.data.value}%`
+      : node.data.value;
 
     // Main group for the bubble
     let bubble = `<g class="bubble-${index}" transform="translate(${node.x},${node.y})" data-language="${language}">`;
@@ -141,12 +143,12 @@ async function createBubbleElement(
       bubble += `<text class="b-text" dy=".3em" style="font-size: ${fontSize}; text-shadow: 0 0 5px ${color};">${displayedText}</text>`;
     }
 
-    // Percentage text
+    // Value text
     if (
-      chartOptions.showPercentages === 'all' ||
-      chartOptions.showPercentages === 'bubbles'
+      chartOptions.displayValues === 'all' ||
+      chartOptions.displayValues === 'bubbles'
     ) {
-      bubble += `<text class="b-percentage" dy="3.5em" style="font-size: ${radius / 4}px;">${percentage}</text>`;
+      bubble += `<text class="b-value" dy="3.5em" style="font-size: ${radius / 4}px;">${value}</text>`;
     }
 
     bubble += '</g>'; // Close the bubble group
@@ -178,12 +180,14 @@ async function createLegend(
 
     // Prepare legend items with their measured widths
     const legendItems = data.map(async (item) => {
-      const percentage =
-        chartOptions.showPercentages === 'all' ||
-        chartOptions.showPercentages === 'legend'
-          ? ` (${item.value}%)`
+      const value =
+        chartOptions.displayValues === 'all' ||
+        chartOptions.displayValues === 'legend'
+          ? chartOptions.usePercentages
+            ? ` (${item.value}%)`
+            : ` (${item.value})`
           : '';
-      const text = `${item.name}${percentage}`;
+      const text = `${item.name}${value}`;
       const textWidth = await measureTextWidth(text, '12px');
       return {
         text,

@@ -41,7 +41,8 @@ export default async (req: Request, res: Response): Promise<void> => {
         width: params.getNumberValue('width', 600),
         height: params.getNumberValue('height', 400),
         titleOptions: params.parseTitleOptions(),
-        showPercentages: params.getPercentageDisplayOption('percentages'),
+        displayValues: params.getValuesDisplayOption('display-values'),
+        usePercentages: true,
         legendOptions: params.parseLegendOptions(),
         theme: params.getTheme('theme', CONSTANTS.DEFAULT_THEME),
       };
