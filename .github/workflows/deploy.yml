@@ -12,9 +12,13 @@ on:
           - Production
           - Preview
       tag:
-        description: 'Tag for the release. Will be used in production deployments, and ignored for preview.'
+        description: 'Tag for the release (Production only). This will be ignored for Preview.'
         required: true
         default: '1.0.0'
+
+permissions:
+  contents: write
+  actions: read
 
 jobs:
   deploy:
@@ -24,27 +28,37 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Tag Release (Production Only)
-        if: ${{ github.event.inputs.environment == 'Production' }}
+        if: ${{ inputs.environment == 'Production' }}
         run: |
-          TAG=${{ github.event.inputs.tag }}
-
+          TAG=${{ inputs.tag }}
           # Check if the tag already exists
           if git tag -l "v$TAG" | grep -q "v$TAG"; then
             echo "Error: Tag v$TAG already exists."
             exit 1
           fi
-
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git tag v$TAG
           git push origin --tags
 
       - name: Deploy to Vercel Production
-        if: ${{ github.event.inputs.environment == 'Production' }}
-        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+        if: ${{ inputs.environment == 'Production' }}
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-deployment: true
+          vercel-args: --prod --yes
+          working-directory: .
 
       - name: Deploy to Vercel Preview
-        if: ${{ github.event.inputs.environment == 'Preview' }}
-        run: |
-          echo "Tag provided (ignored for preview): ${{ github.event.inputs.tag }}"
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
+        if: ${{ inputs.environment == 'Preview' }}
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-deployment: true
+          vercel-args: --yes
+          working-directory: .
