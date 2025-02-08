@@ -10,6 +10,7 @@ export default defineConfig({
       reportsDirectory: './coverage',
       all: true,
       include: ['src/*', 'api/*'],
+      exclude: ['src/logger.ts'],
     },
   },
 });

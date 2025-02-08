@@ -205,9 +205,7 @@ export async function fetchConfigFromRepo(
         response.status === 403 &&
         response.headers.get('X-RateLimit-Remaining') === '0'
       ) {
-        throw new GitHubRateLimitError(
-          'You have exceeded the GitHub API rate limit.',
-        );
+        throw new GitHubRateLimitError();
       } else {
         throw new FetchError(
           `Failed to fetch config from ${filePath} in ${username} repository`,
