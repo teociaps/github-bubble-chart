@@ -8,7 +8,7 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
-    "start": "node dist/api/index.js",
+    "start": "yarn build && node dist/api/index.js",
     "start:vercel": "vercel dev",
     "update-langs": "tsx scripts/fetchLanguageMappings.ts",
     "lint": "eslint . --max-warnings=0 --no-warn-ignored",
@@ -19,7 +19,8 @@
     "clean:modules": "rimraf node_modules && yarn install",
     "clean:coverage": "rimraf coverage",
     "clean:eslint": "rimraf .eslintcache",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prestart": "echo 'Open link http://localhost:9000'"
   },
   "repository": "https://github.com/teociaps/github-bubble-chart.git",
   "author": "Matteo Ciapparelli",
