@@ -166,7 +166,10 @@ export async function fetchConfigFromRepo(
     customConfig: CustomConfig,
   ): { options: BubbleChartOptions; data: BubbleData[] } => {
     const options = mapConfigToBubbleChartOptions(customConfig.options);
-    customConfig.data.forEach((d) => (d.name = d.name));
+    customConfig.data = customConfig.data.filter(
+      (dataItem) =>
+        typeof dataItem.value === 'number' && !isNaN(dataItem.value),
+    );
     return { options: options, data: customConfig.data };
   };
 
