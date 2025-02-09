@@ -106,10 +106,10 @@ const retry = async (
   try {
     return await fn();
   } catch (error) {
+    if (error instanceof Error) {
+      handleGitHubError(error);
+    }
     if (retries > 0) {
-      if (error instanceof Error) {
-        handleGitHubError(error);
-      }
       await new Promise((res) => setTimeout(res, delay));
       return retry(fn, retries - 1, delay);
     } else {
