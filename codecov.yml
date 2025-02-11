@@ -12,6 +12,9 @@ coverage:
       default:
         target: auto
         threshold: 2%
+    patch:
+      default:
+        enabled: off
 
 comment:
   require_changes: true
