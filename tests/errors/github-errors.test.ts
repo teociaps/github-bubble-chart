@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { GitHubError, GitHubNotFoundError, GitHubRateLimitError, GitHubBadCredentialsError, GitHubAccountSuspendedError, GitHubUsernameNotFoundError } from '../../src/errors/github-errors.js';
+import {
+  GitHubError,
+  GitHubNotFoundError,
+  GitHubRateLimitError,
+  GitHubBadCredentialsError,
+  GitHubAccountSuspendedError,
+  GitHubUsernameNotFoundError,
+} from '../../src/errors/github-errors.js';
 
 describe('GitHubError', () => {
   it('should create a GitHubError instance', () => {

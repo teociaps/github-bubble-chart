@@ -3,7 +3,7 @@ export class BaseError extends Error {
     readonly status: number,
     readonly message: string,
     public originalError?: Error,
-    public content: string = 'An unexpected error occurred. Please try again later.'
+    public content: string = 'An unexpected error occurred. Please try again later.',
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -12,11 +12,11 @@ export class BaseError extends Error {
     }
   }
 
-  render() {
+  render(): string {
     return this.renderPage();
   }
 
-  private renderPage() {
+  private renderPage(): string {
     return `<!DOCTYPE html>
     <html lang="en"><head>
       <meta charset="UTF-8">
@@ -52,6 +52,9 @@ export class BaseError extends Error {
         }
         #link-container a:hover {
           text-decoration: underline;
+        }
+        main {
+          text-align: center;
         }
       </style>
     </head>

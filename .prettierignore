@@ -1,0 +1,36 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore build output directories
+dist/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.svelte-kit/
+.webpack/
+.docusaurus/
+.serverless/
+.fusebox/
+.dynamodb/
+.vscode-test/
+.yarn/
+.pnp.*
+
+# Ignore coverage output
+coverage/
+
+# Ignore Vercel directories
+.vercel/
+.vercel/cache/
+
+# Ignore other unnecessary directories
+AppPackages/
+BundleArtifacts/
+Generated_Code/
+ClientBin/
+.localhistory/
+.mfractor/
+.ionide/
+.husky/

@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { LightTheme, DarkTheme, DarkHighContrastTheme, DarkDimmedTheme, themeMap } from '../../src/chart/themes';
+import {
+  LightTheme,
+  DarkTheme,
+  DarkHighContrastTheme,
+  DarkDimmedTheme,
+  themeMap,
+} from '../../src/chart/themes';
 
 describe('Themes', () => {
   it('LightTheme properties', () => {

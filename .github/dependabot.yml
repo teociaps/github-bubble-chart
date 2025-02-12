@@ -1,32 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     commit-message:
-      prefix: "npm deps update"
-      include: "scope"
+      prefix: 'npm deps update'
+      include: 'scope'
     open-pull-requests-limit: 10
     assignees:
-      - "teociaps"
+      - 'teociaps'
     reviewers:
-      - "teociaps"
+      - 'teociaps'
     labels:
-      - "dependencies"
-      - "npm"
-  - package-ecosystem: "github-actions"
-    directory: "/"
+      - 'dependencies'
+      - 'npm'
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "monthly"
+      interval: 'monthly'
     commit-message:
-      prefix: "GitHub Actions update"
-      include: "scope"
+      prefix: 'GitHub Actions update'
+      include: 'scope'
     open-pull-requests-limit: 10
     assignees:
-      - "teociaps"
+      - 'teociaps'
     reviewers:
-      - "teociaps"
+      - 'teociaps'
     labels:
-      - "dependencies"
-      - "github-actions"
+      - 'dependencies'
+      - 'github-actions'

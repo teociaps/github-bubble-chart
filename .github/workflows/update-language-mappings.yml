@@ -17,6 +17,7 @@ jobs:
     env:
       DEVICON_URL: ${{ secrets.DEVICON_URL }}
       LINGUIST_GITHUB: ${{ secrets.LINGUIST_GITHUB }}
+      CHANGES: false
 
     steps:
       - name: Checkout repository
@@ -39,14 +40,14 @@ jobs:
           echo "Checking for changes in src/languageMappings.json..."
           if [[ -n "$(git status --porcelain src/languageMappings.json)" ]]; then
             echo "Changes detected."
-            echo "changes=true" >> $GITHUB_ENV
+            echo "CHANGES=true" >> $GITHUB_ENV
           else
             echo "No changes detected."
-            echo "changes=false" >> $GITHUB_ENV
+            echo "CHANGES=false" >> $GITHUB_ENV
           fi
 
       - name: Commit and push changes
-        if: env.changes == 'true'
+        if: env.CHANGES == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
@@ -56,7 +57,7 @@ jobs:
           git push origin HEAD:refs/heads/update-language-mappings --force
 
       - name: Create Pull Request
-        if: env.changes == 'true'
+        if: env.CHANGES == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

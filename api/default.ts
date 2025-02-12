@@ -1,11 +1,18 @@
+import { Request, Response } from 'express';
+import {
+  defaultHeaders,
+  fetchConfigFromRepo,
+  handleMissingUsername,
+  parseParams,
+  handleErrorResponse,
+} from './utils.js';
 import { CONSTANTS } from '../config/consts.js';
-import { defaultHeaders, fetchConfigFromRepo, handleMissingUsername, parseParams, handleErrorResponse } from './utils.js';
 import { createBubbleChart } from '../src/chart/generator.js';
 import { BubbleChartOptions } from '../src/chart/types/chartOptions.js';
 import { getBubbleData } from '../src/chart/utils.js';
 import { SVGGenerationError } from '../src/errors/custom-errors.js';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response): Promise<void> => {
   const params = parseParams(req);
   const username = params.get('username');
   const configBranch = params.get('config-branch') || undefined;
@@ -22,7 +29,11 @@ export default async (req: any, res: any) => {
     let bubbleData;
 
     if (mode === 'custom-config' && configPath) {
-      const config = await fetchConfigFromRepo(username, configPath, configBranch);
+      const config = await fetchConfigFromRepo(
+        username,
+        configPath,
+        configBranch,
+      );
       options = config.options;
       bubbleData = config.data;
     } else {
@@ -30,7 +41,8 @@ export default async (req: any, res: any) => {
         width: params.getNumberValue('width', 600),
         height: params.getNumberValue('height', 400),
         titleOptions: params.parseTitleOptions(),
-        showPercentages: params.getBooleanValue('percentages', false),
+        displayValues: params.getValuesDisplayOption('display-values'),
+        usePercentages: true,
         legendOptions: params.parseLegendOptions(),
         theme: params.getTheme('theme', CONSTANTS.DEFAULT_THEME),
       };
@@ -42,7 +54,9 @@ export default async (req: any, res: any) => {
     const svg = await createBubbleChart(bubbleData, options);
 
     if (!svg) {
-      throw new SVGGenerationError('SVG generation failed: No data available or invalid configuration.');
+      throw new SVGGenerationError(
+        'SVG generation failed: No data available or invalid configuration.',
+      );
     }
 
     res.setHeaders(defaultHeaders);

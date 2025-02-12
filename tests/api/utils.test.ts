@@ -1,18 +1,34 @@
-import { CustomURLSearchParams, parseParams, fetchConfigFromRepo } from '../../api/utils';
-import { LightTheme } from '../../src/chart/themes';
-import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
-import { FetchError, ValidationError } from '../../src/errors/custom-errors';
-import { GitHubNotFoundError, GitHubRateLimitError } from '../../src/errors/github-errors';
-import { isDevEnvironment, mapConfigToBubbleChartOptions } from '../../src/common/utils';
-import { CustomConfig } from '../../src/chart/types/config';
-import path from 'path';
+import { Request } from 'express';
 import fs from 'fs';
+import path from 'path';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import {
+  CustomURLSearchParams,
+  parseParams,
+  fetchConfigFromRepo,
+} from '../../api/utils';
+import { LightTheme } from '../../src/chart/themes';
+import { CustomConfig } from '../../src/chart/types/config';
+import {
+  isDevEnvironment,
+  mapConfigToBubbleChartOptions,
+} from '../../src/common/utils';
+import { FetchError, ValidationError } from '../../src/errors/custom-errors';
+import {
+  GitHubNotFoundError,
+  GitHubRateLimitError,
+} from '../../src/errors/github-errors';
 
 describe('API Utils', () => {
   describe('CustomURLSearchParams', () => {
     it('should return default string value if key is not present', () => {
       const params = new CustomURLSearchParams('');
       expect(params.getStringValue('key', 'default')).toBe('default');
+    });
+
+    it('should return string value if key is present', () => {
+      const params = new CustomURLSearchParams('key=value');
+      expect(params.getStringValue('key', 'default')).toBe('value');
     });
 
     it('should return default number value if key is not present', () => {
@@ -37,12 +53,16 @@ describe('API Utils', () => {
 
     it('should return default theme if key is not present', () => {
       const params = new CustomURLSearchParams('');
-      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(LightTheme);
+      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(
+        LightTheme,
+      );
     });
 
     it('should return parsed theme if key is present', () => {
       const params = new CustomURLSearchParams('theme=light');
-      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(LightTheme);
+      expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(
+        LightTheme,
+      );
     });
 
     it('should return default text anchor value if key is not present', () => {
@@ -76,23 +96,27 @@ describe('API Utils', () => {
     });
 
     it('should parse title options correctly', () => {
-      const params = new CustomURLSearchParams('title=MyChart&title-size=30&title-weight=normal&title-color=#000000&title-align=center');
+      const params = new CustomURLSearchParams(
+        'title=MyChart&title-size=30&title-weight=normal&title-color=#000000&title-align=center',
+      );
       const titleOptions = params.parseTitleOptions();
       expect(titleOptions).toEqual({
         text: 'MyChart',
         fontSize: '30px',
         fontWeight: 'normal',
         fill: '#000000',
-        textAnchor: 'middle'
+        textAnchor: 'middle',
       });
     });
 
     it('should parse legend options correctly', () => {
-      const params = new CustomURLSearchParams('legend=false&legend-align=right');
+      const params = new CustomURLSearchParams(
+        'legend=false&legend-align=right',
+      );
       const legendOptions = params.parseLegendOptions();
       expect(legendOptions).toEqual({
         show: false,
-        align: 'right'
+        align: 'right',
       });
     });
 
@@ -110,18 +134,95 @@ describe('API Utils', () => {
       const params = new CustomURLSearchParams('mode=invalid-mode');
       expect(params.getMode()).toBe('top-langs');
     });
+
+    it('should return default values display option if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
+    });
+
+    it('should return parsed values display option if key is present', () => {
+      const params = new CustomURLSearchParams('display-values=all');
+      expect(params.getValuesDisplayOption('display-values')).toBe('all');
+    });
+
+    it('should return default values display option if parsed value is invalid', () => {
+      const params = new CustomURLSearchParams('display-values=invalid');
+      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
+    });
+
+    it('should return default title if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getStringValue('title', 'Bubble Chart')).toBe(
+        'Bubble Chart',
+      );
+    });
+
+    it('should return parsed title if key is present', () => {
+      const params = new CustomURLSearchParams('title=MyChart');
+      expect(params.getStringValue('title', 'Bubble Chart')).toBe('MyChart');
+    });
+
+    it('should return default legend alignment if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getStringValue('legend-align', 'center')).toBe('center');
+    });
+
+    it('should return parsed legend alignment if key is present', () => {
+      const params = new CustomURLSearchParams('legend-align=right');
+      expect(params.getStringValue('legend-align', 'center')).toBe('right');
+    });
+
+    it('should return default title size if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getNumberValue('title-size', 24)).toBe(24);
+    });
+
+    it('should return parsed title size if key is present', () => {
+      const params = new CustomURLSearchParams('title-size=30');
+      expect(params.getNumberValue('title-size', 24)).toBe(30);
+    });
+
+    it('should return default title weight if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getStringValue('title-weight', 'bold')).toBe('bold');
+    });
+
+    it('should return parsed title weight if key is present', () => {
+      const params = new CustomURLSearchParams('title-weight=normal');
+      expect(params.getStringValue('title-weight', 'bold')).toBe('normal');
+    });
+
+    it('should return default title color if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getStringValue('title-color', '#000000')).toBe('#000000');
+    });
+
+    it('should return parsed title color if key is present', () => {
+      const params = new CustomURLSearchParams('title-color=#ffffff');
+      expect(params.getStringValue('title-color', '#000000')).toBe('#ffffff');
+    });
+
+    it('should return default title alignment if key is not present', () => {
+      const params = new CustomURLSearchParams('');
+      expect(params.getTextAnchorValue('title-align', 'middle')).toBe('middle');
+    });
+
+    it('should return parsed title alignment if key is present', () => {
+      const params = new CustomURLSearchParams('title-align=center');
+      expect(params.getTextAnchorValue('title-align', 'middle')).toBe('middle');
+    });
   });
 
   describe('parseParams', () => {
     it('should parse URL parameters', () => {
       const req = { url: 'http://example.com?key=value' };
-      const params = parseParams(req as any);
+      const params = parseParams(req as Request);
       expect(params.get('key')).toBe('value');
     });
 
     it('should return empty params if no query string is present', () => {
       const req = { url: 'http://example.com' };
-      const params = parseParams(req as any);
+      const params = parseParams(req as Request);
       expect(params.get('key')).toBeNull();
     });
   });
@@ -130,15 +231,23 @@ describe('API Utils', () => {
   vi.mock('path');
   vi.mock('../../src/common/utils', () => ({
     isDevEnvironment: vi.fn(),
-    mapConfigToBubbleChartOptions: vi.fn().mockReturnValue({ titleOptions: { text: 'Test Chart'} } as any)
+    mapConfigToBubbleChartOptions: vi.fn().mockReturnValue({
+      titleOptions: { text: 'Test Chart' },
+    } as unknown as CustomConfig),
   }));
   vi.stubGlobal('fetch', vi.fn());
 
   const mockConfig: CustomConfig = {
-    options: { titleOptions: { text: 'Test Chart'} } as any,
-    data: [{ name: 'Node.js', value: 50 }] as any
+    options: {
+      titleOptions: { text: 'Test Chart' },
+    } as unknown as CustomConfig['options'],
+    data: [{ name: 'Node.js', value: 50, color: '#68A063' }] as {
+      name: string;
+      value: number;
+      color: string;
+    }[],
   };
-  
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -155,12 +264,14 @@ describe('API Utils', () => {
       const result = await fetchConfigFromRepo('username', 'filePath');
 
       expect(result).toEqual({
-        options: { titleOptions: { text: 'Test Chart'} },
-        data: [{ name: 'Node.js', value: 50 }]
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [{ name: 'Node.js', value: 50, color: '#68A063' }],
       });
       expect(fs.existsSync).toHaveBeenCalledWith(localPath);
       expect(fs.readFileSync).toHaveBeenCalledWith(localPath, 'utf-8');
-      expect(mapConfigToBubbleChartOptions).toHaveBeenCalledWith(mockConfig.options);
+      expect(mapConfigToBubbleChartOptions).toHaveBeenCalledWith(
+        mockConfig.options,
+      );
     });
 
     it('throws an error if local config file is missing in development environment', async () => {
@@ -168,35 +279,41 @@ describe('API Utils', () => {
       vi.mocked(path.resolve).mockReturnValue('/example-config.json');
       vi.mocked(fs.existsSync).mockReturnValue(false);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(FetchError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        FetchError,
+      );
     });
 
     it('fetches configuration from GitHub in non-development environment', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
       const mockResponse = {
         ok: true,
-        json: async () => mockConfig
-      } as any;
+        json: async () => mockConfig,
+      } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
       const result = await fetchConfigFromRepo('username', 'filePath');
 
       expect(result).toEqual({
-        options: { titleOptions: { text: 'Test Chart'} },
-        data: [{ name: 'Node.js', value: 50 }]
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [{ name: 'Node.js', value: 50, color: '#68A063' }],
       });
       expect(fetch).toHaveBeenCalledWith(
         'https://raw.githubusercontent.com/username/username/main/filePath',
-        expect.objectContaining({ headers: { Authorization: expect.any(String) } })
+        expect.objectContaining({
+          headers: { Authorization: expect.any(String) },
+        }),
       );
     });
 
     it('throws GitHubNotFoundError if the file is not found on GitHub', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
-      const mockResponse = { ok: false, status: 404 } as any;
+      const mockResponse = { ok: false, status: 404 } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(GitHubNotFoundError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        GitHubNotFoundError,
+      );
     });
 
     it('throws GitHubRateLimitError if the rate limit is exceeded', async () => {
@@ -204,30 +321,38 @@ describe('API Utils', () => {
       const mockResponse = {
         ok: false,
         status: 403,
-        headers: { get: vi.fn(() => '0') }
-      } as any;
+        headers: { get: vi.fn(() => '0') },
+      } as unknown as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(GitHubRateLimitError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        GitHubRateLimitError,
+      );
     });
 
     it('throws FetchError for other HTTP errors', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
-      const mockResponse = { ok: false, status: 500 } as any;
+      const mockResponse = { ok: false, status: 500 } as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(FetchError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        FetchError,
+      );
     });
 
     it('throws ValidationError if JSON parsing fails', async () => {
       vi.mocked(isDevEnvironment).mockReturnValue(false);
       const mockResponse = {
-      ok: true,
-      json: async () => { throw new Error('Invalid JSON'); }
-      } as any;
+        ok: true,
+        json: async () => {
+          throw new Error('Invalid JSON');
+        },
+      } as unknown as Response;
       vi.mocked(fetch).mockResolvedValue(mockResponse);
 
-      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(ValidationError);
+      await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
+        ValidationError,
+      );
     });
   });
 });

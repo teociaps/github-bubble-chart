@@ -1,39 +1,47 @@
 {
   "options": {
-    "width": 800,
-    "height": 600,
-    "showPercentages": true,
+    "width": 500,
+    "height": 300,
+    "displayValues": "all",
     "title": {
       "text": "Custom Bubble Chart",
       "fontSize": "30px",
       "fontWeight": "bold",
-      "color": "#fff",
+      "color": "#ddd",
       "align": "middle"
     },
     "legend": {
       "show": true,
       "align": "left"
     },
-    "theme": "dark"
+    "theme": "dark_dimmed"
   },
   "data": [
-    { "name": "JavaScript", "value": 40, "color": "green", "icon": "https://cdn.worldvectorlogo.com/logos/devops-2.svg" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Python", "value": 30, "color": "#3572A5" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "Java", "value": 20, "color": "#b07219" },
-    { "name": "C++", "value": 10, "color": "#f34b7d" },
-    { "name": "C++", "value": 10, "color": "#f34b7d" }
+    {
+      "name": "JavaScript",
+      "value": 50,
+      "color": "yellow",
+      "icon": "https://icons.veryicon.com/png/o/business/vscode-program-item-icon/javascript-3.png"
+    },
+    {
+      "name": "Python",
+      "value": 35,
+      "color": "#3572A5"
+    },
+    {
+      "name": "Java",
+      "value": 25,
+      "color": "#b07219"
+    },
+    {
+      "name": "C++",
+      "value": 10,
+      "color": "#f34b7d"
+    },
+    {
+      "name": "C",
+      "value": 10,
+      "color": "orange"
+    }
   ]
 }

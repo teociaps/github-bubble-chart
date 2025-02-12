@@ -1,0 +1,64 @@
+name: Deploy to Vercel
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'Production'
+        type: choice
+        options:
+          - Production
+          - Preview
+      tag:
+        description: 'Tag for the release (Production only). This will be ignored for Preview.'
+        required: true
+        default: '1.0.0'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Tag Release (Production Only)
+        if: ${{ inputs.environment == 'Production' }}
+        run: |
+          TAG=${{ inputs.tag }}
+          # Check if the tag already exists
+          if git tag -l "v$TAG" | grep -q "v$TAG"; then
+            echo "Error: Tag v$TAG already exists."
+            exit 1
+          fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v$TAG
+          git push origin --tags
+
+      - name: Deploy to Vercel Production
+        if: ${{ inputs.environment == 'Production' }}
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-deployment: true
+          vercel-args: --prod --yes
+          working-directory: .
+
+      - name: Deploy to Vercel Preview
+        if: ${{ inputs.environment == 'Preview' }}
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          github-deployment: true
+          vercel-args: --yes
+          working-directory: .

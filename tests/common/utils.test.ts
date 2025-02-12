@@ -1,8 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { isDevEnvironment, isProdEnvironment, mapConfigToBubbleChartOptions, truncateText } from '../../src/common/utils';
 import { themeMap } from '../../src/chart/themes';
-import { ConfigOptions } from '../../src/chart/types/config';
 import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
+import { CustomConfigOptions } from '../../src/chart/types/config';
+import {
+  isDevEnvironment,
+  isProdEnvironment,
+  mapConfigToBubbleChartOptions,
+  truncateText,
+} from '../../src/common/utils';
 
 describe('Utils Tests', () => {
   it('isDevEnvironment should return true if NODE_ENV is dev', () => {
@@ -16,10 +21,10 @@ describe('Utils Tests', () => {
   });
 
   it('mapConfigToBubbleChartOptions should map config to chart options correctly', () => {
-    const config: ConfigOptions = {
+    const config: CustomConfigOptions = {
       width: 600,
       height: 400,
-      showPercentages: true,
+      displayValues: 'all',
       title: {
         text: 'Test Chart',
         fontSize: '16px',
@@ -36,7 +41,8 @@ describe('Utils Tests', () => {
     const expectedOptions: BubbleChartOptions = {
       width: 600,
       height: 400,
-      showPercentages: true,
+      displayValues: 'all',
+      usePercentages: false,
       titleOptions: {
         text: 'Test Chart',
         fontSize: '16px',

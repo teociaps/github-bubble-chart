@@ -44,6 +44,7 @@ Here are some ways you can contribute:
 ### Reporting Bugs
 
 If you find a bug, please open an issue and include as much detail as possible, including:
+
 - Steps to reproduce the issue
 - Expected and actual behavior
 - Relevant screenshots, logs, or error messages
@@ -83,4 +84,3 @@ If you have any questions or need assistance:
 - Reach out by opening an [issue](../../issues) with a question label.
 
 Thank you for contributing!
-
