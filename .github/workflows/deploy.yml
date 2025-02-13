@@ -6,7 +6,7 @@ on:
       environment:
         description: 'Environment to deploy to'
         required: true
-        default: 'Production'
+        default: 'Preview'
         type: choice
         options:
           - Production
@@ -48,9 +48,10 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          github-deployment: true
+          vercel-version: 41
           vercel-args: '--prod --yes'
           working-directory: .
+          github-deployment: true
 
       - name: Deploy to Vercel Preview
         if: ${{ inputs.environment == 'Preview' }}
@@ -59,7 +60,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          github-deployment: true
+          vercel-version: 41
           vercel-args: '--yes'
           working-directory: .
-          vercel-version: 41
+          github-deployment: true
