@@ -14,6 +14,9 @@ describe('Styles Tests', () => {
     const styles = getCommonStyles(theme);
     expect(styles).toContain(`background: ${theme.backgroundColor}`);
     expect(styles).toContain(`fill: ${theme.textColor}`);
+    expect(styles).toContain(`border-radius: ${theme.borderRadius}`);
+    expect(styles).toContain(`border: ${theme.border}`);
+    expect(styles).toContain(`padding: ${theme.padding}`);
   });
 
   it('generateBubbleAnimationStyle generates correct animation styles', () => {

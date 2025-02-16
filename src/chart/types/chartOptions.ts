@@ -19,7 +19,6 @@ export interface TitleOptions {
   [key: string]: unknown;
 }
 
-// TODO: add setting for legend position (bottom, left, right, top of chart)?
 export interface LegendOptions {
   show: boolean;
   align: TextAlign;

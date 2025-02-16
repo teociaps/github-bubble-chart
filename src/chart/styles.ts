@@ -12,6 +12,9 @@ export function getCommonStyles(theme: ThemeBase): string {
       svg {
         font-family: ${defaultFontFamily};
         background: ${theme.backgroundColor};
+        border: ${theme.border};
+        border-radius: ${theme.borderRadius};
+        padding: ${theme.padding};
       }
       text {
         fill: ${theme.textColor};
