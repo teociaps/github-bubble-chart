@@ -34,3 +34,6 @@ ClientBin/
 .mfractor/
 .ionide/
 .husky/
+
+# Ignore language mappings
+src/languageMappings.json

@@ -104,7 +104,7 @@ export class CustomURLSearchParams extends URLSearchParams {
 
   parseTitleOptions(): TitleOptions {
     return {
-      text: this.getStringValue('title', 'Bubble Chart'),
+      text: this.getStringValue('title', 'Most Used Languages'),
       fontSize: this.getNumberValue('title-size', 24) + 'px',
       fontWeight: this.getStringValue('title-weight', 'bold'),
       fill: this.getStringValue(
