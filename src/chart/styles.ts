@@ -6,15 +6,22 @@ import { StyleError } from '../errors/custom-errors.js';
 export const defaultFontFamily =
   "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji'";
 
+export const chartPadding = 8;
+export const chartBorderRadius = 10;
+
 export function getCommonStyles(theme: ThemeBase): string {
   try {
     return `
       svg {
         font-family: ${defaultFontFamily};
-        background: ${theme.backgroundColor};
-        border: ${theme.border};
-        border-radius: ${theme.borderRadius};
-        padding: ${theme.padding};
+      }
+      .chart-background {
+        fill: ${theme.backgroundColor};
+        width: 99%;
+        height: 99%;
+        x: 0.5;
+        y: 0.5;
+        rx: ${theme.border.rounded ? chartBorderRadius : 0};
       }
       text {
         fill: ${theme.textColor};

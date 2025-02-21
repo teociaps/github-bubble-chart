@@ -15,7 +15,7 @@ export function mapConfigToBubbleChartOptions(
 ): BubbleChartOptions {
   const theme =
     typeof config.theme === 'string'
-      ? themeMap[config.theme.toLowerCase()]
+      ? themeMap[config.theme.toLowerCase()] || themeMap.default
       : config.theme;
   return {
     width: config.width,
@@ -42,4 +42,13 @@ export function truncateText(text: string, maxChars: number): string {
     return text.substring(0, maxChars - 1) + '…';
   }
   return text;
+}
+
+export function getPxValue(value: string): number {
+  if (!value || value === 'none') return 0;
+  const pxMatch = value.match(/(\d+(\.\d+)?)(px)/);
+  if (pxMatch) {
+    return parseFloat(pxMatch[1]);
+  }
+  return 0;
 }
