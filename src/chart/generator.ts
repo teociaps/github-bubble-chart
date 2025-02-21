@@ -4,6 +4,7 @@ import {
   getCommonStyles,
   generateBubbleAnimationStyle,
   getLegendItemAnimationStyle,
+  chartPadding,
 } from './styles.js';
 import { BubbleData } from './types/bubbleData.js';
 import { BubbleChartOptions, TitleOptions } from './types/chartOptions.js';
@@ -329,18 +330,21 @@ export async function createBubbleChart(
   }
 
   // Start building the SVG
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${fullHeight}" viewBox="0 0 ${width} ${fullHeight}">`;
+  const borderPx = chartOptions.theme?.border?.width || 0;
+  const borderColor = chartOptions.theme?.border?.color || 'transparent';
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width + borderPx * 2 + chartPadding * 2}" height="${fullHeight + borderPx * 2 + chartPadding * 2}" viewBox="0 0 ${width + borderPx * 2 + chartPadding * 2} ${fullHeight + borderPx * 2 + chartPadding * 2}">`;
   svg += createSVGDefs();
+  svg += `<rect class="chart-background" stroke="${borderColor}" stroke-width="${borderPx}" />`;
+  svg += `<g transform="translate(${borderPx + chartPadding}, ${borderPx + chartPadding})">`;
   svg += svgTitle;
   svg += `<g transform="translate(0, ${distanceFromBubbleChart})">`;
-
   for await (const [index, element] of bubbleNodes.entries()) {
     svg += await createBubbleElement(element, index, chartOptions);
     styles += generateBubbleAnimationStyle(element, index);
   }
-
   svg += '</g>'; // Close bubbles group
   svg += svgLegend;
+  svg += '</g>'; // Close content group
   svg += `<style>${styles}</style>`;
   svg += '</svg>';
 

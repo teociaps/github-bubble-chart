@@ -13,22 +13,23 @@ describe('Themes', () => {
     const theme = themeMap.default;
 
     it('should have correct properties', () => {
-      expect(theme.textColor).toBe('#007acc');
+      expect(theme.textColor).toBe('#777777');
       expect(theme.backgroundColor).toBe('transparent');
-      expect(theme.border).toBe('none');
-      expect(theme.borderRadius).toBe('0');
-      expect(theme.padding).toBe('0');
+      expect(theme.border.color).toBe('none');
+      expect(theme.border.width).toBe(0);
+      expect(theme.border.rounded).toBe(false);
     });
   });
+
   describe('LightTheme', () => {
     const theme = new LightTheme();
 
     it('should have correct basic properties', () => {
       expect(theme.textColor).toBe('#1f2328');
       expect(theme.backgroundColor).toBe('#ffffff');
-      expect(theme.border).toBe(`1.5px solid ${theme.textColor}77`);
-      expect(theme.borderRadius).toBe('.5rem');
-      expect(theme.padding).toBe('.5rem');
+      expect(theme.border.color).toBe(`${theme.textColor}77`);
+      expect(theme.border.width).toBe(2);
+      expect(theme.border.rounded).toBe(true);
     });
   });
 
@@ -38,9 +39,9 @@ describe('Themes', () => {
     it('should have correct basic properties', () => {
       expect(theme.textColor).toBe('#f0f6fc');
       expect(theme.backgroundColor).toBe('#0d1117');
-      expect(theme.border).toBe(`1.5px solid ${theme.textColor}aa`);
-      expect(theme.borderRadius).toBe('.5rem');
-      expect(theme.padding).toBe('.5rem');
+      expect(theme.border.color).toBe(`${theme.textColor}aa`);
+      expect(theme.border.width).toBe(2);
+      expect(theme.border.rounded).toBe(true);
     });
   });
 
@@ -50,9 +51,9 @@ describe('Themes', () => {
     it('should have correct basic properties', () => {
       expect(theme.textColor).toBe('#ffffff');
       expect(theme.backgroundColor).toBe('#010409');
-      expect(theme.border).toBe(`1.5px solid ${theme.textColor}`);
-      expect(theme.borderRadius).toBe('.5rem');
-      expect(theme.padding).toBe('.5rem');
+      expect(theme.border.color).toBe(theme.textColor);
+      expect(theme.border.width).toBe(1);
+      expect(theme.border.rounded).toBe(true);
     });
   });
 
@@ -62,9 +63,9 @@ describe('Themes', () => {
     it('should have correct basic properties', () => {
       expect(theme.textColor).toBe('#d1d7e0');
       expect(theme.backgroundColor).toBe('#212830');
-      expect(theme.border).toBe(`1.5px solid ${theme.textColor}55`);
-      expect(theme.borderRadius).toBe('.5rem');
-      expect(theme.padding).toBe('.5rem');
+      expect(theme.border.color).toBe(`${theme.textColor}55`);
+      expect(theme.border.width).toBe(2);
+      expect(theme.border.rounded).toBe(true);
     });
   });
 
