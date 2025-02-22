@@ -8,19 +8,21 @@ export const defaultFontFamily =
 
 export const chartPadding = 8;
 export const chartBorderRadius = 10;
+export const legendTextSize = '13px';
 
 export function getCommonStyles(theme: ThemeBase): string {
   try {
     return `
       svg {
         font-family: ${defaultFontFamily};
+        background: black;
       }
       .chart-background {
         fill: ${theme.backgroundColor};
         width: 99%;
         height: 99%;
-        x: 0.5;
-        y: 0.5;
+        x: 0.5%;
+        y: 0.5%;
         rx: ${theme.border.rounded ? chartBorderRadius : 0};
       }
       text {
@@ -106,7 +108,7 @@ export function getLegendItemAnimationStyle(): string {
         animation: fadeIn 0.3s forwards;
       }
       .legend-item text {
-        font-size: 12px;
+        font-size: ${legendTextSize};
         text-anchor: start;
         dominant-baseline: central;
       }

@@ -13,6 +13,8 @@ import {
 } from '../../src/chart/types/chartOptions';
 import { GeneratorError, StyleError } from '../../src/errors/custom-errors';
 
+// TODO: create components tests?
+
 describe('Generator', () => {
   describe('createBubbleChart', () => {
     it('should return null if no data is provided', async () => {
