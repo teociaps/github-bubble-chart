@@ -13,7 +13,7 @@ import {
 } from '../../src/chart/types/chartOptions';
 import { GeneratorError, StyleError } from '../../src/errors/custom-errors';
 
-// TODO: create components tests?
+// TODO: adjust tests to new structure
 
 describe('Generator', () => {
   describe('createBubbleChart', () => {
