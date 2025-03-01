@@ -18,7 +18,11 @@ export async function createTitleElement(
 ): Promise<{ svgTitle: string; titleLines: number }> {
   try {
     const style = generateStyle(titleOptions);
-    const titleAlign = getAlignmentPosition(titleOptions.textAnchor, width);
+    const titleAlign = getAlignmentPosition(
+      titleOptions.textAnchor,
+      width,
+      chartPadding,
+    );
     titleOptions.text = escapeSpecialChars(parseEmojis(titleOptions.text));
 
     const textWidth = await measureTextWidth(

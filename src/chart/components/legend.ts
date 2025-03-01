@@ -6,6 +6,8 @@ import { measureTextWidth } from '../utils.js';
 
 const legendItemHeight = 20;
 const legendYPadding = 10;
+const legendItemXPadding = 35;
+const legendCircleRadius = 8;
 
 export async function createLegend(
   data: BubbleData[],
@@ -53,7 +55,7 @@ async function prepareLegendItems(
       const textWidth = await measureTextWidth(text, legendTextSize);
       return {
         text,
-        width: textWidth + 50, // Include circle and padding
+        width: textWidth + legendCircleRadius * 2 + legendItemXPadding, // Include circle and padding
         color: item.color,
       };
     }),
@@ -88,10 +90,7 @@ function generateSVGForLegendRows(
   distanceFromBubbleChart: number,
   chartOptions: BubbleChartOptions,
 ): string {
-  const legendMarginTop = distanceFromBubbleChart;
-  const legendItemHeight = 20;
-  const legendYPadding = 10;
-  let svgLegend = `<g class="legend" transform="translate(0, ${maxBubbleY + legendMarginTop})">`;
+  let svgLegend = `<g class="legend" transform="translate(${chartPadding}, ${maxBubbleY + distanceFromBubbleChart})">`;
 
   let rowY = 0;
   rowItems.forEach((row, rowIndex) => {
@@ -101,7 +100,7 @@ function generateSVGForLegendRows(
     if (chartOptions.legendOptions.align === 'center') {
       rowX = (svgWidth - rowWidth) / 2;
     } else if (chartOptions.legendOptions.align === 'right') {
-      rowX = svgWidth - rowWidth + chartPadding;
+      rowX = svgWidth - rowWidth;
     }
 
     let animationDelay = rowIndex;
@@ -109,7 +108,7 @@ function generateSVGForLegendRows(
       animationDelay += itemIndex * 0.1;
       svgLegend += `
         <g transform="translate(${rowX}, ${rowY})" class="legend-item" style="animation-delay: ${animationDelay}s;">
-          <circle cx="10" cy="15" r="8" fill="${item.color}" />
+          <circle cx="10" cy="15" r="${legendCircleRadius}" fill="${item.color}" />
           <text x="22" y="15">${item.text}</text>
         </g>
       `;

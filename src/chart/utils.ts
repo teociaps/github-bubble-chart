@@ -166,14 +166,15 @@ export async function wrapText(
 export function getAlignmentPosition(
   textAnchor: TextAnchor,
   width: number,
+  padding: number = 0,
 ): number {
   switch (textAnchor) {
     case 'start':
-      return 0;
+      return 0 + padding;
     case 'middle':
       return width / 2;
     case 'end':
-      return width;
+      return width - padding;
     default:
       return width / 2;
   }
