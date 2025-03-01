@@ -15,7 +15,6 @@ export function getCommonStyles(theme: ThemeBase): string {
     return `
       svg {
         font-family: ${defaultFontFamily};
-        background: black;
       }
       .chart-background {
         fill: ${theme.backgroundColor};
