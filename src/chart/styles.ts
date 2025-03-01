@@ -6,7 +6,7 @@ import { StyleError } from '../errors/custom-errors.js';
 export const defaultFontFamily =
   "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji'";
 
-export const chartPadding = 8;
+export const chartPadding = 10;
 export const chartBorderRadius = 10;
 export const legendTextSize = '13px';
 

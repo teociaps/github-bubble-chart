@@ -1,10 +1,12 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 import { BubbleData } from '../../src/chart/types/bubbleData';
+import { TextAnchor } from '../../src/chart/types/chartOptions';
 import {
   getColor,
   getName,
   toKebabCase,
   getBubbleData,
+  getAlignmentPosition,
 } from '../../src/chart/utils';
 import { fetchTopLanguages } from '../../src/services/github-service';
 
@@ -67,6 +69,26 @@ describe('Utils', () => {
           icon: mockJsonLanguageMappings.TypeScript.icon,
         },
       ]);
+    });
+  });
+
+  describe('getAlignmentPosition', () => {
+    it('should return the correct position for start alignment', () => {
+      expect(getAlignmentPosition('start', 100, 10)).toBe(10);
+    });
+
+    it('should return the correct position for middle alignment', () => {
+      expect(getAlignmentPosition('middle', 100)).toBe(50);
+    });
+
+    it('should return the correct position for end alignment', () => {
+      expect(getAlignmentPosition('end', 100, 10)).toBe(90);
+    });
+
+    it('should return the correct position for default alignment', () => {
+      expect(
+        getAlignmentPosition('unknown' as unknown as TextAnchor, 100),
+      ).toBe(50);
     });
   });
 });

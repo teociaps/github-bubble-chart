@@ -13,8 +13,6 @@ import { escapeSpecialChars, measureTextHeight } from './utils.js';
 import { GeneratorError } from '../errors/custom-errors.js';
 import { createTitleElement } from './components/title.js';
 
-// TODO: refactor + adjust padding, spacing, etc.
-
 export async function createBubbleChart(
   data: BubbleData[],
   chartOptions: BubbleChartOptions,
