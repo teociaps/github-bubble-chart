@@ -1940,5 +1940,11 @@
   },
   "Jai": {
     "color": "#ab8b4b"
+  },
+  "ISPC": {
+    "color": "#2D68B1"
+  },
+  "Slang": {
+    "color": "#1fbec9"
   }
 }
