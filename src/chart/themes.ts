@@ -1,49 +1,61 @@
 export abstract class ThemeBase {
   public abstract textColor: string;
   public abstract backgroundColor: string;
-  public abstract border: string;
-  public abstract borderRadius: string;
-  public abstract padding: string;
+  public abstract border: {
+    color: string;
+    width: number;
+    rounded: boolean;
+  };
 }
 
 export class DefaultTheme extends ThemeBase {
-  public textColor = '#007acc';
+  public textColor = '#777777';
   public backgroundColor = 'transparent';
-  public border = 'none';
-  public borderRadius = '0';
-  public padding = '0';
+  public border = {
+    color: 'none',
+    width: 0,
+    rounded: false,
+  };
 }
 
 export class LightTheme extends ThemeBase {
   public textColor = '#1f2328';
   public backgroundColor = '#ffffff';
-  public border = `1.5px solid ${this.textColor}77`;
-  public borderRadius = '.5rem';
-  public padding = '.5rem';
+  public border = {
+    color: `${this.textColor}77`,
+    width: 2,
+    rounded: true,
+  };
 }
 
 export class DarkTheme extends ThemeBase {
   public textColor = '#f0f6fc';
   public backgroundColor = '#0d1117';
-  public border = `1.5px solid ${this.textColor}aa`;
-  public borderRadius = '.5rem';
-  public padding = '.5rem';
+  public border = {
+    color: `${this.textColor}aa`,
+    width: 2,
+    rounded: true,
+  };
 }
 
 export class DarkHighContrastTheme extends ThemeBase {
   public textColor = '#ffffff';
   public backgroundColor = '#010409';
-  public border = `1.5px solid ${this.textColor}`;
-  public borderRadius = '.5rem';
-  public padding = '.5rem';
+  public border = {
+    color: this.textColor,
+    width: 1,
+    rounded: true,
+  };
 }
 
 export class DarkDimmedTheme extends ThemeBase {
   public textColor = '#d1d7e0';
   public backgroundColor = '#212830';
-  public border = `1.5px solid ${this.textColor}55`;
-  public borderRadius = '.5rem';
-  public padding = '.5rem';
+  public border = {
+    color: `${this.textColor}55`,
+    width: 2,
+    rounded: true,
+  };
 }
 
 export const themeMap: { [key: string]: ThemeBase } = {

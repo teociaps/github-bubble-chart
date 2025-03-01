@@ -1,4 +1,4 @@
-# GitHub Bubble Chart
+# 🫧 GitHub Bubble Chart
 
 [![CI](https://github.com/teociaps/github-bubble-chart/actions/workflows/ci.yml/badge.svg)](https://github.com/teociaps/github-bubble-chart/actions/workflows/ci.yml)
 [![Test and Lint](https://github.com/teociaps/github-bubble-chart/actions/workflows/test.yml/badge.svg)](https://github.com/teociaps/github-bubble-chart/actions/workflows/test.yml)
@@ -26,11 +26,15 @@ For detailed usage instructions, please refer to our [Wiki](https://github.com/t
 
 #### Basic Example
 
-![teociaps](https://github-bubble-chart.vercel.app?username=teociaps&theme=dark_high_contrast&title-size=34&title-color=red&legend-align=left)
+![teociaps](https://github-bubble-chart.vercel.app?username=teociaps&theme=dark_dimmed&title-size=34&title-color=red&legend-align=left)
 
 #### Custom Configuration Example
 
-![Test](https://github-bubble-chart.vercel.app/?username=teociaps&mode=custom-config&config-path=ghbc-my-tech-and-tools.json)
+![Custom](https://github-bubble-chart.vercel.app/?username=teociaps&mode=custom-config&config-path=ghbc-my-tech-and-tools.json)
+
+```
+https://github-bubble-chart.vercel.app?username=teociap&mode=custom-config&config-path=ghbc-my-tech-and-tools.json
+```
 
 ## Breaking Changes & Releases
 

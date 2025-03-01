@@ -4,6 +4,7 @@ import {
   getCommonStyles,
   generateBubbleAnimationStyle,
   getLegendItemAnimationStyle,
+  chartBorderRadius,
 } from '../../src/chart/styles';
 import { LightTheme, ThemeBase } from '../../src/chart/themes';
 import { BubbleData } from '../../src/chart/types/bubbleData';
@@ -12,11 +13,11 @@ describe('Styles Tests', () => {
   it('getCommonStyles generates correct styles', () => {
     const theme = new LightTheme();
     const styles = getCommonStyles(theme);
-    expect(styles).toContain(`background: ${theme.backgroundColor}`);
-    expect(styles).toContain(`fill: ${theme.textColor}`);
-    expect(styles).toContain(`border-radius: ${theme.borderRadius}`);
-    expect(styles).toContain(`border: ${theme.border}`);
-    expect(styles).toContain(`padding: ${theme.padding}`);
+    expect(styles).toContain('.chart-background');
+    expect(styles).toContain(`fill: ${theme.backgroundColor}`);
+    expect(styles).toContain(
+      `rx: ${theme.border.rounded ? chartBorderRadius : 0}`,
+    );
   });
 
   it('generateBubbleAnimationStyle generates correct animation styles', () => {
