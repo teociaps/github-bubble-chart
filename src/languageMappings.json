@@ -1946,5 +1946,8 @@
   },
   "Slang": {
     "color": "#1fbec9"
+  },
+  "Tree-sitter Query": {
+    "color": "#8ea64c"
   }
 }
