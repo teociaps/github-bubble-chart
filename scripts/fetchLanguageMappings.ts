@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import fs from 'fs';
-import imageToBase64 from 'image-to-base64';
 import { parse as yamlParse } from 'yaml';
 import { CONSTANTS } from '../config/consts';
+import { convertImageToBase64 } from '../src/common/utils';
 
 // Known language name discrepancies map (GitHub vs Devicon)
 const languageDiscrepancies: Record<string, string> = {
@@ -42,15 +42,6 @@ async function fetchLanguageColors(): Promise<
   } catch (error) {
     console.error('Failed to fetch language colors:', error);
     throw error;
-  }
-}
-
-async function convertImageToBase64(url: string): Promise<string | undefined> {
-  try {
-    const base64 = await imageToBase64(url);
-    return `data:image/svg+xml;base64,${base64}`;
-  } catch (error) {
-    console.error('Error converting image:', error);
   }
 }
 

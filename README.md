@@ -17,10 +17,10 @@ Insert a bubble chart into your GitHub profile readme. This makes for a great [G
 You can insert the bubble chart into your GitHub profile readme by using the following URL format:
 
 ```
-https://github-bubble-chart.vercel.app?username=<your-github-username>
+https://github-bubble-chart.vercel.app?username=YOUR_GITHUB_USERNAME
 ```
 
-For detailed usage instructions, please refer to our [Wiki](https://github.com/teociaps/github-bubble-chart/wiki).
+For detailed usage instructions, please refer to the [Wiki](https://github.com/teociaps/github-bubble-chart/wiki).
 
 ### Examples
 
@@ -28,12 +28,16 @@ For detailed usage instructions, please refer to our [Wiki](https://github.com/t
 
 ![teociaps](https://github-bubble-chart.vercel.app?username=teociaps&theme=dark_dimmed&title-size=34&title-color=red&legend-align=left)
 
+```
+https://github-bubble-chart.vercel.app?username=teociaps&theme=dark_dimmed&title-size=34&title-color=red&legend-align=left
+```
+
 #### Custom Configuration Example
 
-![Custom](https://github-bubble-chart.vercel.app/?username=teociaps&mode=custom-config&config-path=ghbc-my-tech-and-tools.json)
+![Custom](https://github-bubble-chart.vercel.app?username=teociaps&mode=custom-config&config-path=ghbc-my-tech-and-tools.json)
 
 ```
-https://github-bubble-chart.vercel.app?username=teociap&mode=custom-config&config-path=ghbc-my-tech-and-tools.json
+https://github-bubble-chart.vercel.app?username=teociaps&mode=custom-config&config-path=ghbc-my-tech-and-tools.json
 ```
 
 ## Breaking Changes & Releases

@@ -11,8 +11,6 @@ We are thrilled that you are considering contributing to this project! Your cont
 5. [Style Guide](#style-guide)
 6. [Need Help?](#need-help)
 
----
-
 ## Getting Started
 
 To get started, follow these steps:
