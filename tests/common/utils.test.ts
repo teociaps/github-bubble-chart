@@ -1,14 +1,35 @@
-import { describe, it, expect } from 'vitest';
+import imageToBase64 from 'image-to-base64';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { themeMap } from '../../src/chart/themes';
 import { BubbleChartOptions } from '../../src/chart/types/chartOptions';
 import { CustomConfigOptions } from '../../src/chart/types/config';
 import {
-  getPxValue,
   isDevEnvironment,
   isProdEnvironment,
+} from '../../src/common/environment';
+import {
+  getPxValue,
   mapConfigToBubbleChartOptions,
   truncateText,
+  convertImageToBase64,
 } from '../../src/common/utils';
+
+// Mock the imageToBase64 dependency
+vi.mock('image-to-base64', () => {
+  return {
+    default: vi.fn(),
+  };
+});
+
+// Mock logger to avoid actual logging during tests
+vi.mock('../../src/logger', () => ({
+  default: {
+    error: vi.fn(),
+  },
+}));
+
+// Import the mocked modules for direct access in tests
+import logger from '../../src/logger';
 
 describe('Utils Tests', () => {
   it('isDevEnvironment should return true if NODE_ENV is dev', () => {
@@ -183,6 +204,125 @@ describe('Utils Tests', () => {
 
     it('should extract numeric value from a border style', () => {
       expect(getPxValue('3px solid red')).toBe(3);
+    });
+  });
+
+  describe('convertImageToBase64', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+      vi.mocked(imageToBase64).mockResolvedValue('mockBase64Data');
+    });
+
+    afterEach(() => {
+      vi.resetAllMocks();
+    });
+
+    it('should convert PNG image URL to base64 data URL', async () => {
+      const pngUrl =
+        'https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png';
+      const result = await convertImageToBase64(pngUrl);
+      expect(imageToBase64).toHaveBeenCalledWith(pngUrl);
+      expect(result).toBe('data:image/png;base64,mockBase64Data');
+    });
+
+    it('should convert JPG image URL to base64 data URL', async () => {
+      const jpgUrl =
+        'https://www.nasa.gov/wp-content/uploads/2023/03/pia25447-10731.jpg';
+      const result = await convertImageToBase64(jpgUrl);
+      expect(imageToBase64).toHaveBeenCalledWith(jpgUrl);
+      expect(result).toBe('data:image/jpeg;base64,mockBase64Data');
+    });
+
+    it('should convert SVG image URL to base64 data URL', async () => {
+      const svgUrl =
+        'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/android.svg';
+      const result = await convertImageToBase64(svgUrl);
+      expect(imageToBase64).toHaveBeenCalledWith(svgUrl);
+      expect(result).toBe('data:image/svg+xml;base64,mockBase64Data');
+    });
+
+    it('should convert GIF image URL to base64 data URL', async () => {
+      const gifUrl =
+        'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDUzOGk0M3lvejY5OHgwaHgwZTlrYTc3Z3lsOW12ejl1MTkxMmwwayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif';
+      const result = await convertImageToBase64(gifUrl);
+      expect(imageToBase64).toHaveBeenCalledWith(gifUrl);
+      expect(result).toBe('data:image/gif;base64,mockBase64Data');
+    });
+
+    it('should convert WebP image URL to base64 data URL', async () => {
+      const webpUrl = 'https://www.gstatic.com/webp/gallery/1.webp';
+      const result = await convertImageToBase64(webpUrl);
+      expect(imageToBase64).toHaveBeenCalledWith(webpUrl);
+      expect(result).toBe('data:image/webp;base64,mockBase64Data');
+    });
+
+    it('should handle URLs with query parameters correctly', async () => {
+      const imageWithParams =
+        'https://avatars.githubusercontent.com/u/9919?s=200&v=4';
+      const result = await convertImageToBase64(imageWithParams);
+      expect(imageToBase64).toHaveBeenCalledWith(imageWithParams);
+      expect(result).toBe('data:image/png;base64,mockBase64Data');
+    });
+
+    it('should return undefined for invalid URLs', async () => {
+      const result = await convertImageToBase64('invalid-url');
+      expect(result).toBeUndefined();
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid URL format'),
+        expect.anything(),
+      );
+    });
+
+    it('should return undefined for null or empty URLs', async () => {
+      // @ts-ignore - Testing invalid input
+      const result1 = await convertImageToBase64(null);
+      const result2 = await convertImageToBase64('');
+
+      expect(result1).toBeUndefined();
+      expect(result2).toBeUndefined();
+      expect(logger.error).toHaveBeenCalledTimes(2);
+    });
+
+    it('should handle conversion errors gracefully', async () => {
+      vi.mocked(imageToBase64).mockRejectedValue(
+        new Error('Conversion failed'),
+      );
+
+      const result = await convertImageToBase64(
+        'https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png',
+      );
+
+      expect(result).toBeUndefined();
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.stringContaining('Error converting image to base64'),
+        expect.anything(),
+      );
+    });
+
+    it('should handle timeouts properly', async () => {
+      // Mock a delayed response that would trigger the timeout
+      vi.mocked(imageToBase64).mockImplementation(() => {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve('delayed response'), 50);
+        });
+      });
+
+      const result = await convertImageToBase64(
+        'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
+        { timeout: 10 },
+      );
+
+      expect(result).toBeUndefined();
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.stringContaining('Image conversion timed out'),
+        expect.anything(),
+      );
+    });
+
+    it('should use default MIME type for unknown extensions', async () => {
+      const noExtensionUrl = 'https://github.githubassets.com/favicons/favicon';
+      const result = await convertImageToBase64(noExtensionUrl);
+      expect(result).toBe('data:image/png;base64,mockBase64Data');
     });
   });
 });
