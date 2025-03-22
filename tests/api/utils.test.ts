@@ -6,56 +6,107 @@ import {
   CustomURLSearchParams,
   parseParams,
   fetchConfigFromRepo,
+  convertImageToBase64,
 } from '../../api/utils';
 import { LightTheme } from '../../src/chart/themes';
 import { CustomConfig } from '../../src/chart/types/config';
-import {
-  isDevEnvironment,
-  mapConfigToBubbleChartOptions,
-} from '../../src/common/utils';
+import { isDevEnvironment } from '../../src/common/environment';
+import { mapConfigToBubbleChartOptions } from '../../src/common/utils';
 import { FetchError, ValidationError } from '../../src/errors/custom-errors';
 import {
   GitHubNotFoundError,
   GitHubRateLimitError,
 } from '../../src/errors/github-errors';
+import logger from '../../src/logger';
 
 describe('API Utils', () => {
   describe('CustomURLSearchParams', () => {
-    it('should return default string value if key is not present', () => {
+    const testCases = [
+      {
+        name: 'string value',
+        param: 'key=value',
+        method: 'getStringValue',
+        key: 'key',
+        defaultVal: 'default',
+        expected: 'value',
+      },
+      {
+        name: 'number value',
+        param: 'key=42',
+        method: 'getNumberValue',
+        key: 'key',
+        defaultVal: 0,
+        expected: 42,
+      },
+      {
+        name: 'boolean value',
+        param: 'key=true',
+        method: 'getBooleanValue',
+        key: 'key',
+        defaultVal: false,
+        expected: true,
+      },
+      {
+        name: 'title',
+        param: 'title=MyChart',
+        method: 'getStringValue',
+        key: 'title',
+        defaultVal: 'Bubble Chart',
+        expected: 'MyChart',
+      },
+      {
+        name: 'legend alignment',
+        param: 'legend-align=right',
+        method: 'getStringValue',
+        key: 'legend-align',
+        defaultVal: 'center',
+        expected: 'right',
+      },
+      {
+        name: 'title size',
+        param: 'title-size=30',
+        method: 'getNumberValue',
+        key: 'title-size',
+        defaultVal: 24,
+        expected: 30,
+      },
+      {
+        name: 'title weight',
+        param: 'title-weight=normal',
+        method: 'getStringValue',
+        key: 'title-weight',
+        defaultVal: 'bold',
+        expected: 'normal',
+      },
+      {
+        name: 'title color',
+        param: 'title-color=#ffffff',
+        method: 'getStringValue',
+        key: 'title-color',
+        defaultVal: '#000000',
+        expected: '#ffffff',
+      },
+    ];
+
+    it('should return default values when keys are not present', () => {
       const params = new CustomURLSearchParams('');
       expect(params.getStringValue('key', 'default')).toBe('default');
-    });
-
-    it('should return string value if key is present', () => {
-      const params = new CustomURLSearchParams('key=value');
-      expect(params.getStringValue('key', 'default')).toBe('value');
-    });
-
-    it('should return default number value if key is not present', () => {
-      const params = new CustomURLSearchParams('');
       expect(params.getNumberValue('key', 0)).toBe(0);
-    });
-
-    it('should return parsed number value if key is present', () => {
-      const params = new CustomURLSearchParams('key=42');
-      expect(params.getNumberValue('key', 0)).toBe(42);
-    });
-
-    it('should return default boolean value if key is not present', () => {
-      const params = new CustomURLSearchParams('');
       expect(params.getBooleanValue('key', true)).toBe(true);
-    });
-
-    it('should return parsed boolean value if key is present', () => {
-      const params = new CustomURLSearchParams('key=true');
-      expect(params.getBooleanValue('key', false)).toBe(true);
-    });
-
-    it('should return default theme if key is not present', () => {
-      const params = new CustomURLSearchParams('');
       expect(params.getTheme('theme', new LightTheme())).toBeInstanceOf(
         LightTheme,
       );
+      expect(params.getTextAnchorValue('key', 'middle')).toBe('middle');
+      expect(params.getLanguagesCount(5)).toBe(5);
+      expect(params.getMode()).toBe('top-langs');
+      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
+    });
+
+    testCases.forEach(({ name, param, method, key, defaultVal, expected }) => {
+      it(`should return ${name} if key is present`, () => {
+        const params = new CustomURLSearchParams(param);
+        expect(params[method](key, defaultVal)).toBe(expected);
+      });
     });
 
     it('should return parsed theme if key is present', () => {
@@ -75,24 +126,24 @@ describe('API Utils', () => {
       expect(params.getTextAnchorValue('key', 'middle')).toBe('middle');
     });
 
-    it('should return default languages count if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getLanguagesCount(5)).toBe(5);
-    });
+    it('should handle languages count correctly', () => {
+      // Default
+      expect(new CustomURLSearchParams('').getLanguagesCount(5)).toBe(5);
 
-    it('should return parsed languages count if key is present', () => {
-      const params = new CustomURLSearchParams('langs-count=10');
-      expect(params.getLanguagesCount(5)).toBe(10);
-    });
+      // Valid value
+      expect(
+        new CustomURLSearchParams('langs-count=10').getLanguagesCount(5),
+      ).toBe(10);
 
-    it('should return minimum languages count if parsed value is less than 1', () => {
-      const params = new CustomURLSearchParams('langs-count=0');
-      expect(params.getLanguagesCount(5)).toBe(1);
-    });
+      // Too small (should return minimum)
+      expect(
+        new CustomURLSearchParams('langs-count=0').getLanguagesCount(5),
+      ).toBe(1);
 
-    it('should return maximum languages count if parsed value is greater than 20', () => {
-      const params = new CustomURLSearchParams('langs-count=21');
-      expect(params.getLanguagesCount(5)).toBe(20);
+      // Too large (should return maximum)
+      expect(
+        new CustomURLSearchParams('langs-count=21').getLanguagesCount(5),
+      ).toBe(20);
     });
 
     it('should parse title options correctly', () => {
@@ -120,96 +171,41 @@ describe('API Utils', () => {
       });
     });
 
-    it('should return default mode if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getMode()).toBe('top-langs');
-    });
+    // Mode tests - consolidated
+    it('should handle mode correctly', () => {
+      // Default
+      expect(new CustomURLSearchParams('').getMode()).toBe('top-langs');
 
-    it('should return parsed mode if key is present', () => {
-      const params = new CustomURLSearchParams('mode=custom-config');
-      expect(params.getMode()).toBe('custom-config');
-    });
+      // Valid mode
+      expect(new CustomURLSearchParams('mode=custom-config').getMode()).toBe(
+        'custom-config',
+      );
 
-    it('should return default mode if parsed mode is invalid', () => {
-      const params = new CustomURLSearchParams('mode=invalid-mode');
-      expect(params.getMode()).toBe('top-langs');
-    });
-
-    it('should return default values display option if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
-    });
-
-    it('should return parsed values display option if key is present', () => {
-      const params = new CustomURLSearchParams('display-values=all');
-      expect(params.getValuesDisplayOption('display-values')).toBe('all');
-    });
-
-    it('should return default values display option if parsed value is invalid', () => {
-      const params = new CustomURLSearchParams('display-values=invalid');
-      expect(params.getValuesDisplayOption('display-values')).toBe('legend');
-    });
-
-    it('should return default title if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getStringValue('title', 'Bubble Chart')).toBe(
-        'Bubble Chart',
+      // Invalid mode (should return default)
+      expect(new CustomURLSearchParams('mode=invalid-mode').getMode()).toBe(
+        'top-langs',
       );
     });
 
-    it('should return parsed title if key is present', () => {
-      const params = new CustomURLSearchParams('title=MyChart');
-      expect(params.getStringValue('title', 'Bubble Chart')).toBe('MyChart');
-    });
+    it('should handle values display option correctly', () => {
+      // Default
+      expect(
+        new CustomURLSearchParams('').getValuesDisplayOption('display-values'),
+      ).toBe('legend');
 
-    it('should return default legend alignment if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getStringValue('legend-align', 'center')).toBe('center');
-    });
+      // Valid option
+      expect(
+        new CustomURLSearchParams('display-values=all').getValuesDisplayOption(
+          'display-values',
+        ),
+      ).toBe('all');
 
-    it('should return parsed legend alignment if key is present', () => {
-      const params = new CustomURLSearchParams('legend-align=right');
-      expect(params.getStringValue('legend-align', 'center')).toBe('right');
-    });
-
-    it('should return default title size if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getNumberValue('title-size', 24)).toBe(24);
-    });
-
-    it('should return parsed title size if key is present', () => {
-      const params = new CustomURLSearchParams('title-size=30');
-      expect(params.getNumberValue('title-size', 24)).toBe(30);
-    });
-
-    it('should return default title weight if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getStringValue('title-weight', 'bold')).toBe('bold');
-    });
-
-    it('should return parsed title weight if key is present', () => {
-      const params = new CustomURLSearchParams('title-weight=normal');
-      expect(params.getStringValue('title-weight', 'bold')).toBe('normal');
-    });
-
-    it('should return default title color if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getStringValue('title-color', '#000000')).toBe('#000000');
-    });
-
-    it('should return parsed title color if key is present', () => {
-      const params = new CustomURLSearchParams('title-color=#ffffff');
-      expect(params.getStringValue('title-color', '#000000')).toBe('#ffffff');
-    });
-
-    it('should return default title alignment if key is not present', () => {
-      const params = new CustomURLSearchParams('');
-      expect(params.getTextAnchorValue('title-align', 'middle')).toBe('middle');
-    });
-
-    it('should return parsed title alignment if key is present', () => {
-      const params = new CustomURLSearchParams('title-align=center');
-      expect(params.getTextAnchorValue('title-align', 'middle')).toBe('middle');
+      // Invalid option (should return default)
+      expect(
+        new CustomURLSearchParams(
+          'display-values=invalid',
+        ).getValuesDisplayOption('display-values'),
+      ).toBe('legend');
     });
   });
 
@@ -230,12 +226,28 @@ describe('API Utils', () => {
   vi.mock('fs');
   vi.mock('path');
   vi.mock('../../src/common/utils', () => ({
-    isDevEnvironment: vi.fn(),
     mapConfigToBubbleChartOptions: vi.fn().mockReturnValue({
       titleOptions: { text: 'Test Chart' },
-    } as unknown as CustomConfig),
+    }),
+    convertImageToBase64: vi.fn().mockImplementation(async (url) => {
+      if (url === 'https://example.com/icon.png') {
+        return 'data:image/png;base64,converted';
+      }
+      return undefined;
+    }),
+  }));
+  vi.mock('../../src/common/environment', () => ({
+    isDevEnvironment: vi.fn(),
   }));
   vi.stubGlobal('fetch', vi.fn());
+
+  // logger mock to include the warn method
+  vi.mock('../../src/logger', () => ({
+    default: {
+      error: vi.fn(),
+      warn: vi.fn(),
+    },
+  }));
 
   const mockConfig: CustomConfig = {
     options: {
@@ -353,6 +365,168 @@ describe('API Utils', () => {
       await expect(fetchConfigFromRepo('username', 'filePath')).rejects.toThrow(
         ValidationError,
       );
+    });
+
+    it('handles icon URL conversion cases correctly', async () => {
+      vi.mocked(isDevEnvironment).mockReturnValue(true);
+      const localPath = '/example-config.json';
+      vi.mocked(path.resolve).mockReturnValue(localPath);
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+
+      // Case 1: Normal conversion
+      const configWithIconData = {
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [
+          {
+            name: 'Node.js',
+            value: 50,
+            color: '#68A063',
+            icon: 'https://example.com/icon.png',
+          },
+          { name: 'Python', value: 30, color: '#3776AB' }, // No icon
+        ],
+      };
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        JSON.stringify(configWithIconData),
+      );
+      let result = await fetchConfigFromRepo('username', 'filePath');
+      expect(convertImageToBase64).toHaveBeenCalledWith(
+        'https://example.com/icon.png',
+      );
+      expect(result.data[0].icon).toBe('data:image/png;base64,converted');
+      expect(result.data[1].icon).toBeUndefined();
+
+      vi.clearAllMocks();
+
+      // Case 2: Already base64 icon
+      const configWithBase64IconData = {
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [
+          {
+            name: 'Node.js',
+            value: 50,
+            color: '#68A063',
+            icon: 'data:image/png;base64,alreadyBase64',
+          },
+        ],
+      };
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        JSON.stringify(configWithBase64IconData),
+      );
+      result = await fetchConfigFromRepo('username', 'filePath');
+      expect(convertImageToBase64).not.toHaveBeenCalled();
+      expect(result.data[0].icon).toBe('data:image/png;base64,alreadyBase64');
+
+      vi.clearAllMocks();
+
+      // Case 3: Failed conversion
+      const configWithBadIconData = {
+        options: { titleOptions: { text: 'Test Chart' } },
+        data: [
+          {
+            name: 'Broken',
+            value: 50,
+            color: '#FF0000',
+            icon: 'https://example.com/bad-icon.png',
+          },
+        ],
+      };
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        JSON.stringify(configWithBadIconData),
+      );
+      result = await fetchConfigFromRepo('username', 'filePath');
+      expect(convertImageToBase64).toHaveBeenCalledWith(
+        'https://example.com/bad-icon.png',
+      );
+      expect(result.data[0].icon).toBe('https://example.com/bad-icon.png');
+    });
+
+    it('filters out data items with invalid values', async () => {
+      vi.mocked(isDevEnvironment).mockReturnValue(true);
+      const localPath = '/example-config.json';
+      vi.mocked(path.resolve).mockReturnValue(localPath);
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+
+      const configWithInvalidData = {
+        options: {
+          titleOptions: { text: 'Test Chart' },
+        },
+        data: [
+          { name: 'Valid Number', value: 50, color: '#68A063' }, // Valid
+          { name: 'String Value', value: '50', color: '#3776AB' }, // Invalid - string
+          { name: 'NaN Value', value: NaN, color: '#FF0000' }, // Invalid - NaN
+          { name: 'Undefined Value', value: undefined, color: '#00FF00' }, // Invalid - undefined
+          { name: 'Null Value', value: null, color: '#0000FF' }, // Invalid - null
+          { name: 'Object Value', value: {}, color: '#FFFF00' }, // Invalid - object
+          { name: 'Zero', value: 0, color: '#FF00FF' }, // Valid - zero is a valid number
+        ],
+      };
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        JSON.stringify(configWithInvalidData),
+      );
+
+      const result = await fetchConfigFromRepo('username', 'filePath');
+
+      // Only the valid numeric values should remain
+      expect(result.data.length).toBe(2);
+      expect(result.data[0].name).toBe('Valid Number');
+      expect(result.data[1].name).toBe('Zero');
+
+      // Verify the invalid items were filtered out
+      const dataNames = result.data.map((item) => item.name);
+      expect(dataNames).not.toContain('String Value');
+      expect(dataNames).not.toContain('NaN Value');
+      expect(dataNames).not.toContain('Undefined Value');
+      expect(dataNames).not.toContain('Null Value');
+      expect(dataNames).not.toContain('Object Value');
+    });
+
+    it('catches and logs exceptions during icon conversion', async () => {
+      vi.mocked(isDevEnvironment).mockReturnValue(true);
+      const localPath = '/example-config.json';
+      vi.mocked(path.resolve).mockReturnValue(localPath);
+      vi.mocked(fs.existsSync).mockReturnValue(true);
+
+      const configWithIconData = {
+        options: {
+          titleOptions: { text: 'Test Chart' },
+        },
+        data: [
+          {
+            name: 'Node.js',
+            value: 50,
+            color: '#68A063',
+            icon: 'https://example.com/error-icon.png',
+          },
+        ],
+      };
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        JSON.stringify(configWithIconData),
+      );
+
+      // Mock convertImageToBase64 to throw an exception
+      vi.mocked(convertImageToBase64).mockImplementation(async (url) => {
+        if (url === 'https://example.com/error-icon.png') {
+          throw new Error('Conversion error');
+        }
+        return 'data:image/png;base64,converted';
+      });
+
+      const result = await fetchConfigFromRepo('username', 'filePath');
+
+      // Verify the function caught the exception
+      expect(logger.warn).toHaveBeenCalledWith(
+        'Failed to convert icon to base64: https://example.com/error-icon.png',
+        expect.any(Error),
+      );
+
+      // Verify the original URL is preserved
+      expect(result.data[0].icon).toBe('https://example.com/error-icon.png');
     });
   });
 });

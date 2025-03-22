@@ -14,9 +14,10 @@ import {
   DisplayMode,
 } from '../src/chart/types/chartOptions.js';
 import { CustomConfig, Mode } from '../src/chart/types/config.js';
+import { isDevEnvironment } from '../src/common/environment.js';
 import {
-  isDevEnvironment,
   mapConfigToBubbleChartOptions,
+  convertImageToBase64,
 } from '../src/common/utils.js';
 import { BaseError } from '../src/errors/base-error.js';
 import {
@@ -162,15 +163,40 @@ export async function fetchConfigFromRepo(
   filePath: string,
   branch?: string,
 ): Promise<{ options: BubbleChartOptions; data: BubbleData[] }> {
-  const processConfig = (
+  const processConfig = async (
     customConfig: CustomConfig,
-  ): { options: BubbleChartOptions; data: BubbleData[] } => {
-    const options = mapConfigToBubbleChartOptions(customConfig.options);
+  ): Promise<{ options: BubbleChartOptions; data: BubbleData[] }> => {
+    // First filter invalid data items
     customConfig.data = customConfig.data.filter(
       (dataItem) =>
         typeof dataItem.value === 'number' && !isNaN(dataItem.value),
     );
-    return { options: options, data: customConfig.data };
+
+    // Process icons in data items if they exist
+    for (const dataItem of customConfig.data) {
+      // Check if item has an icon property that's a URL string and not already base64
+      if (
+        dataItem.icon &&
+        typeof dataItem.icon === 'string' &&
+        !dataItem.icon.startsWith('data:')
+      ) {
+        try {
+          const base64Icon = await convertImageToBase64(dataItem.icon);
+          if (base64Icon) {
+            dataItem.icon = base64Icon;
+          }
+        } catch (error) {
+          logger.warn(
+            `Failed to convert icon to base64: ${dataItem.icon}`,
+            error,
+          );
+          // Continue with original URL if conversion fails
+        }
+      }
+    }
+
+    const options = mapConfigToBubbleChartOptions(customConfig.options);
+    return { options, data: customConfig.data };
   };
 
   if (isDevEnvironment()) {
@@ -182,7 +208,7 @@ export async function fetchConfigFromRepo(
         const customConfig = JSON.parse(
           fs.readFileSync(localPath, 'utf-8'),
         ) as CustomConfig;
-        return processConfig(customConfig);
+        return await processConfig(customConfig);
       } catch (error) {
         throw new ValidationError(
           'Failed to parse local JSON configuration.',
@@ -219,7 +245,7 @@ export async function fetchConfigFromRepo(
 
     try {
       const customConfig = (await response.json()) as CustomConfig;
-      return processConfig(customConfig);
+      return await processConfig(customConfig);
     } catch (error) {
       throw new ValidationError(
         'Failed to parse fetched JSON configuration.',
@@ -240,3 +266,4 @@ export function handleErrorResponse(
     res.status(500).send({ error: 'An unexpected error occurred' });
   }
 }
+export { convertImageToBase64 };

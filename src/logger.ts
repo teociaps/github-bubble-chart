@@ -1,5 +1,5 @@
 import { pino } from 'pino';
-import { isDevEnvironment } from './common/utils.js';
+import { isDevEnvironment } from './common/environment.js';
 
 const isDev = isDevEnvironment();
 

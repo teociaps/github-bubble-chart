@@ -19,3 +19,8 @@ configuration:
           - .prettierrc*
           - .editorconfig
           - .stylelintrc*
+
+theme:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/chart/themes.ts
