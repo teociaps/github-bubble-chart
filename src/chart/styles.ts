@@ -35,7 +35,7 @@ export function getCommonStyles(theme: ThemeBase): string {
         text-anchor: middle;
       }
       .b-icon {
-        filter: drop-shadow(0px 0px .3px ${theme.textColor});
+        filter: drop-shadow(0px 0px .5px ${theme.textColor});
       }
       @keyframes plop {
         0% {
@@ -99,12 +99,16 @@ export function generateBubbleAnimationStyle(
   }
 }
 
-export function getLegendItemAnimationStyle(): string {
+export function getLegendItemAnimationStyle(theme: ThemeBase): string {
   try {
     return `
       .legend-item {
         opacity: 0;
         animation: fadeIn 0.3s forwards;
+      }
+      .legend-item circle {
+        stroke: ${theme.textColor};
+        stroke-width: .01;
       }
       .legend-item text {
         font-size: ${legendTextSize};
