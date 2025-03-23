@@ -33,7 +33,8 @@ describe('Styles Tests', () => {
   });
 
   it('getLegendItemAnimationStyle generates correct legend item styles', () => {
-    const styles = getLegendItemAnimationStyle();
+    const theme = new LightTheme();
+    const styles = getLegendItemAnimationStyle(theme);
     expect(styles).toContain('.legend-item');
     expect(styles).toContain('animation: fadeIn');
   });

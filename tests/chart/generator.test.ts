@@ -48,7 +48,7 @@ describe('Generator', () => {
       expect(svg).toContain('JavaScript');
       expect(svg).toContain('TypeScript');
       expect(svg).toContain(getCommonStyles(options.theme));
-      expect(svg).toContain(getLegendItemAnimationStyle());
+      expect(svg).toContain(getLegendItemAnimationStyle(options.theme));
       data.forEach((_, index) => {
         expect(svg).toContain(`.bubble-${index}`);
         expect(svg).toContain(`@keyframes float-${index}`);

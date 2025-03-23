@@ -38,7 +38,7 @@ export async function createBubbleChart(
     distanceFromBubbleChart,
     chartOptions,
   );
-  styles += getLegendItemAnimationStyle();
+  styles += getLegendItemAnimationStyle(chartOptions.theme);
 
   const svg = await buildSVG({
     width,
