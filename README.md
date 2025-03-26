@@ -3,7 +3,7 @@
 [![CI](https://github.com/teociaps/github-bubble-chart/actions/workflows/ci.yml/badge.svg)](https://github.com/teociaps/github-bubble-chart/actions/workflows/ci.yml)
 [![Test and Lint](https://github.com/teociaps/github-bubble-chart/actions/workflows/test.yml/badge.svg)](https://github.com/teociaps/github-bubble-chart/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/teociaps/github-bubble-chart/graph/badge.svg?token=7RKP37CX4F)](https://codecov.io/gh/teociaps/github-bubble-chart)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/teociaps/github-bubble-chart?label=Latest%20Release)
+![GitHub Prod Deploy](https://img.shields.io/github/deployments/teociaps/github-bubble-chart/Production?style=flat&label=Production%20Release)
 
 ![GitHub issues](https://img.shields.io/github/issues/teociaps/github-bubble-chart)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/teociaps/github-bubble-chart)
