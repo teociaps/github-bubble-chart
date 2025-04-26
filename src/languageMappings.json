@@ -1949,5 +1949,20 @@
   },
   "Tree-sitter Query": {
     "color": "#8ea64c"
+  },
+  "HIP": {
+    "color": "#4F3A4F"
+  },
+  "Koka": {
+    "color": "#215166"
+  },
+  "M3U": {
+    "color": "#179C7D"
+  },
+  "Rocq Prover": {
+    "color": "#d0b68c"
+  },
+  "Sail": {
+    "color": "#259dd5"
   }
 }
