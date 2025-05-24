@@ -1964,5 +1964,8 @@
   },
   "Sail": {
     "color": "#259dd5"
+  },
+  "BuildStream": {
+    "color": "#006bff"
   }
 }
