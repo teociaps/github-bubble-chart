@@ -1740,7 +1740,7 @@
     "color": "#41b883"
   },
   "Vyper": {
-    "color": "#2980b9",
+    "color": "#9F4CF2",
     "icon": "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gdHJhbnNmb3JtPSJtYXRyaXgoLjA2MjUgMCAwIC4wNjI1IDMuNzVlLTcgOC41NzQ0KSIgcG9pbnRzPSIxMjgwIDEzMzAuMiAxMDI0IDg4Ni44MSA3NjggMTMzMC4yIDEwMjQgMTc3My42IiBvcGFjaXR5PSIuOCIvPgo8cG9seWdvbiB0cmFuc2Zvcm09Im1hdHJpeCguMDYyNSAwIDAgLjA2MjUgMy43NWUtNyA4LjU3NDQpIiBwb2ludHM9IjE1MzYgODg2LjgxIDEyODAgNDQzLjQxIDEwMjQgODg2LjgxIDEyODAgMTMzMC4yIiBvcGFjaXR5PSIuNiIvPgo8cG9seWdvbiB0cmFuc2Zvcm09Im1hdHJpeCguMDYyNSAwIDAgLjA2MjUgMy43NWUtNyA4LjU3NDQpIiBwb2ludHM9IjEwMjQgODg2LjgxIDc2OCA0NDMuNDEgNTEyIDg4Ni44MSA3NjggMTMzMC4yIiBvcGFjaXR5PSIuNiIvPgo8cG9seWdvbiB0cmFuc2Zvcm09Im1hdHJpeCguMDYyNSAwIDAgLjA2MjUgMy43NWUtNyA4LjU3NDQpIiBwb2ludHM9IjE3OTIgNDQzLjQxIDE1MzYgMCAxMjgwIDQ0My40MSAxNTM2IDg4Ni44MSIgb3BhY2l0eT0iLjQ1Ii8+Cjxwb2x5Z29uIHRyYW5zZm9ybT0ibWF0cml4KC4wNjI1IDAgMCAuMDYyNSAzLjc1ZS03IDguNTc0NCkiIHBvaW50cz0iNzY4IDQ0My40MSAxMDI0IDg4Ni44MSAxMjgwIDQ0My40MSAxMTUyIDIyMS43IDg5NiAyMjEuNyIgb3BhY2l0eT0iLjQ1Ii8+Cjxwb2x5Z29uIHRyYW5zZm9ybT0ibWF0cml4KC4wNjI1IDAgMCAuMDYyNSAzLjc1ZS03IDguNTc0NCkiIHBvaW50cz0iNzY4IDQ0My40MSA1MTIgMCAyNTYgNDQzLjQxIDUxMiA4ODYuODEiIG9wYWNpdHk9Ii40NSIvPgo8cG9seWdvbiB0cmFuc2Zvcm09Im1hdHJpeCguMDYyNSAwIDAgLjA2MjUgMy43NWUtNyA4LjU3NDQpIiBwb2ludHM9IjIwNDggMCAxNTM2IDAgMTc5MiA0NDMuNCIgb3BhY2l0eT0iLjMiLz4KPHBvbHlnb24gdHJhbnNmb3JtPSJtYXRyaXgoLjA2MjUgMCAwIC4wNjI1IDMuNzVlLTcgOC41NzQ0KSIgcG9pbnRzPSI1MTIgMCAwIDAgMjU2IDQ0My40IiBvcGFjaXR5PSIuMyIvPgo8L3N2Zz4="
   },
   "WDL": {
@@ -1967,5 +1967,32 @@
   },
   "BuildStream": {
     "color": "#006bff"
+  },
+  "Aiken": {
+    "color": "#640ff8"
+  },
+  "Clue": {
+    "color": "#0009b5"
+  },
+  "Daslang": {
+    "color": "#d3d3d3"
+  },
+  "GDShader": {
+    "color": "#478CBF"
+  },
+  "Leo": {
+    "color": "#C4FFC2"
+  },
+  "Tor Config": {
+    "color": "#59316b"
+  },
+  "Untyped Plutus Core": {
+    "color": "#36adbd"
+  },
+  "Vento": {
+    "color": "#ff0080"
+  },
+  "Zmodel": {
+    "color": "#ff7100"
   }
 }
