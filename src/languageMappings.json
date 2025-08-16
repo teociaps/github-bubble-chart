@@ -2002,5 +2002,11 @@
   },
   "Nickel": {
     "color": "#E0C3FC"
+  },
+  "C3": {
+    "color": "#2563eb"
+  },
+  "ROS Interface": {
+    "color": "#22314e"
   }
 }
