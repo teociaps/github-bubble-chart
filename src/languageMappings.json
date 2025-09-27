@@ -2008,5 +2008,20 @@
   },
   "ROS Interface": {
     "color": "#22314e"
+  },
+  "Bru": {
+    "color": "#F4AA41"
+  },
+  "Cooklang": {
+    "color": "#E15A29"
+  },
+  "Flix": {
+    "color": "#d44a45"
+  },
+  "KoLMafia ASH": {
+    "color": "#B9D9B9"
+  },
+  "QuakeC": {
+    "color": "#975777"
   }
 }
