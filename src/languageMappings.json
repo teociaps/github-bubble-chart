@@ -2023,5 +2023,26 @@
   },
   "QuakeC": {
     "color": "#975777"
+  },
+  "ArkTS": {
+    "color": "#0080ff"
+  },
+  "Cangjie": {
+    "color": "#00868B"
+  },
+  "Git Commit": {
+    "color": "#F44D27"
+  },
+  "Hurl": {
+    "color": "#FF0288"
+  },
+  "KoLmafia ASH": {
+    "color": "#B9D9B9"
+  },
+  "Teal": {
+    "color": "#00B1BC"
+  },
+  "Wolfram Language": {
+    "color": "#dd1100"
   }
 }
