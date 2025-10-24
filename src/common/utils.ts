@@ -59,7 +59,7 @@ export async function convertImageToBase64(
   try {
     new URL(url);
   } catch {
-    logger.error('Invalid URL format', { url });
+    logger.error({ url }, 'Invalid URL format');
     return undefined;
   }
 
@@ -105,7 +105,10 @@ export async function convertImageToBase64(
   } catch (_error) {
     const errorMessage =
       _error instanceof Error ? _error.message : 'Unknown error';
-    logger.error(`Error converting image to base64: ${errorMessage}`, _error);
+    logger.error(
+      { error: _error },
+      `Error converting image to base64: ${errorMessage}`,
+    );
     return undefined;
   }
 }

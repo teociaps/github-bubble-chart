@@ -105,7 +105,8 @@ describe('API Utils', () => {
     testCases.forEach(({ name, param, method, key, defaultVal, expected }) => {
       it(`should return ${name} if key is present`, () => {
         const params = new CustomURLSearchParams(param);
-        expect(params[method](key, defaultVal)).toBe(expected);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((params as any)[method](key, defaultVal)).toBe(expected);
       });
     });
 
@@ -521,8 +522,8 @@ describe('API Utils', () => {
 
       // Verify the function caught the exception
       expect(logger.warn).toHaveBeenCalledWith(
+        { error: expect.any(Error) },
         'Failed to convert icon to base64: https://example.com/error-icon.png',
-        expect.any(Error),
       );
 
       // Verify the original URL is preserved
