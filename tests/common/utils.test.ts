@@ -268,8 +268,8 @@ describe('Utils Tests', () => {
       const result = await convertImageToBase64('invalid-url');
       expect(result).toBeUndefined();
       expect(logger.error).toHaveBeenCalledWith(
-        expect.stringContaining('Invalid URL format'),
-        expect.anything(),
+        { url: 'invalid-url' },
+        'Invalid URL format',
       );
     });
 
@@ -294,8 +294,8 @@ describe('Utils Tests', () => {
 
       expect(result).toBeUndefined();
       expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({ error: expect.any(Error) }),
         expect.stringContaining('Error converting image to base64'),
-        expect.anything(),
       );
     });
 
@@ -314,8 +314,8 @@ describe('Utils Tests', () => {
 
       expect(result).toBeUndefined();
       expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({ error: expect.any(Error) }),
         expect.stringContaining('Image conversion timed out'),
-        expect.anything(),
       );
     });
 

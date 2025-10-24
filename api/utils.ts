@@ -187,8 +187,8 @@ export async function fetchConfigFromRepo(
           }
         } catch (error) {
           logger.warn(
+            { error },
             `Failed to convert icon to base64: ${dataItem.icon}`,
-            error,
           );
           // Continue with original URL if conversion fails
         }
@@ -259,7 +259,7 @@ export function handleErrorResponse(
   error: Error | undefined,
   res: Response,
 ): void {
-  logger.error(error);
+  logger.error({ error });
   if (error instanceof BaseError) {
     res.status(error.status).send(error.render());
   } else {
