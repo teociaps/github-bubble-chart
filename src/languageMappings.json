@@ -2044,5 +2044,35 @@
   },
   "Wolfram Language": {
     "color": "#dd1100"
+  },
+  "ALGOL": {
+    "color": "#D1E0DB"
+  },
+  "B (Formal Method)": {
+    "color": "#8aa8c5"
+  },
+  "Go Template": {
+    "color": "#00ADD8"
+  },
+  "Jac": {
+    "color": "#FC792D"
+  },
+  "KCL": {
+    "color": "#7ABABF"
+  },
+  "KFramework": {
+    "color": "#4195c5"
+  },
+  "Lambdapi": {
+    "color": "#8027a3"
+  },
+  "Langium": {
+    "color": "#2c8c87"
+  },
+  "RAScript": {
+    "color": "#2C97FA"
+  },
+  "SurrealQL": {
+    "color": "#ff00a0"
   }
 }
