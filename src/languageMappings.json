@@ -2074,5 +2074,14 @@
   },
   "SurrealQL": {
     "color": "#ff00a0"
+  },
+  "CQL": {
+    "color": "#006091"
+  },
+  "Mathematical Programming System": {
+    "color": "#0530ad"
+  },
+  "TMDL": {
+    "color": "#f0c913"
   }
 }
