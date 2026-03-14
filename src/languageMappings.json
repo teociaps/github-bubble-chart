@@ -2086,5 +2086,11 @@
   },
   "MeTTa": {
     "color": "#6a5acd"
+  },
+  "FlatBuffers": {
+    "color": "#ed284a"
+  },
+  "Liquidsoap": {
+    "color": "#990066"
   }
 }
