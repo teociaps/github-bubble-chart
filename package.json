@@ -42,7 +42,7 @@
   },
   "homepage": "https://github.com/teociaps/github-bubble-chart#readme",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/eslintrc": "^3.3.5",
     "@types/d3": "^7.4.3",
     "@types/express": "^5.0.0",
     "@types/image-to-base64": "^2.1.2",
