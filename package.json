@@ -73,7 +73,7 @@
   "dependencies": {
     "@octokit/rest": "^22.0.1",
     "d3": "^7.9.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.4.2",
     "express": "^4.19.2",
     "express-rate-limit": "^7.5.0",
     "node-emoji": "^2.2.0",
