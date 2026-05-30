@@ -2092,5 +2092,14 @@
   },
   "Liquidsoap": {
     "color": "#990066"
+  },
+  "IL Assembly": {
+    "color": "#512BD4"
+  },
+  "Quint": {
+    "color": "#9d6ce5"
+  },
+  "SpiceDB Schema": {
+    "color": "#a5318a"
   }
 }
