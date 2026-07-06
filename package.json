@@ -68,7 +68,7 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5",
-    "yaml": "^2.7.0"
+    "yaml": "^2.9.0"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
