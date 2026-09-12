@@ -198,7 +198,7 @@
     "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjYTliYWNkIiBkPSJNMTI1IDUwYy00LTMyLTI0LTUwLTYyLTUwQzI5IDAgMyAyNCAzIDY0YzAgMzkgMjQgNjQgNjQgNjQgMzIgMCA1NS0xOSA1OC01MEg4N2MtMiAxMS04IDIwLTIwIDIwLTIxIDAtMjQtMTYtMjQtMzMgMC0yMyA4LTM1IDIyLTM1IDEzIDAgMjAgNyAyMiAyMHoiIC8+PC9zdmc+Cg=="
   },
   "C#": {
-    "color": "#178600",
+    "color": "#7355dd",
     "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjOUI0Rjk2IiBkPSJNMTE1LjQgMzAuN0w2Ny4xIDIuOWMtLjgtLjUtMS45LS43LTMuMS0uNy0xLjIgMC0yLjMuMy0zLjEuN2wtNDggMjcuOWMtMS43IDEtMi45IDMuNS0yLjkgNS40djU1LjdjMCAxLjEuMiAyLjQgMSAzLjVsMTA2LjgtNjJjLS42LTEuMi0xLjUtMi4xLTIuNC0yLjd6Ii8+PHBhdGggZmlsbD0iIzY4MjE3QSIgZD0iTTEwLjcgOTUuM2MuNS44IDEuMiAxLjUgMS45IDEuOWw0OC4yIDI3LjljLjguNSAxLjkuNyAzLjEuNyAxLjIgMCAyLjMtLjMgMy4xLS43bDQ4LTI3LjljMS43LTEgMi45LTMuNSAyLjktNS40VjM2LjFjMC0uOS0uMS0xLjktLjYtMi44bC0xMDYuNiA2MnoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNODUuMyA3Ni4xQzgxLjEgODMuNSA3My4xIDg4LjUgNjQgODguNWMtMTMuNSAwLTI0LjUtMTEtMjQuNS0yNC41czExLTI0LjUgMjQuNS0yNC41YzkuMSAwIDE3LjEgNSAyMS4zIDEyLjVsMTMtNy41Yy02LjgtMTEuOS0xOS42LTIwLTM0LjMtMjAtMjEuOCAwLTM5LjUgMTcuNy0zOS41IDM5LjVzMTcuNyAzOS41IDM5LjUgMzkuNWMxNC42IDAgMjcuNC04IDM0LjItMTkuOGwtMTIuOS03LjZ6TTk3IDY2LjJsLjktNC4zaC00LjJ2LTQuN2g1LjFMMTAwIDUxaDQuOWwtMS4yIDYuMWgzLjhsMS4yLTYuMWg0LjhsLTEuMiA2LjFoMi40djQuN2gtMy4zbC0uOSA0LjNoNC4ydjQuN2gtNS4xbC0xLjIgNmgtNC45bDEuMi02aC0zLjhsLTEuMiA2aC00LjhsMS4yLTZoLTIuNHYtNC43SDk3em00LjggMGgzLjhsLjktNC4zaC0zLjhsLS45IDQuM3oiLz48L3N2Zz4="
   },
   "C++": {
@@ -2101,5 +2101,89 @@
   },
   "SpiceDB Schema": {
     "color": "#a5318a"
+  },
+  "Aleo": {
+    "color": "#154BF9"
+  },
+  "B": {
+    "color": "#da7666"
+  },
+  "BAML": {
+    "color": "#a855f7"
+  },
+  "BBCode": {
+    "color": "#CAFF42"
+  },
+  "BIRD2": {
+    "color": "#b6d7e4"
+  },
+  "Blueprint": {
+    "color": "#3584E4"
+  },
+  "FPP": {
+    "color": "#d37327"
+  },
+  "Gno": {
+    "color": "#226c57"
+  },
+  "GtkRC": {
+    "color": "#7fe719"
+  },
+  "ImHex Pattern Language": {
+    "color": "#3a6be0"
+  },
+  "JASS": {
+    "color": "#FF0303"
+  },
+  "LLVM TableGen": {
+    "color": "#6E8B3D"
+  },
+  "Lobster": {
+    "color": "#f95428"
+  },
+  "MiniScript": {
+    "color": "#4B4A56"
+  },
+  "OverPy": {
+    "color": "#78b355"
+  },
+  "Power Query": {
+    "color": "#d38e0d"
+  },
+  "Pro*C": {
+    "color": "#bb8368"
+  },
+  "Quartus Simulation IP": {
+    "color": "#58C42E"
+  },
+  "Redscript": {
+    "color": "#f44336"
+  },
+  "Rhai": {
+    "color": "#FBA63B"
+  },
+  "SIP": {
+    "color": "#4E8D83"
+  },
+  "Salt": {
+    "color": "#57bcad"
+  },
+  "Tolk": {
+    "color": "#30A1F5"
+  },
+  "Verse": {
+    "color": "#518ef8"
+  },
+  "Vespa Schema Definition": {
+    "color": "#61D790"
+  },
+  "Vim script": {
+    "color": "#199f4b"
+  },
+  "pkg-config": {
+    "color": "#2b5e82"
+  },
+  "ucode": {
+    "color": "#00b8d4"
   }
 }
